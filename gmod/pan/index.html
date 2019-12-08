@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	
+	<title>McKiddo Inc.</title>
+	
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet">
+
+	
+</head>
+
+<style>
+	@font-face {
+		font-family: "Coolvetica";
+		src:url("coolvetica.ttf");
+	}
+
+	body {
+		background-image: url('back.jpg');
+		font-family: 'Coolvetica', sans-serif;
+		font-size: 70px;
+		color: #f7f7f7;
+		text-shadow: 5px 5px 0px rgba(0,0,0,0.9);
+		background-size: cover;
+	}
+
+	.name {
+		font-size: 50px;
+		margin-top: -70px;
+	}
+
+	.container {
+		position: relative;
+		margin-top: -40px;
+		margin-left: 100px;
+	}
+</style>
+
+<body>
+
+	<div class="container">
+		<p>Greetings.</p>
+		<p class="name">plz b nice!!</p>
+	</div>
+	
+	<script>
+		var audio = new Audio('liquid.ogg');
+		audio.volume = 0.4;
+		
+		window.onload = function() {
+			audio.loop = true;
+			audio.play();
+		}
+	</script>
+	
+</body>
+
+</html> 

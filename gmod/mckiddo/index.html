@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	
+	<title>McKiddo Inc.</title>
+	
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet">
+
+	
+</head>
+
+<style>
+	body {
+		background-image: url('back.jpg');
+		font-family: 'Cabin', sans-serif;
+		font-size: 50px;
+		color: #f7f7f7;
+		text-shadow: 0px 0px 6px rgba(0,0,0,0.9);
+		background-size: cover;
+	}
+
+	.name {
+		font-size: 70px;
+		margin-top: -40px;
+	}
+
+	.container {
+		position: relative;
+		margin-top: 40px;
+		margin-left: 100px;
+	}
+</style>
+
+<body>
+
+	<div class="container">
+		<p>You're on your way to</p>
+		<p class="name">McKiddo's CQC-enabled private server</p>
+	</div>
+	
+	<script>
+		var audio = new Audio('ogonek.ogg');
+		audio.volume = 0.4;
+		
+		window.onload = function() {
+			audio.loop = true;
+			audio.play();
+		}
+	</script>
+	
+</body>
+
+</html> 

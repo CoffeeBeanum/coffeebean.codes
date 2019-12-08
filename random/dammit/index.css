@@ -1,0 +1,12 @@
+body {
+    background: #496178;
+}
+
+#dammit {
+	image-rendering: pixelated;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+	cursor: pointer;
+}

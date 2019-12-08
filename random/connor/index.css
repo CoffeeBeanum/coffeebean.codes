@@ -1,0 +1,60 @@
+body {
+    background: url("back.png") no-repeat center center fixed;
+    background-size: cover;
+}
+
+#splash {
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    position: fixed;
+    background: #363841;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#splashConnor {
+    height: 400px;
+    transition:all 11s cubic-bezier(0.47, 0, 0.745, 0.715);
+}
+
+#connors {
+    position: absolute;
+    text-align: center;
+    right: 0;
+    left: 0;
+}
+
+@keyframes gif-connor {
+    0% {background-position:0px 0px;}
+    6.67% {background-position:0px -351px;}
+    13.33% {background-position:0px -702px;}
+    20% {background-position:0px -1053px;}
+    26.67% {background-position:0px -1404px;}
+    33.33% {background-position:0px -1755px;}
+    40% {background-position:0px -2106px;}
+    46.67% {background-position:0px -2457px;}
+    53.33% {background-position:0px -2808px;}
+    60% {background-position:0px -3159px;}
+    66.67% {background-position:0px -3510px;}
+    73.33% {background-position:0px -3861px;}
+    80% {background-position:0px -4212px;}
+    86.67% {background-position:0px -4563px;}
+    93.33%, 100% {background-position:0px -4914px;}
+}
+.connor{
+    background:url("connor.png") no-repeat 0px 0px;
+    display:inline-block;
+    width:438px;
+    height:351px;
+    animation: gif-connor 0.45s infinite steps(1);
+}
+
+.stop-scrolling {
+    height: 100%;
+    overflow: hidden;
+}
