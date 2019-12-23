@@ -25,6 +25,10 @@ input:focus {
     background-color: #7a7a7a;
 }
 
+::placeholder {
+	color: #999999;
+}
+
 button {
 	outline: none;
     height: 35px;

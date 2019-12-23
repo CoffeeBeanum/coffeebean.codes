@@ -16,13 +16,19 @@
 <div id="container">
 	<div id="title">Vocalizer</div>
 	<div id="input-container">
-		<input id="text-input" type="text" value="Hello nigga">
+		<button id="link-button" type="button">Copy link</button>
+		<input id="text-input" type="text" placeholder="Enter text">
 		<button id="play-button" type="button" onClick="readString()">Read</button>
 	</div>
 </div>
 
 <!-- JQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+
+<script src="url_utils.js"></script>
+<script src="audio_utils.js"></script>
 
 <script src="index.js"></script>
 

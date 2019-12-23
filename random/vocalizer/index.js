@@ -1,29 +1,15 @@
-function getAudioFor(character) {
-	if (character == " " || character == ".") {
-		character = "pause";
+$(document).ready(function() {
+	let urlVarText = getUrlVars()["m"]
+	if (urlVarText) {
+		$("#text-input").val(urlVarText)
 	}
 	
-	let route = `vocal/${character}.mp3`;
-
-	return new Audio(route);
-}
-
-function playQueue(audioQueue) {
-    let index = -1;
-	
-	playAudio(index, audioQueue);
-}
-
-function playAudio(index, audioQueue) {
-	index++;
-	
-    if (index == audioQueue.length) return;
-	
-    audioQueue[index].onended = setTimeout(function() {
-		playAudio(index, audioQueue);
-	}, 80)
-    audioQueue[index].play();
-}
+	new Clipboard('#link-button', {
+		text: function() {
+			return getRawLocation() + "?m=" + escapeHtml($("#text-input").val());
+		}
+	});
+});
 
 function readString() {
 	let string = $("#text-input").val()
