@@ -42,7 +42,7 @@ button:hover {
     background-color: #4d7e48;
 }
 
-button:focus {
+button:active {
     background-color: #60995a;
 }
 
@@ -53,5 +53,3 @@ button:focus {
 	font-family: 'Odibee Sans', cursive;
 	text-shadow: 2px 2px 0px #4e4e4e;
 }
-
-#
