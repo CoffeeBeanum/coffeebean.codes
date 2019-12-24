@@ -14,7 +14,7 @@ $(document).ready(function() {
 function readString() {
 	let string = $("#text-input").val()
 	
-	let audioQueue = []
+	let audioQueue = [new getAudioFor(".")]
 	
 	string.toLowerCase().split('').forEach(character => {
 		audioQueue.push(getAudioFor(character));
