@@ -10,20 +10,27 @@ body {
     font-family: 'Odibee Sans', cursive;
 }
 
-input {
+textarea {
+    display: block;
     outline: none;
-    height: 29px;
+    overflow: hidden;
+    resize: none;
+    width: 300px;
+    max-width: 300px;
+    max-height: 500px;
     color: #dedfe1;
     border-width: 0;
     border-bottom: 4px solid #4e4e4e;
     border-radius: 2px;
     background-color: #6d6d6d;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding: 5px;
     font-size: 18px;
+    margin-bottom: 5px;
+    
+    vertical-align: middle;
 }
 
-input:focus {
+textarea:focus {
     background-color: #7a7a7a;
 }
 
@@ -39,9 +46,10 @@ button {
 	border-bottom: 4px solid #435a47;
     border-radius: 2px;
     background-color: #5f7e67;
-	padding-left: 5px;
-    padding-right: 5px;
+	padding-left: 7px;
+    padding-right: 7px;
     font-size: 18px;
+    margin: 0;
 }
 
 button:hover {
@@ -65,4 +73,12 @@ button:active {
 #subtitle {
     color: #f49d87;
     font-size: 30px;
+}
+
+#link-button {
+    float: left;
+}
+
+#play-button {
+    float: right;
 }

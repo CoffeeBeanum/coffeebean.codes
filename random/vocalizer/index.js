@@ -9,6 +9,8 @@ $(document).ready(function() {
 			return getRawLocation() + "?m=" + escapeHtml($("#text-input").val());
 		}
 	});
+                  
+    $("textarea").keydown(autosize);
 });
 
 function readString() {
@@ -31,3 +33,11 @@ $("#text-input").on("keyup", function(event) {
     $("#play-button").click();
   }
 });
+             
+function autosize(){
+  var el = this;
+  setTimeout(function(){
+    el.style.cssText = 'height:auto; padding:0';
+    el.style.cssText = 'height:' + el.scrollHeight + 'px';
+  },0);
+}

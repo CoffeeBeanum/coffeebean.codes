@@ -1,10 +1,15 @@
 let audioDelay = 0;
 
 function getAudioFor(character) {
+    if (character == "" || character == null) {
+        return null;
+    }
+    
     switch (character) {
         case "?":
         case "!":
         case ".":
+        case "\n":
             character = "pause_long";
             break;
         case ",":
