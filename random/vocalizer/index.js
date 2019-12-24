@@ -20,8 +20,8 @@ function readString() {
 		audioQueue.push(getAudioFor(character));
 	})
 	
-	audioQueue = audioQueue.filter(item => item)
-	
+    audioQueue = audioQueue.filter(item => item);
+    
 	playQueue(audioQueue);
 }
 
