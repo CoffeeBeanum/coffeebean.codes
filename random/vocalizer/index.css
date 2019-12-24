@@ -57,36 +57,6 @@ button:active {
     text-shadow: 2px 2px 0px #4e4e4e;
 }
 
-@media only screen and (max-width: 600px) {
-    #title {
-        font-size: 15em;
-    }
-    
-    #subtitle {
-        font-size: 5em;
-    }
-    
-    button {
-        height: 1.7em;
-        border-bottom: 0.2em solid #435a47;
-        border-radius: 0.2em;
-        background-color: #5f7e67;
-        padding-left: 0.3em;
-        padding-right: 0.3em;
-        font-size: 3em;
-    }
-    
-    input {
-        height: 1em;
-        border-bottom: 0.2em solid #4e4e4e;
-        border-radius: 0.2em;
-        background-color: #6d6d6d;
-        padding-left: 0.3em;
-        padding-right: 0.3em;
-        font-size: 3em;
-    }
-}
-
 #title {
 	color: #fab696;
 	font-size: 80px;
