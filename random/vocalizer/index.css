@@ -6,6 +6,8 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+    
+    font-family: 'Odibee Sans', cursive;
 }
 
 input {
@@ -50,10 +52,17 @@ button:active {
     background-color: #60995a;
 }
 
+#title-container {
+    text-align: center;
+    text-shadow: 2px 2px 0px #4e4e4e;
+}
+
 #title {
-	text-align: center;
 	color: #fab696;
 	font-size: 80px;
-	font-family: 'Odibee Sans', cursive;
-	text-shadow: 2px 2px 0px #4e4e4e;
+}
+
+#subtitle {
+    color: #f49d87;
+    font-size: 30px;
 }
