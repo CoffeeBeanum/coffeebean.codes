@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	let urlVarText = getUrlVars()["m"]
 	if (urlVarText) {
-		$("#text-input").val(urlVarText)
+		$("#text-input").val(urlVarText.replace('+', ' '))
 	}
 	
 	new Clipboard('#link-button', {
