@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'IBMVGA8';
+  src: url('PxPlus_IBM_VGA8.ttf')  format('truetype')
+}
+
 html,
 body {
     height: 100%;
@@ -19,14 +24,17 @@ textarea {
     max-width: 300px;
     max-height: 500px;
     color: #dedfe1;
+    font-family: IBMVGA8, monospace;
     border-width: 0;
     border-bottom: 4px solid #4e4e4e;
     border-radius: 2px;
     background-color: #6d6d6d;
-    padding: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     font-size: 18px;
     margin-bottom: 5px;
-    
     vertical-align: middle;
 }
 
@@ -40,8 +48,9 @@ textarea:focus {
 
 button {
 	outline: none;
-    height: 35px;
+    height: 33px;
     color: #dedfe1;
+    font-family: IBMVGA8, monospace;
     border-width: 0;
 	border-bottom: 4px solid #435a47;
     border-radius: 2px;
@@ -77,8 +86,10 @@ button:active {
 
 #link-button {
     float: left;
+    width: calc(50% - 2.5px);
 }
 
 #play-button {
     float: right;
+    width: calc(50% - 2.5px);
 }
