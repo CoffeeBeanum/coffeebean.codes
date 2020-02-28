@@ -1,17 +1,17 @@
 var boot_string_1 = "KIDTECH (C) 1991\n\
 BIOS Date DATE Ver: 00.00.01\n\
-CPU: Inter(R) CPU 330 @ 40 MHz\n\
-Speed: 40 MHz\n";
+CPU: Intel(R) CPU 330 @ 40 MHz\n\
+Speed: 40 MHz\n\n";
 
-const boot_string_2 = "Memory Test: 128420 OK\n";
+const boot_string_2 = "Memory Test: 128420 OK\n\n";
 
 const boot_string_3 = "PMU ROM Version 2055\n\
 NVMM ROM Version: 6.027.44\n\
-Initializing USB Controllers.. %(700x1)%Done.\n";
+Initializing USB Controllers.. %(700x1)%Done.\n\n";
 
-const boot_string_4 = "128MB OK\n";
+const boot_string_4 = "128MB OK\n\n";
 
-const splash_string_1 = "%(0x10)%.´,.,,.,´.,´.,´´,.´,.´,.,,.,´.,´.,´´,.´,.´,.,,.,´.,´.,´´,.´\n\
+const splash_string_1 = "%(0x5)%.´,.,,.,´.,´.,´´,.´,.´,.,,.,´.,´.,´´,.´,.´,.,,.,´.,´.,´´,.´\n\
 ,´´,´´,´^~'^^'^^'^^'~,´,´´,´´,.´,.´´.,,'~^'~^^~'^~'^,.´´.,´\n\
 ,´´,´´,´¶NNNNNNNNNNNN;´,´´,´´,´´´´´´´´íNNNNNNNNNNNNN´´´´´´´\n\
 .´,»NNNNNNNNNNNNNNNNNNN*,,.,´.,´.,´´*NNNNNN&=====%NNNNNN*.´\n\
@@ -19,7 +19,7 @@ const splash_string_1 = "%(0x10)%.´,.,,.,´.,´.,´´,.´,.´,.,,.,´.,´.,´´
 ,oNNNNNNNNNNNNNNNNNNNNNI´´,.´,.´,.,,=Næ======@N@======æNNNo\n\
 .%NNNNNNNNNNNNNNNNNNNNN*´´.,´.,´´,´´*NNNN===========NNNNNNX\n\
 ´´´?NNNNNNNNNNNNNNNNN/´´´´´íNNNN;,´´,´íNNNN&=====%NNNNNN=´´\n\
-,´.',,',¶NNNNNNNNNNNN;.,´´,~NNNN/.,,.,;NNNN©©©©©©©NN'´''´,´\n\
+,´.',,',¶NNNNNNNNNNNN;.,´´,~NNNN/.,,.,;NNNN@@@@@@@NN'´''´,´\n\
 ´´´´´´´´;/;;/;//?NN//'´´´»@§NNNN§Ñ?´´´,;/NN*;;/;;/;;´´´´´´´\n\
 .´,.,,.,´.,´»Xooo*I'.´,.,*NNNNNNNN*´,.´,.II%XXo=´.,´.,´´,.´\n\
 ,´´,´´,´=*'´?£££%,´´,´´,´=NNNNNNNNI´´,´´,´´%£££=´^==,´´´´,´\n\
