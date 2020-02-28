@@ -19,7 +19,15 @@ body {
 	position: relative;
 	float: right;
     right: 88px;
-    top: 158px;
+    top: 278px;
+}
+
+#screen-text {
+    padding-top: 120px;
+    padding-left: 130px;
+    color: white;
+    font-family: IBMVGA8, monospace;
+    font-size: 16px;
 }
 
 .screen-container {
@@ -30,18 +38,6 @@ body {
 	background-image: url('ibm_monitor.png');
 	background-size: contain;
 	background-repeat: no-repeat;
-}
-
-.screen-text {
-	padding-top: 120px;
-	padding-left: 130px;
-	color: white;
-	font-family: IBMVGA8, monospace;
-	font-size: 16px;
-}
-
-.boot-text {
-	display: none;
 }
 
 .boot-text::selection {
