@@ -1,3 +1,5 @@
+let audioCtx;
+
 var boot_string_1 = "KIDTECH (C) 1991\n\
 BIOS Date DATE Ver: 00.00.01\n\
 CPU: Intel(R) CPU 330 @ 40 MHz\n\
@@ -81,7 +83,7 @@ function presentMessage(message) {
     let splits = message.split("%(");
         
     for (let split of splits) {
-        const regex = /(\d+)x(\d+)\)\%(.*)/s;
+        const regex = /(\d+)x(\d+)\)\%([^\x05]*)/;
         let matches = split.match(regex);
         
         if (matches == null) {
@@ -120,17 +122,41 @@ function calculateScreenSize() {
 }
 
 function playIdleAudio() {
-	let idleAudio = new Audio('idle1.mp3');
-	idleAudio.volume = 0.4;
+	if(window.webkitAudioContext) {
+		audioCtx = new window.webkitAudioContext();
+	} else {
+		audioCtx = new window.AudioContext();
+	}
 	
-	idleAudio.addEventListener('timeupdate', function(){
-                var buffer = .44
-                if(this.currentTime > this.duration - buffer){
-                    this.currentTime = 0
-                    this.play()
-                }}, false);
+	let source = audioCtx.createBufferSource();
+	request = new XMLHttpRequest();
+
+	request.open('GET', 'idle1.mp3', true);
+
+	request.responseType = 'arraybuffer';
+
+	request.onload = function() {
+		var audioData = request.response;
+
+		audioCtx.decodeAudioData(audioData, function(buffer) {
+			myBuffer = buffer;
+			source.buffer = myBuffer;
+			source.loop = true;
+			
+			let gainNode = audioCtx.createGain();
+			gainNode.gain.value = 0.4;
+			
+			gainNode.connect(audioCtx.destination);
+			source.connect(gainNode);
+		},
+
+		function(e){"Error with decoding audio data" + e.err});
+
+		}
+
+	request.send();
 	
-	idleAudio.play();
+	source.start(0);
 }
 
 $("body").click(function() {
