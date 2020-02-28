@@ -36,6 +36,8 @@ const splash_string_1 = "%(0x5)%.´,.,,.,´.,´.,´´,.´,.´,.,,.,´.,´.,´´,
 var on = false
 
 window.addEventListener('load', function () {
+	calculateScreenSize();
+	
 	var date = new Date();
 	var dateString = date.toLocaleString();
                         
@@ -81,8 +83,6 @@ function presentMessage(message) {
     for (let split of splits) {
         const regex = /(\d+)x(\d+)\)\%(.*)/s;
         let matches = split.match(regex);
-
-        console.log(matches)
         
         if (matches == null) {
             presentString(split);
@@ -109,6 +109,16 @@ function clearScreen() {
     $("#screen-text").empty();
 }
 
+function calculateScreenSize() {
+	if ($('.screen-container').width() < 800) {
+		$('#screen-text').css("font-size", "2vw");
+		$('#screen-text').css("height", "75vw");
+	} else {
+		$('#screen-text').css("font-size", "16px");
+		$('#screen-text').css("height", "600px");
+	}
+}
+
 function playIdleAudio() {
 	let idleAudio = new Audio('idle1.mp3');
 	idleAudio.volume = 0.4;
@@ -125,5 +135,9 @@ function playIdleAudio() {
 
 $("body").click(function() {
 	startup();
+});
+
+$( window ).resize(function() {
+	calculateScreenSize();
 });
 

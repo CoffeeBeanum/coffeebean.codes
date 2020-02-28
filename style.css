@@ -23,11 +23,17 @@ body {
 }
 
 #screen-text {
-    padding-top: 120px;
-    padding-left: 130px;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	height: 60%;
+    padding-top: 14.5em;
+    padding-left: 8.2em;
     color: white;
     font-family: IBMVGA8, monospace;
     font-size: 16px;
+	white-space: nowrap;
+	transition: width 1s;
 }
 
 .screen-container {
