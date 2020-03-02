@@ -63,6 +63,7 @@ function startup() {
 		playIdleAudio()
 	}, 10700);
 	setTimeout(function() {
+		clearScreen();
         presentMessage(boot_string_1);
 	}, 5000);
 	setTimeout(function() {
@@ -110,19 +111,16 @@ function clearScreen() {
 
 function calculateScreenSize() {
 	if ($('.screen-container').width() < 800) {
-		$('#screen-text').css("font-size", "2vw");
-		$('#screen-text').css("height", "75vw");
-        $('#led-image').css("width", "3vw");
-        
         let widthRatio = $('.screen-container').width() / 800;
-        let rightMargin = 75 * widthRatio;
-        
-        $('#led-image').css("right", rightMargin + "px");
+		let rightMargin = 75 * widthRatio;
+		
+		$('.screen-container').css("height", 583 * widthRatio + "px");
+		$('#screen-text').css("transform", "scale(" + widthRatio + ")");
+		$('#led-image').css("width", 25 * widthRatio + "px");
 	} else {
-		$('#screen-text').css("font-size", "16px");
-		$('#screen-text').css("height", "600px");
+		$('.screen-container').css("height", "583px");
+		$('#screen-text').css("transform", "scale(1)");
         $('#led-image').css("width", "25px");
-        $('#led-image').css("right", "75px");
 	}
 }
 

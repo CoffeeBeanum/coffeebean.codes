@@ -19,18 +19,17 @@ body {
 #led-image {
 	position: relative;
     float: right;
-    top: 290px;
-    right: 75px;
-    transform: translateY(-50%) translateX(-50%);
+    top: 46%;
+    right: 11%;
 }
 
 #screen-text {
 	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	height: 60%;
-    padding-top: 14.5em;
-    padding-left: 8.2em;
+	top: 18%;
+	left: 16.4%;
+	width: 472px;
+	height: 336px;
+	transform-origin: top left;
     color: white;
     font-family: IBMVGA8, monospace;
     font-size: 16px;
@@ -40,7 +39,7 @@ body {
 .screen-container {
 	position: relative;
 	width: 800px;
-	height: 600px;
+	height: 583px;
 	background-position: center;
 	background-image: url('ibm_monitor.png');
 	background-size: contain;
