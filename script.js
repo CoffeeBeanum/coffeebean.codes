@@ -1,19 +1,23 @@
-let audioCtx;
+const regexMessage = /(\d+)x(\d+)\)\%([^\x05]*)/;
 
-var boot_string_1 = "KIDTECH (C) 1991\n\
+var boot_string = "%(5000x1)%\
+KIDTECH (C) 1991\n\
 BIOS Date DATE Ver: 00.00.01\n\
 CPU: Intel(R) CPU 330 @ 40 MHz\n\
-Speed: 40 MHz\n\n";
-
-const boot_string_2 = "Memory Test: 128420 OK\n\n";
-
-const boot_string_3 = "PMU ROM Version 2055\n\
+Speed: 40 MHz\n\
+\n\
+%(8300x1)%\
+Memory Test: %(8400x1)%128420 OK\n\
+\n\
+%(10000x1)%\
+PMU ROM Version 2055\n\
 NVMM ROM Version: 6.027.44\n\
-Initializing USB Controllers.. %(700x1)%Done.\n\n";
+Initializing USB Controllers.. %(10700x1)%Done.\n\
+\n\
+%(11000x1)%\
+128MB OK\n\n";
 
-const boot_string_4 = "128MB OK\n\n";
-
-const splash_string_1 = "%(0x3)%\
+const splash_string = "%(0x3)%\
 ███████████████████████████████████████████████████████████\n\
 ███████████████████████████████████████████████████████████\n\
 ███████████████████████████████████████████████████████████\n\
@@ -44,40 +48,29 @@ window.addEventListener('load', function () {
 	var date = new Date();
 	var dateString = date.toLocaleString();
                         
-	boot_string_1 = boot_string_1.replace("DATE", dateString);
+	boot_string = boot_string.replace("DATE", dateString);
 })
 
 function startup() {
 	if (on == true) { return }
-	
 	on = true
 	
 	let startupAudio = new Audio('startup.mp3');
 	startupAudio.volume = 0.4;
-	
 	startupAudio.play();
 	
 	$("#led-image").toggle()
 	
+	clearScreen();
+	presentMessage(boot_string);
+
 	setTimeout(function() {
 		playIdleAudio()
 	}, 10700);
-	setTimeout(function() {
-		clearScreen();
-        presentMessage(boot_string_1);
-	}, 5000);
-	setTimeout(function() {
-        presentMessage(boot_string_2);
-	}, 8300);
-	setTimeout(function() {
-        presentMessage(boot_string_3);
-	}, 10000);
-	setTimeout(function() {
-        presentMessage(boot_string_4);
-	}, 11000);
+
 	setTimeout(function() {
         clearScreen();
-        presentMessage(splash_string_1)
+        presentMessage(splash_string)
 	}, 13000);
 }
 
@@ -85,8 +78,7 @@ function presentMessage(message) {
     let splits = message.split("%(");
         
     for (let split of splits) {
-        const regex = /(\d+)x(\d+)\)\%([^\x05]*)/;
-        let matches = split.match(regex);
+        let matches = split.match(regexMessage);
         
         if (matches == null) {
             presentString(split);
@@ -125,41 +117,16 @@ function calculateScreenSize() {
 }
 
 function playIdleAudio() {
-	if(window.webkitAudioContext) {
-		audioCtx = new window.webkitAudioContext();
-	} else {
-		audioCtx = new window.AudioContext();
-	}
-	
-	let source = audioCtx.createBufferSource();
-	request = new XMLHttpRequest();
-
-	request.open('GET', 'idle1.mp3', true);
-
-	request.responseType = 'arraybuffer';
-
-	request.onload = function() {
-		var audioData = request.response;
-
-		audioCtx.decodeAudioData(audioData, function(buffer) {
-			myBuffer = buffer;
-			source.buffer = myBuffer;
-			source.loop = true;
-			
-			let gainNode = audioCtx.createGain();
-			gainNode.gain.value = 0.4;
-			
-			gainNode.connect(audioCtx.destination);
-			source.connect(gainNode);
-		},
-
-		function(e){"Error with decoding audio data" + e.err});
-
+	var idleAudio = new Audio('idle1.mp3')
+	idleAudio.volume = 0.4;
+	idleAudio.addEventListener('timeupdate', function(){
+		var buffer = .44
+		if(this.currentTime > this.duration - buffer){
+			this.currentTime = 0
+			this.play()
 		}
-
-	request.send();
-	
-	source.start(0);
+	});
+	idleAudio.play();
 }
 
 $("body").click(function() {
