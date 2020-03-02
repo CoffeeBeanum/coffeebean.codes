@@ -6,6 +6,7 @@
 body, html {
 	height:100%;
 	margin: 0;
+    overflow: hidden;
 }
 
 body {
@@ -17,9 +18,10 @@ body {
 
 #led-image {
 	position: relative;
-	float: right;
-    right: 88px;
-    top: 278px;
+    float: right;
+    top: 290px;
+    right: 75px;
+    transform: translateY(-50%) translateX(-50%);
 }
 
 #screen-text {
@@ -32,7 +34,7 @@ body {
     color: white;
     font-family: IBMVGA8, monospace;
     font-size: 16px;
-	white-space: nowrap;
+    white-space: pre-wrap;
 }
 
 .screen-container {
@@ -52,5 +54,5 @@ body {
 }
 
 .glow {
-	text-shadow: white 0 0 4px;
+	text-shadow: white 0 0 10px;
 }

@@ -13,27 +13,28 @@ Initializing USB Controllers.. %(700x1)%Done.\n\n";
 
 const boot_string_4 = "128MB OK\n\n";
 
-const splash_string_1 = "%(0x5)%.´,.,,.,´.,´.,´´,.´,.´,.,,.,´.,´.,´´,.´,.´,.,,.,´.,´.,´´,.´\n\
-,´´,´´,´^~'^^'^^'^^'~,´,´´,´´,.´,.´´.,,'~^'~^^~'^~'^,.´´.,´\n\
-,´´,´´,´¶NNNNNNNNNNNN;´,´´,´´,´´´´´´´´íNNNNNNNNNNNNN´´´´´´´\n\
-.´,»NNNNNNNNNNNNNNNNNNN*,,.,´.,´.,´´*NNNNNN&=====%NNNNNN*.´\n\
-´%NNNNNNNNNNNNNNNNNNNNNI´´´´´´´´´´´´=NNNN===========NNNNNNo\n\
-,oNNNNNNNNNNNNNNNNNNNNNI´´,.´,.´,.,,=Næ======@N@======æNNNo\n\
-.%NNNNNNNNNNNNNNNNNNNNN*´´.,´.,´´,´´*NNNN===========NNNNNNX\n\
-´´´?NNNNNNNNNNNNNNNNN/´´´´´íNNNN;,´´,´íNNNN&=====%NNNNNN=´´\n\
-,´.',,',¶NNNNNNNNNNNN;.,´´,~NNNN/.,,.,;NNNN@@@@@@@NN'´''´,´\n\
-´´´´´´´´;/;;/;//?NN//'´´´»@§NNNN§Ñ?´´´,;/NN*;;/;;/;;´´´´´´´\n\
-.´,.,,.,´.,´»Xooo*I'.´,.,*NNNNNNNN*´,.´,.II%XXo=´.,´.,´´,.´\n\
-,´´,´´,´=*'´?£££%,´´,´´,´=NNNNNNNNI´´,´´,´´%£££=´^==,´´´´,´\n\
-,´´,´´,´¶N*í^´´´´´´´,´´,´»§§§§§§§§?´´´´´,´´,´´,´´;NN;í,´´´´\n\
-.´,.,,´,¶NNNI'´´'.´,.´,.,,.,´.,´.,´´,.´,.´,.,,´,,íNNNNí´,.´\n\
-´´´?NNNNNN;.%NNNÉ´´´´´´´´´´´´´´´´´´´´´´´´´´´´XNNNNNNNNNN=´´\n\
-,´.,´´,.¶N;.%N£.^NNNNNNNNNNNNNNNNNNNNNNNNNNNN=.*NNNN,.,,.,´\n\
-´´,´´´´,´´@NNN£......@N*...~NN´.....=N§....§N=.*NÑ,´´,´´,´´\n\
-´´´´´´´´´´,´oNNNÉ....@N*...~NN´.....=N§....§NNNX´´,´´,´´,´´\n\
-,´.,´´,.´,.´,.,,^NNNNNN*...~NN´.....=N§..NNNN*,.´,.´,.,,.,´\n\
-´´´´´´´´´´´´´´´´´´´´´ÑNNNNNNNNNNNNNNNNNNN´´´´´´´´´´´´´´´´´´\n\
-.´,.,,.,´.,´.,´´,.´,.^í^~~^í~^í~^í~~í^~í^´,.,,.,´.,´.,´´,.´";
+const splash_string_1 = "%(0x3)%\
+███████████████████████████████████████████████████████████\n\
+███████████████████████████████████████████████████████████\n\
+███████████████████████████████████████████████████████████\n\
+███████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███████\n\
+███████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███████\n\
+███████▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓███████\n\
+███████▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓███████\n\
+███████▓▓▓▓▓▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▓▓▓▓▓███████\n\
+███████▓▓▓▓▓▒▒▒▒░░█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█░░▒▒▒▒▓▓▓▓▓███████\n\
+███████▓▓▓▓▓▒▒▒▒░░█      = DEMO =       █░░▒▒▒▒▓▓▓▓▓███████\n\
+███████▓▓▓▓▓▒▒▒▒░░█ THERES NOTHING HERE █░░▒▒▒▒▓▓▓▓▓███████\n\
+███████▓▓▓▓▓▒▒▒▒░░█        YET.         █░░▒▒▒▒▓▓▓▓▓███████\n\
+███████▓▓▓▓▓▒▒▒▒░░█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█░░▒▒▒▒▓▓▓▓▓███████\n\
+███████▓▓▓▓▓▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▓▓▓▓▓███████\n\
+███████▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓███████\n\
+███████▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓███████\n\
+███████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███████\n\
+███████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███████\n\
+███████████████████████████████████████████████████████████\n\
+███████████████████████████████████████████████████████████\n\
+███████████████████████████████████████████████████████████";
 
 var on = false
 
@@ -74,8 +75,8 @@ function startup() {
         presentMessage(boot_string_4);
 	}, 11000);
 	setTimeout(function() {
-		clearScreen();
-       presentMessage(splash_string_1)
+        clearScreen();
+        presentMessage(splash_string_1)
 	}, 13000);
 }
 
@@ -98,11 +99,7 @@ function presentString(string, delay = 0, modifier = 1) {
     for (let index = 0; index < string.length; index++) {
         setTimeout(function() {
             let character = string.charAt(index);
-            if (character == "\n") {
-                $("#screen-text").append("<br>");
-            } else {
-                $("#screen-text").append(character);
-            }
+            $("#screen-text").append(htmlEncode(character));
         }, index * modifier + delay);
     }
 }
@@ -115,9 +112,17 @@ function calculateScreenSize() {
 	if ($('.screen-container').width() < 800) {
 		$('#screen-text').css("font-size", "2vw");
 		$('#screen-text').css("height", "75vw");
+        $('#led-image').css("width", "3vw");
+        
+        let widthRatio = $('.screen-container').width() / 800;
+        let rightMargin = 75 * widthRatio;
+        
+        $('#led-image').css("right", rightMargin + "px");
 	} else {
 		$('#screen-text').css("font-size", "16px");
 		$('#screen-text').css("height", "600px");
+        $('#led-image').css("width", "25px");
+        $('#led-image').css("right", "75px");
 	}
 }
 
@@ -167,3 +172,9 @@ $( window ).resize(function() {
 	calculateScreenSize();
 });
 
+function htmlEncode(string) {
+  var element = document.createElement("div");
+  element.innerText = element.textContent = string;
+  string = element.innerHTML;
+  return string;
+}
