@@ -1,23 +1,26 @@
-const regexMessage = /(\d+)x(\d+)\)\%([^\x05]*)/;
+const regexTiming = /(\d+)\|(\d+)\)\%([^\x05]*)/;
 
-var boot_string = "%(5000x1)%\
+var boot_string = "%(5000|1)%\
 KIDTECH (C) 1991\n\
-BIOS Date DATE Ver: 00.00.01\n\
+BIOS Date DATE Ver: 00.00.03\n\
 CPU: Intel(R) CPU 330 @ 40 MHz\n\
 Speed: 40 MHz\n\
 \n\
-%(8300x1)%\
-Memory Test: %(8400x1)%128420 OK\n\
+%(8300|1)%\
+Memory Test: %(8400|1)%128420 OK\n\
 \n\
-%(10000x1)%\
+%(10000|1)%\
 PMU ROM Version 2055\n\
 NVMM ROM Version: 6.027.44\n\
-Initializing USB Controllers.. %(10700x1)%Done.\n\
+Initializing USB Controllers.. %(10700|1)%Done.\n\
 \n\
-%(11000x1)%\
-128MB OK\n\n";
+%(11000|1)%\
+128MB OK\n\
+\n\
+%(12000|1)%\
+Reading A:%(12100|50)%......%(12500|500)%...%(16000|10)%......................................";
 
-const splash_string = "%(0x3)%\
+const splash_string = "%(0|3)%\
 ███████████████████████████████████████████████████████████\n\
 ███████████████████████████████████████████████████████████\n\
 ███████████████████████████████████████████████████████████\n\
@@ -40,13 +43,16 @@ const splash_string = "%(0x3)%\
 ███████████████████████████████████████████████████████████\n\
 ███████████████████████████████████████████████████████████";
 
+const startupAudio = new Audio('startup.mp3');
+const idleAudio = new Audio('idle1.mp3')
+
 var on = false
 
 window.addEventListener('load', function () {
 	calculateScreenSize();
 	
-	var date = new Date();
-	var dateString = date.toLocaleString();
+	let date = new Date();
+	let dateString = date.toLocaleString();
                         
 	boot_string = boot_string.replace("DATE", dateString);
 })
@@ -54,45 +60,43 @@ window.addEventListener('load', function () {
 function startup() {
 	if (on == true) { return }
 	on = true
-	
-	let startupAudio = new Audio('startup.mp3');
-	startupAudio.volume = 0.4;
-	startupAudio.play();
+
+	playStartupAudio();
 	
 	$("#led-image").toggle()
 	
 	clearScreen();
-	presentMessage(boot_string);
 
-	setTimeout(function() {
-		playIdleAudio()
-	}, 10700);
-
-	setTimeout(function() {
-        clearScreen();
-        presentMessage(splash_string)
-	}, 13000);
+	presentMessage(boot_string, function() {
+		clearScreen();
+        presentMessage(splash_string);
+	});
 }
 
-function presentMessage(message) {
+function presentMessage(message, callback) {
     let splits = message.split("%(");
         
-    for (let split of splits) {
-        let matches = split.match(regexMessage);
-        
-        if (matches == null) {
-            presentString(split);
+    for (let [index, split] of splits.entries()) {
+		let matches = split.match(regexTiming);
+
+		let completion = callback;
+		if (index < splits.length - 1) { completion = null; }
+
+        if (matches != null) {
+			presentString(completion, matches[3], parseInt(matches[1]), parseInt(matches[2]));
         } else {
-            presentString(matches[3], parseInt(matches[1]), parseInt(matches[2]));
+            presentString(completion, split);
         }
     }
 }
 
-function presentString(string, delay = 0, modifier = 1) {
+function presentString(callback, string, delay = 0, modifier = 1) {
     for (let index = 0; index < string.length; index++) {
         setTimeout(function() {
             let character = string.charAt(index);
-            $("#screen-text").append(htmlEncode(character));
+			$("#screen-text").html($("#screen-text").html() + character);
+
+			if (index == string.length - 1) { callback(); }
         }, index * modifier + delay);
     }
 }
@@ -116,11 +120,21 @@ function calculateScreenSize() {
 	}
 }
 
+function playStartupAudio() {
+	startupAudio.volume = 0.4;
+	startupAudio.addEventListener('timeupdate', function(){
+		let buffer = .44
+		if(this.currentTime > this.duration - buffer){
+			playIdleAudio();
+		}
+	});
+	startupAudio.play();
+}
+
 function playIdleAudio() {
-	var idleAudio = new Audio('idle1.mp3')
 	idleAudio.volume = 0.4;
 	idleAudio.addEventListener('timeupdate', function(){
-		var buffer = .44
+		let buffer = .44
 		if(this.currentTime > this.duration - buffer){
 			this.currentTime = 0
 			this.play()
@@ -136,10 +150,3 @@ $("body").click(function() {
 $( window ).resize(function() {
 	calculateScreenSize();
 });
-
-function htmlEncode(string) {
-  var element = document.createElement("div");
-  element.innerText = element.textContent = string;
-  string = element.innerHTML;
-  return string;
-}
