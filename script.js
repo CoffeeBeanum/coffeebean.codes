@@ -6,19 +6,19 @@ BIOS Date DATE Ver: 00.00.03\n\
 CPU: Intel(R) CPU 330 @ 40 MHz\n\
 Speed: 40 MHz\n\
 \n\
-%(8300|1)%\
-Memory Test: %(8400|1)%128420 OK\n\
+%(3300|1)%\
+Memory Test: %(100|1)%128420 OK\n\
 \n\
-%(10000|1)%\
+%(1600|1)%\
 PMU ROM Version 2055\n\
 NVMM ROM Version: 6.027.44\n\
-Initializing USB Controllers.. %(10700|1)%Done.\n\
+Initializing USB Controllers.. %(700|1)%Done.\n\
 \n\
-%(11000|1)%\
+%(300|1)%\
 128MB OK\n\
 \n\
-%(12000|1)%\
-Reading A:%(12100|50)%......%(12500|500)%...%(16000|10)%......................................";
+%(1000|1)%\
+Reading A:%(100|50)%......%(400|500)%...%(3000|20)%..........%(200|5)%............................";
 
 const splash_string = "%(0|3)%\
 ███████████████████████████████████████████████████████████\n\
@@ -75,7 +75,9 @@ function startup() {
 
 function presentMessage(message, callback) {
     let splits = message.split("%(");
-        
+		
+	let accumulatedDelay = 0;
+
     for (let [index, split] of splits.entries()) {
 		let matches = split.match(regexTiming);
 
@@ -83,9 +85,11 @@ function presentMessage(message, callback) {
 		if (index < splits.length - 1) { completion = null; }
 
         if (matches != null) {
-			presentString(completion, matches[3], parseInt(matches[1]), parseInt(matches[2]));
+			presentString(completion, matches[3], accumulatedDelay + parseInt(matches[1]), parseInt(matches[2]));
+			accumulatedDelay += parseInt(matches[1]) + matches[3].length * parseInt(matches[2]);
         } else {
-            presentString(completion, split);
+			presentString(completion, split);
+			accumulatedDelay += split.length;
         }
     }
 }
