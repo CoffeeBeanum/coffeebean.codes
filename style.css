@@ -16,6 +16,16 @@ body {
 	align-items: center;
 }
 
+a {
+	color: white;
+}
+
+a::selection {
+	background-color: white;
+	color: black;
+	text-shadow: none;
+}
+
 #screen-container {
 	position: relative;
 	width: 800px;

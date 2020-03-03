@@ -43,6 +43,29 @@ const splash_string = "%(0|3)%\
 ███████████████████████████████████████████████████████████\n\
 ███████████████████████████████████████████████████████████";
 
+const library_string = "%(0|3)%\
+\n\
+    ██╗     ██╗██████╗ ██████╗  █████╗ ██████╗ ██╗   ██╗   \n\
+    ██║     ██║██╔══██╗██╔══██╗██╔══██╗██╔══██╗╚██╗ ██╔╝   \n\
+    ██║     ██║██████╔╝██████╔╝███████║██████╔╝ ╚████╔╝    \n\
+    ██║     ██║██╔══██╗██╔══██╗██╔══██║██╔══██╗  ╚██╔╝     \n\
+    ███████╗██║██████╔╝██║  ██║██║  ██║██║  ██║   ██║      \n\
+    ╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝      \n\
+\n\
+-=[ Epic pro stuff ]=0ms=-- - ·\n\
+\n\
+  ERROR: Unexpected EOF.\n\
+\n\
+-=[ Random stuff ]==17ms=-- - ·\n\
+\n\
+  > <a href='random/vocalizer'>Vocalizer</a> - cutting-edge voice synthesizer.\n\
+\n\
+  > <a href='random/connor'>Detroit run simulator</a> - it had to be done.\n\
+\n\
+██████████████████████████████████████████████▀▀▀▀▀▀▀▀▀▀▀▀█\n\
+██████████████████████████████████████████████  SHUTDOWN  █\n\
+██████████████████████████████████████████████▄▄▄▄▄▄▄▄▄▄▄▄█";
+
 const startupAudio = new Audio('startup.mp3');
 const idleAudio = new Audio('idle1.mp3')
 
@@ -50,16 +73,15 @@ var on = false
 
 window.addEventListener('load', function () {
 	calculateScreenSize();
-	
-	let date = new Date();
-	let dateString = date.toLocaleString();
-                        
-	boot_string = boot_string.replace("DATE", dateString);
 })
 
 function startup() {
 	if (on == true) { return }
 	on = true
+
+	let date = new Date();
+	let dateString = date.toLocaleString();    
+	boot_string = boot_string.replace("DATE", dateString);
 
 	playStartupAudio();
 	
@@ -69,7 +91,7 @@ function startup() {
 
 	presentMessage(boot_string, function() {
 		clearScreen();
-        presentMessage(splash_string);
+        presentMessage(library_string);
 	});
 }
 
@@ -98,15 +120,40 @@ function presentString(callback, string, delay = 0, modifier = 1) {
     for (let index = 0; index < string.length; index++) {
         setTimeout(function() {
             let character = string.charAt(index);
-			$("#screen-text").html($("#screen-text").html() + character);
-
-			if (index == string.length - 1) { callback(); }
+            $("#screen-text").html($("#screen-text").html() + character);
+ 
+            if ($("#screen-text").html().substr($("#screen-text").html().length - 10) === '&lt;/a&gt;') {
+                $("#screen-text").html(convertHTMLEntity($("#screen-text").html()));
+            }
+ 
+            if (callback != null && index == string.length - 1) { callback(); }
         }, index * modifier + delay);
     }
+}
+ 
+function convertHTMLEntity(text){
+    const span = document.createElement('span');
+ 
+    return text
+        .replace(/&[#A-Za-z0-9]+;/gi, (entity,position,text)=> {
+            span.innerHTML = entity;
+            return span.innerText;
+        });
 }
 
 function clearScreen() {
     $("#screen-text").empty();
+}
+
+function clearLine(numberOfLines = 1) {
+	let linesRemoved = 0;
+	while (linesRemoved < numberOfLines) {
+		while ($("#screen-text").html()[0] != "\n") {
+			$("#screen-text").html($("#screen-text").html().substring(1));
+		}
+		$("#screen-text").html($("#screen-text").html().substring(1));
+		linesRemoved ++;
+	}
 }
 
 function calculateScreenSize() {
@@ -126,9 +173,9 @@ function calculateScreenSize() {
 
 function playStartupAudio() {
 	startupAudio.volume = 0.4;
-	startupAudio.addEventListener('timeupdate', function(){
+	startupAudio.addEventListener('timeupdate', function() {
 		let buffer = .44
-		if(this.currentTime > this.duration - buffer){
+		if (this.currentTime > this.duration - buffer) {
 			playIdleAudio();
 		}
 	});
@@ -137,9 +184,9 @@ function playStartupAudio() {
 
 function playIdleAudio() {
 	idleAudio.volume = 0.4;
-	idleAudio.addEventListener('timeupdate', function(){
+	idleAudio.addEventListener('timeupdate', function() { 
 		let buffer = .44
-		if(this.currentTime > this.duration - buffer){
+		if( this.currentTime > this.duration - buffer) {
 			this.currentTime = 0
 			this.play()
 		}
@@ -151,6 +198,6 @@ $("body").click(function() {
 	startup();
 });
 
-$( window ).resize(function() {
+$(window).resize(function() {
 	calculateScreenSize();
 });
