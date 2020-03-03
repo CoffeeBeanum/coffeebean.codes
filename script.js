@@ -102,15 +102,15 @@ function clearScreen() {
 }
 
 function calculateScreenSize() {
-	if ($('.screen-container').width() < 800) {
-        let widthRatio = $('.screen-container').width() / 800;
+	if ($('#screen-container').width() < 800) {
+        let widthRatio = $('#screen-container').width() / 800;
 		let rightMargin = 75 * widthRatio;
 		
-		$('.screen-container').css("height", 583 * widthRatio + "px");
+		$('#screen-container').css("height", 583 * widthRatio + "px");
 		$('#screen-text').css("transform", "scale(" + widthRatio + ")");
 		$('#led-image').css("width", 25 * widthRatio + "px");
 	} else {
-		$('.screen-container').css("height", "583px");
+		$('#screen-container').css("height", "583px");
 		$('#screen-text').css("transform", "scale(1)");
         $('#led-image').css("width", "25px");
 	}
