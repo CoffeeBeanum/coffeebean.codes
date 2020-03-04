@@ -15,10 +15,33 @@ NVMM ROM Version: 6.027.44\n\
 Initializing USB Controllers.. %(700|1)%Done.\n\
 \n\
 %(300|1)%\
-128MB OK\n\
+128MB OK\
+%(500|1)% ";
+
+const system_string = "\
+A:\\>dir\n\
+ Volume in drive A has no label\n\
+ Directory of A:\\\n\
 \n\
-%(1000|1)%\
-Reading A:%(100|50)%......%(400|500)%...%(3000|20)%..........%(200|5)%............................";
+2019-12-10  10:32 AM    <DIR>   gmod\n\
+2020-03-04  06:02 PM      8,224 homelib.exe\n\
+2019-12-10  10:32 AM    215,526 ibm_monitor.png\n\
+2019-12-10  10:32 AM     28,814 idle1.mp3\n\
+2019-12-10  10:32 AM     19,889 idle2.mp3\n\
+2019-12-10  10:32 AM     55,900 idle3.mp3\n\
+2020-03-04  03:12 PM        584 index.html\n\
+2019-12-10  10:32 AM        584 led.png\n\
+2019-12-10  10:32 AM     70,956 PxPlus_IBM_VGA8.ttf\n\
+2019-12-24  09:46 AM    <DIR>   random\n\
+2020-03-04  05:51 PM     10,635 script.js\n\
+2019-12-10  10:32 AM    235,632 startup.mp3\n\
+2020-03-04  05:20 PM      1,522 style.css\n\
+             10 File(s) 640,046 bytes\n\
+\n\
+%(300|1)%\
+A:\\>homelib\n\
+%(300|1)%\
+Loading Library:%(100|50)%......%(400|500)%...%(3000|20)%..........%(200|5)%........................";
 
 const splash_string = "%(0|3)%\
 ███████████████████████████████████████████████████████████\n\
@@ -52,18 +75,18 @@ const library_string = "%(0|3)%\
     ███████╗██║██████╔╝██║  ██║██║  ██║██║  ██║   ██║      \n\
     ╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝      \n\
 \n\
--=[ Epic pro stuff ]=0ms=-- - ·\n\
+-=[ Epic pro stuff ]=14ms=-- - ·\n\
 \n\
   ERROR: Unexpected EOF.\n\
 \n\
--=[ Random stuff ]==17ms=-- - ·\n\
+-=[ Random stuff ]==273ms=-- - ·\n\
 \n\
-  > %(0|0)%<a href='random/vocalizer' target='_blank'>Vocalizer</a>%(100|3)% - cutting-edge voice synthesizer.\n\
+  > %(0|0)%<a href='random/vocalizer' target='_blank'>Vocalizer</a>%(10|3)% - cutting-edge voice synthesizer.\n\
 \n\
-  > %(0|0)%<a href='random/connor' target='_blank'>Detroit running simulator</a>%(100|3)% - it had to be done.\n\
+  > %(0|0)%<a href='random/connor' target='_blank'>Detroit running simulator</a>%(10|3)% - it had to be done.\n\
 \n\
 ██████████████████████████████████████████████▀▀▀▀▀▀▀▀▀▀▀▀█\n\
-██████████████████████████████████████████████  %(0|0)%<a onclick='shutdown()' href='javascript:;'>SHUTDOWN</a>%(100|3)%  █\n\
+██████████████████████████████████████████████  %(0|0)%<a onclick='shutdown()' href='javascript:;'>SHUTDOWN</a>%(10|3)%  █\n\
 ██████████████████████████████████████████████▄▄▄▄▄▄▄▄▄▄▄▄█";
 
 const shutdown_string = "\n\n\n\n\n\n\n\n\n\
@@ -108,7 +131,11 @@ function startup() {
 
 	presentMessage(processed_boot_string, function() {
 		clearScreen();
-        presentMessage(library_string);
+        presentMessage(system_string, function() {
+			clearLine(23, 50, function() {
+				presentMessage(library_string);
+			});
+		});
 	});
 }
 
