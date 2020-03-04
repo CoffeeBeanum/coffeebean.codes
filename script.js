@@ -58,20 +58,33 @@ const library_string = "%(0|3)%\
 \n\
 -=[ Random stuff ]==17ms=-- - ·\n\
 \n\
-  > <a href='random/vocalizer' target='_blank'>Vocalizer</a> - cutting-edge voice synthesizer.\n\
+  > %(0|0)%<a href='random/vocalizer' target='_blank'>Vocalizer</a>%(100|3)% - cutting-edge voice synthesizer.\n\
 \n\
-  > <a href='random/connor' target='_blank'>Detroit running simulator</a> - it had to be done.\n\
+  > %(0|0)%<a href='random/connor' target='_blank'>Detroit running simulator</a>%(100|3)% - it had to be done.\n\
 \n\
 ██████████████████████████████████████████████▀▀▀▀▀▀▀▀▀▀▀▀█\n\
-██████████████████████████████████████████████  <a onclick='shutdown()' href='javascript:;'>SHUTDOWN</a>  █\n\
+██████████████████████████████████████████████  %(0|0)%<a onclick='shutdown()' href='javascript:;'>SHUTDOWN</a>%(100|3)%  █\n\
 ██████████████████████████████████████████████▄▄▄▄▄▄▄▄▄▄▄▄█";
 
 const shutdown_string = "\n\n\n\n\n\n\n\n\n\
                 IT'S NOW SAFE TO TURN OFF\n\
                       YOUR COMPUTER";
 
-const startupAudio = new Audio('startup.mp3');
-const idleAudio = new Audio('idle1.mp3')
+const startupAudio = new Howl({ 
+	src: ['startup.mp3'],
+	autoplay: false,
+	loop: false,
+	volume: 0.4,
+	onend: function() {
+		idleAudio.play();
+	}
+});
+const idleAudio = new Howl({
+	src: ['idle1.mp3'],
+	autoplay: false,
+	loop: true,
+	volume: 0.4
+});
 
 var on = false
 
@@ -87,7 +100,7 @@ function startup() {
 	let dateString = date.toLocaleString();    
 	let processed_boot_string = boot_string.replace("DATE", dateString);
 
-	playStartupAudio();
+	startupAudio.play();
 	
 	$("#led-image").toggle()
 	
@@ -195,29 +208,6 @@ function calculateScreenSize() {
 		$('#screen-text').css("transform", "scale(1)");
         $('#led-image').css("width", "25px");
 	}
-}
-
-function playStartupAudio() {
-	startupAudio.volume = 0.4;
-	startupAudio.addEventListener('timeupdate', function() {
-		let buffer = .44
-		if (this.currentTime > this.duration - buffer) {
-			playIdleAudio();
-		}
-	});
-	startupAudio.play();
-}
-
-function playIdleAudio() {
-	idleAudio.volume = 0.4;
-	idleAudio.addEventListener('timeupdate', function() { 
-		let buffer = .44
-		if( this.currentTime > this.duration - buffer) {
-			this.currentTime = 0
-			this.play()
-		}
-	});
-	idleAudio.play();
 }
 
 $("body").click(function() {
