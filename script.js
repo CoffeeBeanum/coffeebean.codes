@@ -1,6 +1,6 @@
 const regexTiming = /(\d+)\|(\d+)\)\%([^\x05]*)/;
 
-var boot_string = "%(5000|1)%\
+const boot_string = "%(5000|1)%\
 KIDTECH (C) 1991\n\
 BIOS Date DATE Ver: 00.00.03\n\
 CPU: Intel(R) CPU 330 @ 40 MHz\n\
@@ -58,13 +58,17 @@ const library_string = "%(0|3)%\
 \n\
 -=[ Random stuff ]==17ms=-- - ·\n\
 \n\
-  > <a href='random/vocalizer'>Vocalizer</a> - cutting-edge voice synthesizer.\n\
+  > <a href='random/vocalizer' target='_blank'>Vocalizer</a> - cutting-edge voice synthesizer.\n\
 \n\
-  > <a href='random/connor'>Detroit run simulator</a> - it had to be done.\n\
+  > <a href='random/connor' target='_blank'>Detroit running simulator</a> - it had to be done.\n\
 \n\
 ██████████████████████████████████████████████▀▀▀▀▀▀▀▀▀▀▀▀█\n\
-██████████████████████████████████████████████  SHUTDOWN  █\n\
+██████████████████████████████████████████████  <a onclick='shutdown()' href='javascript:;'>SHUTDOWN</a>  █\n\
 ██████████████████████████████████████████████▄▄▄▄▄▄▄▄▄▄▄▄█";
+
+const shutdown_string = "\n\n\n\n\n\n\n\n\n\
+                IT'S NOW SAFE TO TURN OFF\n\
+                      YOUR COMPUTER";
 
 const startupAudio = new Audio('startup.mp3');
 const idleAudio = new Audio('idle1.mp3')
@@ -81,7 +85,7 @@ function startup() {
 
 	let date = new Date();
 	let dateString = date.toLocaleString();    
-	boot_string = boot_string.replace("DATE", dateString);
+	let processed_boot_string = boot_string.replace("DATE", dateString);
 
 	playStartupAudio();
 	
@@ -89,9 +93,23 @@ function startup() {
 	
 	clearScreen();
 
-	presentMessage(boot_string, function() {
+	presentMessage(processed_boot_string, function() {
 		clearScreen();
         presentMessage(library_string);
+	});
+}
+
+function shutdown() {
+	clearLine(21, 70, function() {
+		presentMessage(shutdown_string);
+
+		setTimeout(function() {
+			clearScreen();
+			on = false;
+			$("#led-image").toggle()
+			startupAudio.pause();
+			idleAudio.pause();
+		}, 1500);
 	});
 }
 
@@ -145,14 +163,22 @@ function clearScreen() {
     $("#screen-text").empty();
 }
 
-function clearLine(numberOfLines = 1) {
-	let linesRemoved = 0;
-	while (linesRemoved < numberOfLines) {
-		while ($("#screen-text").html()[0] != "\n") {
+function clearLine(numberOfLines = 1, delay = 0, callback) {
+	let scheduledRemoval = 0;
+	while (scheduledRemoval < numberOfLines) {
+
+		let completion = callback;
+		if (scheduledRemoval < numberOfLines - 1) { completion = null; }
+
+		setTimeout(function() {
+			while ($("#screen-text").html().length > 1 && $("#screen-text").html()[0] != "\n") {
+				$("#screen-text").html($("#screen-text").html().substring(1));
+			}
 			$("#screen-text").html($("#screen-text").html().substring(1));
-		}
-		$("#screen-text").html($("#screen-text").html().substring(1));
-		linesRemoved ++;
+			if (completion != null) { completion(); }
+		}, delay * (scheduledRemoval + 1));
+
+		scheduledRemoval ++;
 	}
 }
 

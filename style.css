@@ -20,6 +20,13 @@ a {
 	color: white;
 }
 
+a:hover {
+	text-decoration: none;
+	background-color: white;
+	color: black;
+	text-shadow: none;
+}
+
 a::selection {
 	background-color: white;
 	color: black;
