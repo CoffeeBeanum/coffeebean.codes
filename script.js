@@ -23,20 +23,20 @@ A:\\>dir\n\
  Volume in drive A has no label\n\
  Directory of A:\\\n\
 \n\
+2020-03-05  12:31 AM      2,400 beep.mp3\n\
 2019-12-10  10:32 AM    <DIR>   gmod\n\
 2020-03-04  06:02 PM      7,244 homelib.exe\n\
 2019-12-10  10:32 AM    215,526 ibm_monitor.png\n\
-2019-12-10  10:32 AM     28,814 idle1.mp3\n\
-2019-12-10  10:32 AM     19,889 idle2.mp3\n\
-2019-12-10  10:32 AM     55,900 idle3.mp3\n\
-2020-03-04  03:12 PM        584 index.html\n\
+2020-03-05  11:58 AM    351,675 idle_loop.mp3\n\
+2020-03-05  09:38 AM        674 index.html\n\
 2019-12-10  10:32 AM        584 led.png\n\
 2019-12-10  10:32 AM     70,956 PxPlus_IBM_VGA8.ttf\n\
 2019-12-24  09:46 AM    <DIR>   random\n\
-2020-03-04  05:51 PM     10,635 script.js\n\
-2019-12-10  10:32 AM    235,632 startup.mp3\n\
+2020-03-05  06:05 PM      7,875 script.js\n\
+2020-03-05  12:14 PM     50,331 shutdown.mp3\n\
+2020-03-05  11:58 AM    263,316 startup.mp3\n\
 2020-03-04  05:20 PM      1,522 style.css\n\
-             10 File(s) 640,046 bytes\n\
+             10 File(s) 971,011 bytes\n\
 \n\
 %(300|1)%\
 A:\\>homelib\n\
