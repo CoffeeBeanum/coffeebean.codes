@@ -1,13 +1,13 @@
 const regexTiming = /(\d+)\|(\d+)\)\%([^\x05]*)/;
 
-const boot_string = "%(5000|1)%\
+const boot_string = "%(3000|1)%\
 KIDTECH (C) 1991\n\
 BIOS Date DATE Ver: 00.00.03\n\
 CPU: Intel(R) CPU 330 @ 40 MHz\n\
 Speed: 40 MHz\n\
 \n\
-%(3300|1)%\
-Memory Test: %(100|1)%128420 OK\n\
+%(2400|1)%\
+Memory Test: %(200|1)%128420 OK\n\
 \n\
 %(1600|1)%\
 PMU ROM Version 2055\n\
@@ -24,7 +24,7 @@ A:\\>dir\n\
  Directory of A:\\\n\
 \n\
 2019-12-10  10:32 AM    <DIR>   gmod\n\
-2020-03-04  06:02 PM      8,224 homelib.exe\n\
+2020-03-04  06:02 PM      7,244 homelib.exe\n\
 2019-12-10  10:32 AM    215,526 ibm_monitor.png\n\
 2019-12-10  10:32 AM     28,814 idle1.mp3\n\
 2019-12-10  10:32 AM     19,889 idle2.mp3\n\
@@ -41,30 +41,7 @@ A:\\>dir\n\
 %(300|1)%\
 A:\\>homelib\n\
 %(300|1)%\
-Loading Library:%(100|50)%......%(400|500)%...%(3000|20)%..........%(200|5)%........................";
-
-const splash_string = "%(0|3)%\
-███████████████████████████████████████████████████████████\n\
-███████████████████████████████████████████████████████████\n\
-███████████████████████████████████████████████████████████\n\
-███████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███████\n\
-███████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███████\n\
-███████▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓███████\n\
-███████▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓███████\n\
-███████▓▓▓▓▓▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▓▓▓▓▓███████\n\
-███████▓▓▓▓▓▒▒▒▒░░█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█░░▒▒▒▒▓▓▓▓▓███████\n\
-███████▓▓▓▓▓▒▒▒▒░░█      = DEMO =       █░░▒▒▒▒▓▓▓▓▓███████\n\
-███████▓▓▓▓▓▒▒▒▒░░█ THERES NOTHING HERE █░░▒▒▒▒▓▓▓▓▓███████\n\
-███████▓▓▓▓▓▒▒▒▒░░█        YET.         █░░▒▒▒▒▓▓▓▓▓███████\n\
-███████▓▓▓▓▓▒▒▒▒░░█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█░░▒▒▒▒▓▓▓▓▓███████\n\
-███████▓▓▓▓▓▒▒▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒▒▓▓▓▓▓███████\n\
-███████▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓███████\n\
-███████▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓███████\n\
-███████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███████\n\
-███████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓███████\n\
-███████████████████████████████████████████████████████████\n\
-███████████████████████████████████████████████████████████\n\
-███████████████████████████████████████████████████████████";
+Loading Library:%(100|50)%......%(400|500)%...%(2400|20)%..........%(200|5)%........................";
 
 const library_string = "%(0|3)%\
 \n\
@@ -93,6 +70,8 @@ const shutdown_string = "\n\n\n\n\n\n\n\n\n\
                 IT'S NOW SAFE TO TURN OFF\n\
                       YOUR COMPUTER";
 
+const restore_string = "%(600|1)%Restoring session%(100|60)%....%(100|20)%.........%(100|40)%........%(400|10)%....................."
+
 const startupAudio = new Howl({ 
 	src: ['startup.mp3'],
 	autoplay: false,
@@ -102,14 +81,27 @@ const startupAudio = new Howl({
 		idleAudio.play();
 	}
 });
+const shutdownAudio = new Howl({
+	src: ['shutdown_alt.mp3'],
+	autoplay: false,
+	loop: false,
+	volume: 0.4
+});
 const idleAudio = new Howl({
-	src: ['idle1.mp3'],
+	src: ['idle_loop.mp3'],
 	autoplay: false,
 	loop: true,
 	volume: 0.4
 });
 
-var on = false
+const beepAudio = new Howl({
+	src: ['beep.mp3'],
+	autoplay: false,
+	loop: false,
+	volume: 0.1
+});
+
+var on = false;
 
 window.addEventListener('load', function () {
 	calculateScreenSize();
@@ -117,38 +109,57 @@ window.addEventListener('load', function () {
 
 function startup() {
 	if (on == true) { return }
-	on = true
+	on = true;
+
+	let fastBoot = Cookies.get("fastBoot");
+
+	Cookies.set("fastBoot", "true", { expires: 1 });
 
 	let date = new Date();
 	let dateString = date.toLocaleString();    
 	let processed_boot_string = boot_string.replace("DATE", dateString);
 
+	shutdownAudio.stop();
 	startupAudio.play();
 	
-	$("#led-image").toggle()
+	$("#led-image").toggle();
 	
 	clearScreen();
 
-	presentMessage(processed_boot_string, function() {
-		clearScreen();
-        presentMessage(system_string, function() {
-			clearLine(23, 50, function() {
+	if (fastBoot == "true") {
+		presentMessage(restore_string, function() {
+			clearLine(1, 0, function() {
 				presentMessage(library_string);
 			});
 		});
-	});
+	} else {
+		setTimeout(function() { beepAudio.play(); }, 3000);
+
+		presentMessage(processed_boot_string, function() {
+			clearScreen();
+			presentMessage(system_string, function() {
+				clearLine(23, 50, function() {
+					presentMessage(library_string);
+				});
+			});
+		});
+	}
 }
 
 function shutdown() {
+	Cookies.set("fastBoot", "false", { expires: 1 });
+
+	startupAudio.stop();
+	idleAudio.stop();
+	shutdownAudio.play();
+
 	clearLine(21, 70, function() {
 		presentMessage(shutdown_string);
 
 		setTimeout(function() {
 			clearScreen();
 			on = false;
-			$("#led-image").toggle()
-			startupAudio.pause();
-			idleAudio.pause();
+			$("#led-image").toggle();
 		}, 1500);
 	});
 }
