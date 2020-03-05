@@ -33,7 +33,7 @@ A:\\>dir\n\
 2019-12-10  10:32 AM     70,956 PxPlus_IBM_VGA8.ttf\n\
 2019-12-24  09:46 AM    <DIR>   random\n\
 2020-03-05  06:05 PM      7,875 script.js\n\
-2020-03-05  12:14 PM     50,331 shutdown.mp3\n\
+2020-03-05  12:14 PM     64,389 shutdown.mp3\n\
 2020-03-05  11:58 AM    263,316 startup.mp3\n\
 2020-03-04  05:20 PM      1,522 style.css\n\
              10 File(s) 971,011 bytes\n\
@@ -82,7 +82,7 @@ const startupAudio = new Howl({
 	}
 });
 const shutdownAudio = new Howl({
-	src: ['shutdown_alt.mp3'],
+	src: ['shutdown.mp3'],
 	autoplay: false,
 	loop: false,
 	volume: 0.4
