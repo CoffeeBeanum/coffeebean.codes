@@ -66,7 +66,7 @@ const library_string = "%(0|3)%\
 ██████████████████████████████████████████████  %(0|0)%<a onclick='shutdown()' href='javascript:;'>SHUTDOWN</a>%(10|3)%  █\n\
 ██████████████████████████████████████████████▄▄▄▄▄▄▄▄▄▄▄▄█";
 
-const link_string = "%(0|0)%<a onclick='linkBack()' href='javascript:;'>← Back</a>                    Preview                    <a onclick='linkOriginal()' href='javascript:;'>Link ↑</a>"
+const link_string = "%(0|0)%<a onclick='linkBack()' href='javascript:;'>← Back</a>                    Preview         <a onclick='linkOriginal()' href='javascript:;'>Open in new tab ↑</a>"
 
 const shutdown_string = "\n\n\n\n\n\n\n\n\n\
                 IT'S NOW SAFE TO TURN OFF\n\
@@ -83,12 +83,14 @@ const startupAudio = new Howl({
 		idleAudio.play();
 	}
 });
+
 const shutdownAudio = new Howl({
 	src: ['shutdown.mp3'],
 	autoplay: false,
 	loop: false,
 	volume: 0.4
 });
+
 const idleAudio = new Howl({
 	src: ['idle_loop.mp3'],
 	autoplay: false,
