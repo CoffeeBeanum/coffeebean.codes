@@ -131,7 +131,7 @@ function startup() {
 	shutdownAudio.stop();
 	startupAudio.play();
 	
-	$("#led-image").toggle();
+	$("#led-image").fadeOut(100);
 	
 	clearScreen();
 
@@ -193,7 +193,7 @@ function shutdown() {
 		setTimeout(function() {
 			clearScreen();
 			on = false;
-			$("#led-image").toggle();
+			$("#led-image").fadeIn(100);
 		}, 1500);
 	});
 }
