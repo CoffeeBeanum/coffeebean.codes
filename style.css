@@ -36,10 +36,6 @@ a::selection {
 	position: relative;
 	width: 800px;
 	height: 583px;
-	background-position: center;
-	background-image: url('ibm_monitor.png');
-	background-size: contain;
-	background-repeat: no-repeat;
 }
 
 #led-image {
@@ -47,6 +43,15 @@ a::selection {
     float: right;
     top: 46%;
     right: 11%;
+}
+
+#display-image {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+    pointer-events: none;
+    user-select: none;
 }
 
 #screen-container {
