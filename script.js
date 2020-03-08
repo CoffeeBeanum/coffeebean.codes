@@ -137,7 +137,7 @@ function startup() {
 	
 	clearScreen();
 
-	if (fastBoot == "true") {
+	if (true) {
 		presentMessage(restore_string, function() {
 			clearLine(1, 0, function() {
 				presentMessage(library_string);
