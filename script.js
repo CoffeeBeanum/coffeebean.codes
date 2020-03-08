@@ -60,13 +60,13 @@ const library_string = "%(0|3)%\
 \n\
   > %(0|0)%<a onclick='linkProject(0)' href='javascript:;'>Vocalizer</a>%(10|3)% - cutting-edge voice synthesizer.\n\
 \n\
-  > %(0|0)%<a href='random/connor' target='_blank'>Detroit running simulator</a>%(10|3)% - it had to be done.\n\
+  > %(0|0)%<a onclick='linkProject(1)' href='javascript:;'>Detroit running simulator</a>%(10|3)% - it had to be done.\n\
 \n\
 ██████████████████████████████████████████████▀▀▀▀▀▀▀▀▀▀▀▀█\n\
 ██████████████████████████████████████████████  %(0|0)%<a onclick='shutdown()' href='javascript:;'>SHUTDOWN</a>%(10|3)%  █\n\
 ██████████████████████████████████████████████▄▄▄▄▄▄▄▄▄▄▄▄█";
 
-const link_string = "<a onclick='linkBack()' href='javascript:;'>← Back</a>                                               <a onclick='linkOriginal()' href='javascript:;'>Link ↑</a>"
+const link_string = "%(0|0)%<a onclick='linkBack()' href='javascript:;'>← Back</a>                    Preview                    <a onclick='linkOriginal()' href='javascript:;'>Link ↑</a>"
 
 const shutdown_string = "\n\n\n\n\n\n\n\n\n\
                 IT'S NOW SAFE TO TURN OFF\n\
@@ -103,7 +103,14 @@ const beepAudio = new Howl({
 	volume: 0.1
 });
 
+const projectLinks = [
+	"random/vocalizer",
+	"random/connor"
+];
+
 var on = false;
+
+var currentProjectIndex = 0;
 
 window.addEventListener('load', function () {
 	calculateScreenSize();
@@ -140,7 +147,7 @@ function startup() {
 		presentMessage(processed_boot_string, function() {
 			clearScreen();
 			presentMessage(system_string, function() {
-				clearLine(23, 50, function() {
+				clearLine(21, 50, function() {
 					presentMessage(library_string);
 				});
 			});
@@ -152,10 +159,25 @@ function linkProject(index) {
 	clearLine(21, 70, function() {
 		$('#screen-text').css("height", "6%");
 		
+		currentProjectIndex = index;
+		
 		presentMessage(link_string);
 		
-		$('#screen-container').append("<object id='screen-embed' data='random/vocalizer/index.html'>");
+		$('#screen-container').append(`<object id='screen-embed' data='${projectLinks[index]}/index.html'>`);
 	});
+}
+
+function linkBack() {
+	$('#screen-embed').remove();
+	
+	$('#screen-text').css("height", "100%");
+	
+	clearScreen();
+	presentMessage(library_string);
+}
+
+function linkOriginal() {
+	window.open(`${projectLinks[currentProjectIndex]}/index.html`, "_blank"); 
 }
 
 function shutdown() {
