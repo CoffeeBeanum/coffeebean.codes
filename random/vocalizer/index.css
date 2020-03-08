@@ -3,9 +3,14 @@
   src: url('PxPlus_IBM_VGA8.ttf')  format('truetype')
 }
 
+@font-face {
+  font-family: 'Odibee Sans';
+  src: url('Odibee_Sans.woff2')  format('truetype')
+}
+
 html,
 body {
-    height: 100%;
+    height: 98%;
 	background: #1c1c1c;
 	
 	display: flex;

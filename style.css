@@ -32,7 +32,7 @@ a::selection {
 	text-shadow: none;
 }
 
-#screen-container {
+#display-container {
 	position: relative;
 	width: 800px;
 	height: 583px;
@@ -49,20 +49,11 @@ a::selection {
     right: 11%;
 }
 
-#screen-text {
-	position: absolute;
-	top: 18%;
-	left: 16.4%;
-	width: 472px;
-	height: 336px;
-	transform-origin: top left;
-    color: white;
-    font-family: IBMVGA8, monospace;
-    font-size: 16px;
-	white-space: pre-wrap;
+#screen-container {
+    filter: saturate(0.7);
 }
 
-#screen-text::after {
+#screen-container::after {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -84,10 +75,34 @@ a::selection {
 	pointer-events: none;
 }
 
-#screen-container::selection, #screen-text::selection {
+#display-container::selection, #screen-text::selection {
 	background-color: white;
 	color: black;
 	text-shadow: none;
+}
+
+#screen-embed {
+	width: 100%;
+	height: 94%;
+}
+
+#screen-text {
+	width: 100%;
+	height: 100%;
+    color: white;
+    font-family: IBMVGA8, monospace;
+    font-size: 16px;
+	white-space: pre-wrap;
+	line-height: 1;
+}
+
+.screen-aligned {
+	position: absolute;
+	top: 18%;
+	left: 16.4%;
+	width: 472px;
+	height: 336px;
+	transform-origin: top left;
 }
 
 .glow {

@@ -58,13 +58,15 @@ const library_string = "%(0|3)%\
 \n\
 -=[ Random stuff ]==273ms=-- - ·\n\
 \n\
-  > %(0|0)%<a href='random/vocalizer' target='_blank'>Vocalizer</a>%(10|3)% - cutting-edge voice synthesizer.\n\
+  > %(0|0)%<a onclick='linkProject(0)' href='javascript:;'>Vocalizer</a>%(10|3)% - cutting-edge voice synthesizer.\n\
 \n\
   > %(0|0)%<a href='random/connor' target='_blank'>Detroit running simulator</a>%(10|3)% - it had to be done.\n\
 \n\
 ██████████████████████████████████████████████▀▀▀▀▀▀▀▀▀▀▀▀█\n\
 ██████████████████████████████████████████████  %(0|0)%<a onclick='shutdown()' href='javascript:;'>SHUTDOWN</a>%(10|3)%  █\n\
 ██████████████████████████████████████████████▄▄▄▄▄▄▄▄▄▄▄▄█";
+
+const link_string = "<a onclick='linkBack()' href='javascript:;'>← Back</a>                                               <a onclick='linkOriginal()' href='javascript:;'>Link ↑</a>"
 
 const shutdown_string = "\n\n\n\n\n\n\n\n\n\
                 IT'S NOW SAFE TO TURN OFF\n\
@@ -144,6 +146,16 @@ function startup() {
 			});
 		});
 	}
+}
+
+function linkProject(index) {
+	clearLine(21, 70, function() {
+		$('#screen-text').css("height", "6%");
+		
+		presentMessage(link_string);
+		
+		$('#screen-container').append("<object id='screen-embed' data='random/vocalizer/index.html'>");
+	});
 }
 
 function shutdown() {
@@ -234,16 +246,16 @@ function clearLine(numberOfLines = 1, delay = 0, callback) {
 }
 
 function calculateScreenSize() {
-	if ($('#screen-container').width() < 800) {
-        let widthRatio = $('#screen-container').width() / 800;
+	if ($('#display-container').width() < 800) {
+        let widthRatio = $('#display-container').width() / 800;
 		let rightMargin = 75 * widthRatio;
 		
-		$('#screen-container').css("height", 583 * widthRatio + "px");
-		$('#screen-text').css("transform", "scale(" + widthRatio + ")");
+		$('.screen-aligned').css("transform", "scale(" + widthRatio + ")");
+		$('#display-container').css("height", 583 * widthRatio + "px");
 		$('#led-image').css("width", 25 * widthRatio + "px");
 	} else {
-		$('#screen-container').css("height", "583px");
-		$('#screen-text').css("transform", "scale(1)");
+		$('.screen-aligned').css("transform", "scale(1)");
+		$('#display-container').css("height", "583px");
         $('#led-image').css("width", "25px");
 	}
 }
