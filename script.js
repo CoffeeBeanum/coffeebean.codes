@@ -52,15 +52,15 @@ const library_string = "%(0|3)%\
     ███████╗██║██████╔╝██║  ██║██║  ██║██║  ██║   ██║      \n\
     ╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝      \n\
 \n\
--=[ Epic pro stuff ]=14ms=-- - ·\n\
+-=[ Epic pro stuff ]=32ms=-- - ·\n\
 \n\
-  ERROR: Unexpected EOF.\n\
+  > %(0|0)%<a onclick='linkProject(0)' href='javascript:;'>TRION TX-200E</a>%(10|3)% - Hi-Fi stereo cassette player.\n\
 \n\
 -=[ Random stuff ]==273ms=-- - ·\n\
 \n\
-  > %(0|0)%<a onclick='linkProject(0)' href='javascript:;'>Vocalizer</a>%(10|3)% - cutting-edge voice synthesizer.\n\
+  > %(0|0)%<a onclick='linkProject(1)' href='javascript:;'>Vocalizer</a>%(10|3)% - cutting-edge voice synthesizer.\n\
 \n\
-  > %(0|0)%<a onclick='linkProject(1)' href='javascript:;'>Detroit running simulator</a>%(10|3)% - it had to be done.\n\
+  > %(0|0)%<a onclick='linkProject(2)' href='javascript:;'>Detroit running simulator</a>%(10|3)% - it had to be done.\n\
 \n\
 ██████████████████████████████████████████████▀▀▀▀▀▀▀▀▀▀▀▀█\n\
 ██████████████████████████████████████████████  %(0|0)%<a onclick='shutdown()' href='javascript:;'>SHUTDOWN</a>%(10|3)%  █\n\
@@ -106,6 +106,7 @@ const beepAudio = new Howl({
 });
 
 const projectLinks = [
+	"random/trion",
 	"random/vocalizer",
 	"random/connor"
 ];

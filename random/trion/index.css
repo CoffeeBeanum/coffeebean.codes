@@ -62,6 +62,10 @@ body {
 	-webkit-text-fill-color: transparent;
 }
 
+.text-glow {
+	text-shadow: #ffffffaa 0 0 10px;
+}
+
 .lcd-effect::before {
 	content: "";
 	position: absolute;
