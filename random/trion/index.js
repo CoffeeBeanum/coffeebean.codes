@@ -43,7 +43,7 @@ Player.prototype = {
 			playbackPlay.style.display = 'none';
 			playbackPause.style.display = 'none';
 			playbackLoading.style.display = 'block';
-			resetStatusAnimation();
+			removeStatusAnimation();
 
 			sound = data.howl = new Howl({
 				src: [data.file],
@@ -310,12 +310,15 @@ function prepareFFTDisplay() {
 	renderFrame();
 }
 
+function removeStatusAnimation() {
+	playbackState.style.animation = "none";
+}
+
 function resetStatusAnimation() {
 	playbackState.style.animation = "none";
 	playbackState.offsetHeight;
 	playbackState.style.animation = ""; 
 }
-
 
 function updatePlaylist() {
 	list.innerHTML = "";
