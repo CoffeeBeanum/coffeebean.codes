@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Retro-player</title>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+    <link href="index.css" rel="stylesheet">
+	
+</head>
+<body>
+
+<div id="container">
+    <div id="title-container">
+        <span id="title">Retro-player</span>
+        <span id="subtitle">0.1</span>
+    </div>
+	<div id="player-container">
+        <div id="file-browser-container">
+            <div id="list"></div>
+            <input id="file-input" type="file" accept="audio/*" />
+        </div>
+        <div id="viewport-container">
+            <canvas id="analyzerCanvas"></canvas>
+            <div id="trackTitle"></div>
+            <div id="duration"></div>
+            <div id="viewport-controls">
+                <div id="button-container">
+                    <div id="playBtn" class="control-button">▶️</div>
+                    <div id="pauseBtn" class="control-button">⏸️</div>
+                    <div id="loadingBtn" class="control-button">⏫</div>
+                </div>
+                <div id="progressContainer">
+                    <div id="progress"></div>
+                </div>
+                <div id="timer"></div>
+            </div>
+        </div>
+	</div>
+</div>
+
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="howler.core.min.js"></script>
+
+<script src="index.js"></script>
+
+</body>
+</html>
