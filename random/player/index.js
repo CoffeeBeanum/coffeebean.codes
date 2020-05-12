@@ -1,14 +1,12 @@
+var analyzer;
+
 // Cache references to DOM elements.
-var elms = ['playBtn', 'pauseBtn', 'loadingBtn', 'prevBtn', 'nextBtn', 'progressContainer', 'progress', 'timer', 'list', 'volume', 'trackTitle', 'analyzerCanvas'];
+var elms = ['playBtn', 'pauseBtn', 'prevBtn', 'nextBtn', 'progressContainer', 'progress', 'timer', 'list', 'fileInput', 'trackTitle', 'playbackState', 'playbackPlay', 'playbackPause', 'analyzerCanvas'];
 	elms.forEach(function(elm) {
 	window[elm] = document.getElementById(elm);
 });
 
-/**
- * Player class containing the state of our playlist and where we are in it.
- * Includes all methods for playing, skipping, updating the display, etc.
- * @param {Array} playlist Array of objects with playlist song details ({title, file, howl}).
- */
+// Player class containing the state of playlist.
 var Player = function(playlist) {
 	this.playlist = playlist;
 	this.index = 0;
@@ -29,10 +27,7 @@ var Player = function(playlist) {
 };
 
 Player.prototype = {
-	/**
-	 * Play a song in the playlist.
-	 * @param  {Number} index Index of the song in the playlist (leave empty to play the first or current).
-	 */
+	// Play a song in the playlist.
 	play: function(index) {
 		var self = this;
 		var sound;
@@ -46,36 +41,31 @@ Player.prototype = {
 			sound = data.howl;
 		} else {
 			sound = data.howl = new Howl({
-				src: ['./audio/' + data.file + '.mp3'],
+				src: [data.file],
+				format: ['mp3', 'ogg', 'wav'],
 
 				onplay: function() {
-					// Display the duration.
 					duration.innerHTML = self.formatTime(Math.round(sound.duration()));
 
-					// Start upating the progress of the track.
 					requestAnimationFrame(self.step.bind(self));
 
-					// Start the wave animation if we have already loaded
-					pauseBtn.style.display = 'block';
+					pauseBtn.disabled = false;
 				},
 
 				onload: function() {
-					// Start the wave animation.
-					loadingBtn.style.display = 'none';
-					pauseBtn.style.display = 'block';
+					pauseBtn.disabled = false;
+
+					if (self.index != index) { sound.stop(); }
 				},
 
 				onend: function() {
-					// Stop the wave animation.
 					self.skip(true);
 				},
 
 				onpause: function() {
-					// Stop the wave animation.
 				},
 
 				onstop: function() {
-					// Stop the wave animation.
 				}
 			});
 		}
@@ -88,14 +78,18 @@ Player.prototype = {
 		// Update the track display.
 		trackTitle.innerHTML = data.title;
 
+		playbackPlay.style.display = 'block';
+		playbackPause.style.display = 'none';
+		playbackState.style.display = 'block';
+		setTimeout(function(){ playbackState.style.display = 'none'; }, 3000);
+
 		// Show the pause button.
 		if (sound.state() === 'loaded') {
-			playBtn.style.display = 'none';
-			pauseBtn.style.display = 'block';
+			playBtn.disabled = true;
+			pauseBtn.disabled = false;
 		} else {
-			loadingBtn.style.display = 'block';
-			playBtn.style.display = 'none';
-			pauseBtn.style.display = 'none';
+			playBtn.disabled = true;
+			pauseBtn.disabled = true;
 		}
 
 		// Keep track of the index we are currently playing.
@@ -109,14 +103,20 @@ Player.prototype = {
 		var self = this;
 
 		// Get the Howl we want to manipulate.
-		var sound = self.playlist[self.index].howl;
+		var data = self.playlist[self.index]
+		var sound = data.howl;
 
-		// Puase the sound.
+		// Pause the sound.
 		sound.pause();
 
+		playbackPlay.style.display = 'none';
+		playbackPause.style.display = 'block';
+		playbackState.style.display = 'block';
+		setTimeout(function(){ playbackState.style.display = 'none'; }, 3000);
+
 		// Show the play button.
-		playBtn.style.display = 'block';
-		pauseBtn.style.display = 'none';
+		playBtn.disabled = false;
+		pauseBtn.disabled = true;
 	},
 
 	/**
@@ -152,7 +152,7 @@ Player.prototype = {
 
 		// Stop the current track.
 		if (self.playlist[self.index].howl) {
-		self.playlist[self.index].howl.stop();
+			self.playlist[self.index].howl.stop();
 		}
 
 		// Reset progress.
@@ -181,10 +181,7 @@ Player.prototype = {
 		sliderBtn.style.left = (window.innerWidth * barWidth + window.innerWidth * 0.05 - 25) + 'px';
 	},
 
-	/**
-	 * Seek to a new position in the currently playing track.
-	 * @param  {Number} per Percentage through the song to skip.
-	 */
+	// Seek to a new position in the currently playing track.
 	seek: function(per) {
 		var self = this;
 
@@ -197,9 +194,7 @@ Player.prototype = {
 		}
 	},
 
-	/**
-	 * The step called within requestAnimationFrame to update the playback position.
-	 */
+	// The step called within requestAnimationFrame to update the playback position.
 	step: function() {
 		var self = this;
 
@@ -217,16 +212,12 @@ Player.prototype = {
 		}
 	},
 
-	/**
-	 * Format the time from seconds to M:SS.
-	 * @param  {Number} secs Seconds to format.
-	 * @return {String}      Formatted time.
-	 */
+	// Format the time from seconds to MM:SS.
 	formatTime: function(secs) {
 		var minutes = Math.floor(secs / 60) || 0;
 		var seconds = (secs - minutes * 60) || 0;
 
-		return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+		return (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
 	}
 };
 
@@ -234,22 +225,22 @@ Player.prototype = {
 var player = new Player([
 	{
 		title: 'Kavinsky - Nightcall',
-		file: 'nightcall',
+		file: 'audio/nightcall.mp3',
 		howl: null
 	},
 	{
 		title: 'Coconuts - Silver Lights',
-		file: 'silver_lights',
+		file: 'audio/silver_lights.mp3',
 		howl: null
 	},
 	{
-		title: 'Rust',
-		file: 'rust',
+		title: 'El Huervo - Rust',
+		file: 'audio/rust.mp3',
 		howl: null
 	},
 	{
-		title: 'NARC',
-		file: 'narc',
+		title: 'Mega Drive - NARC',
+		file: 'audio/narc.mp3',
 		howl: null
 	}
 ]);
@@ -261,32 +252,31 @@ playBtn.addEventListener('click', function() {
 pauseBtn.addEventListener('click', function() {
 	player.pause();
 });
-// prevBtn.addEventListener('click', function() {
-// 	player.skip(false);
-// });
-// nextBtn.addEventListener('click', function() {
-// 	player.skip(true);
-// });
+prevBtn.addEventListener('click', function() {
+	player.skip(false);
+});
+nextBtn.addEventListener('click', function() {
+	player.skip(true);
+});
 progressContainer.addEventListener('click', function(event) {
 	player.seek(event.offsetX / progressContainer.offsetWidth);
 });
 
 function prepareFFTDisplay() {
-	var analyzer = Howler.ctx.createAnalyser();
-	Howler.masterGain.connect(analyzer);
+	if (analyzer === undefined) {
+		analyzer = Howler.ctx.createAnalyser();
+		Howler.masterGain.connect(analyzer);
+
+		Howler.volume(0.2);
+	}
 
 	var ctx = analyzerCanvas.getContext("2d");
 
 	analyzer.fftSize = 256;
-
 	var bufferLength = analyzer.frequencyBinCount;
-
 	var dataArray = new Uint8Array(bufferLength);
 
-	var WIDTH = analyzerCanvas.width;
-	var HEIGHT = analyzerCanvas.height;
-
-	var barWidth = (WIDTH / bufferLength) * 2.5;
+	var barWidth = (analyzerCanvas.width / bufferLength) * 2.5;
 	var barHeight;
 	var x = 0;
 
@@ -297,17 +287,17 @@ function prepareFFTDisplay() {
 
 		analyzer.getByteFrequencyData(dataArray);
 
-		ctx.clearRect(0, 0, WIDTH, HEIGHT);
+		ctx.clearRect(0, 0, analyzerCanvas.width, analyzerCanvas.height);
 
 		for (var i = 0; i < bufferLength; i++) {
-		barHeight = dataArray[i];
+		barHeight = dataArray[i] / 256 * analyzerCanvas.height;
 		
 		var r = barHeight + (25 * (i/bufferLength));
 		var g = 250 * (i/bufferLength);
-		var b = 50;
+		var b = 150;
 
 		ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
-		ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
+		ctx.fillRect(x, analyzerCanvas.height - barHeight, barWidth, barHeight);
 
 		x += barWidth + 1;
 		}
@@ -315,3 +305,27 @@ function prepareFFTDisplay() {
 
 	renderFrame();
 }
+
+function updatePlaylist() {
+	list.innerHTML = "";
+
+	player.playlist.forEach(function(song) {
+		var div = document.createElement('div');
+		div.className = 'list-song';
+		div.innerHTML = song.title;
+		div.onclick = function() {
+			player.skipTo(player.playlist.indexOf(song));
+		};
+		list.appendChild(div);
+	});
+}
+
+$("#fileInput").on('change', function() {
+    player.playlist.push({
+		title: this.files[0].name,
+		file: URL.createObjectURL(this.files[0]),
+		howl: null
+	})
+	updatePlaylist()
+	player.skipTo(player.playlist.length - 1);
+});
