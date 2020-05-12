@@ -81,7 +81,8 @@ body {
 			rgba(0, 255, 0, 0.02) 1px,
 			rgba(0, 0, 255, 0.06) 2px,
 			rgba(255, 0, 0, 0.06) 3px);
-	pointer-events: none;
+    pointer-events: none;
+    z-index: 1;
 }
 
 .scratch-effect::after {
@@ -94,6 +95,7 @@ body {
     background: url('resources/scratches.png');
     background-size: cover;
     pointer-events: none;
+    z-index: 3;
 }
 
 .fade-out {
@@ -264,6 +266,7 @@ body {
     height: 40px;
     background-color: black;
     box-shadow: inset 0px 0px 0px 2px #ffffff10;
+    z-index: 2;
 }
 
 #button-container {
