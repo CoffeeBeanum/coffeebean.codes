@@ -228,6 +228,11 @@ Player.prototype = {
 // Setup our new audio player class and pass it the playlist.
 var player = new Player([
 	{
+		title: 'Palmbomen - Stock',
+		file: 'audio/stock.mp3',
+		howl: null
+	},
+	{
 		title: 'Kavinsky - Nightcall',
 		file: 'audio/nightcall.mp3',
 		howl: null
@@ -271,7 +276,7 @@ function prepareFFTDisplay() {
 		analyzer = Howler.ctx.createAnalyser();
 		Howler.masterGain.connect(analyzer);
 
-		Howler.volume(0.2);
+		Howler.volume(0.4);
 	}
 
 	var ctx = analyzerCanvas.getContext("2d");

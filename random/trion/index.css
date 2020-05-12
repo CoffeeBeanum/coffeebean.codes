@@ -288,6 +288,7 @@ body {
 #progress {
     background-color: whitesmoke;
     height: 100%;
+    width: 0;
 }
 
 #timer {
