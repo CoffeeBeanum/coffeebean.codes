@@ -1,7 +1,7 @@
 var analyzer;
 
 // Cache references to DOM elements.
-var elms = ['playBtn', 'pauseBtn', 'prevBtn', 'nextBtn', 'progressContainer', 'progress', 'timer', 'list', 'fileInput', 'trackTitle', 'playbackState', 'playbackPlay', 'playbackPause', 'analyzerCanvas'];
+var elms = ['playBtn', 'pauseBtn', 'prevBtn', 'nextBtn', 'progressContainer', 'progress', 'timer', 'list', 'fileInput', 'trackTitle', 'playbackState', 'playbackPlay', 'playbackPause', 'playbackLoading', 'analyzerCanvas'];
 	elms.forEach(function(elm) {
 	window[elm] = document.getElementById(elm);
 });
@@ -40,6 +40,11 @@ Player.prototype = {
 		if (data.howl) {
 			sound = data.howl;
 		} else {
+			playbackPlay.style.display = 'none';
+			playbackPause.style.display = 'none';
+			playbackLoading.style.display = 'block';
+			resetStatusAnimation();
+
 			sound = data.howl = new Howl({
 				src: [data.file],
 				format: ['mp3', 'ogg', 'wav'],
@@ -50,6 +55,11 @@ Player.prototype = {
 					requestAnimationFrame(self.step.bind(self));
 
 					pauseBtn.disabled = false;
+
+					playbackPlay.style.display = 'block';
+					playbackPause.style.display = 'none';
+					playbackLoading.style.display = 'none';
+					resetStatusAnimation();
 				},
 
 				onload: function() {
@@ -63,6 +73,10 @@ Player.prototype = {
 				},
 
 				onpause: function() {
+					playbackPlay.style.display = 'none';
+					playbackPause.style.display = 'block';
+					playbackLoading.style.display = 'none';
+					resetStatusAnimation();
 				},
 
 				onstop: function() {
@@ -77,11 +91,6 @@ Player.prototype = {
 
 		// Update the track display.
 		trackTitle.innerHTML = data.title;
-
-		playbackPlay.style.display = 'block';
-		playbackPause.style.display = 'none';
-		playbackState.style.display = 'block';
-		setTimeout(function(){ playbackState.style.display = 'none'; }, 3000);
 
 		// Show the pause button.
 		if (sound.state() === 'loaded') {
@@ -108,11 +117,6 @@ Player.prototype = {
 
 		// Pause the sound.
 		sound.pause();
-
-		playbackPlay.style.display = 'none';
-		playbackPause.style.display = 'block';
-		playbackState.style.display = 'block';
-		setTimeout(function(){ playbackState.style.display = 'none'; }, 3000);
 
 		// Show the play button.
 		playBtn.disabled = false;
@@ -305,6 +309,13 @@ function prepareFFTDisplay() {
 
 	renderFrame();
 }
+
+function resetStatusAnimation() {
+	playbackState.style.animation = "none";
+	playbackState.offsetHeight;
+	playbackState.style.animation = ""; 
+}
+
 
 function updatePlaylist() {
 	list.innerHTML = "";
