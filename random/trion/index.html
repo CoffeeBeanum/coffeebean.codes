@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
         
     <link href="index.css" rel="stylesheet">
-	
 </head>
 <body>
 
@@ -16,29 +15,33 @@
         <div id="file-browser-title-container" class="text-flare">
             <span id="file-browser-title">TRION</span>
             <span id="file-browser-subtitle">TX - 200E</span>
-            <span id="file-browser-extra">Hi-Fi Stereo | Master Cassette Deck | DBX NR</span></div>
+            <span id="file-browser-extra">Hi-Fi Stereo | Master Cassette Deck | DBX NR</span>
+        </div>
         <div id="list-container" class="scratch-effect lcd-effect text-glow">
-            <div id="list"></div>
+            <div id="fileList"></div>
         </div>
         <div id="file-input-container">
             <i class="fas fa-dot-circle"></i>
             <input id="fileInput" type="file" accept="audio/*" />
         </div>
     </div>
-    <div id="viewport-container" class="scratch-effect lcd-effect">
+    <div id="viewport-container" class="scratch-effect lcd-effect text-glow">
         <div id="graphics-container">
+            <div id="graphics-background"></div>
             <canvas id="analyzerCanvas"></canvas>
-            <div id="backgroundAnim"></div>
+            <div id="graphics-foreground"></div>
         </div>
-        <div id="player-state" class="text-glow">
-            <span id="trackTitle"></span><br>
+        <div id="viewport-state-container">
+            <div id="viewport-state">
+                <div id="trackTitle"></div>
+                <div id="trackDuration"></div>
+            </div>
             <div id="playbackState" class="fade-out">
                 <span id="playbackPlay">PLAY <i class="fas fa-play"></i></span>
                 <span id="playbackPause">PAUSE <i class="fas fa-pause"></i></span>
                 <span id="playbackLoading">DOWNLOADING <i class="fas fa-save"></i></span>
             </div>
         </div>
-        <div id="duration" class="text-glow"></div>
         <div id="viewport-controls">
             <div id="button-container">
                 <button id="playBtn" class="control-button"><i class="fas fa-play"></i></button>
@@ -47,16 +50,14 @@
                 <button  id="nextBtn" class="control-button"><i class="fas fa-step-forward"></i></button>
             </div>
             <div id="progressContainer">
-                <div id="progress"></div>
+                <div id="trackProgress"></div>
             </div>
-            <div id="timer">00:00</div>
+            <div id="trackTimer">00:00</div>
         </div>
     </div>
 </div>
 
 <!-- Scripts -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 <script src="https://kit.fontawesome.com/abbabf579a.js" crossorigin="anonymous"></script>
 
 <script src="howler.core.min.js"></script>

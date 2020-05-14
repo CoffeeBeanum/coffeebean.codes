@@ -1,3 +1,7 @@
+/*
+    Fonts
+*/
+
 @font-face {
     font-family: 'Hauser';
     src: url('resources/Hauser.otf')  format('truetype')
@@ -13,48 +17,19 @@
     src: url('resources/VCR_OSD.ttf')  format('truetype')
 }
 
+/*
+    Animations
+*/
+
 @keyframes fade-out {
      0% { opacity: 1 }
     80% { opacity: 1 }
    100% { opacity: 0 }
- }
-
-html, body {
-    height: 100%;
-	margin: 0;
-    overflow: hidden;
 }
 
-body {
-    display: flex;
-	justify-content: center;
-	align-items: center;
-    
-    background: #222222;
-    color: whitesmoke;
-
-    font-family: 'VCR';
-}
-
-.control-button {
-    display: inline-block;
-    height: 30px;
-    width: 30px;
-    margin: 0;
-    background: none;
-    border: none;
-    cursor: pointer;
-    outline: 0;
-    float: left;
-}
-
-.control-button:enabled {
-    color: whitesmoke
-}
-
-.control-button:disabled {
-    color: #222222
-}
+/*
+    Text effects and overlays
+*/
 
 .text-flare {
     background: linear-gradient(to bottom right, #cccccc 0%, #888888 70%);
@@ -108,6 +83,70 @@ body {
     animation-fill-mode: forwards;
 }
 
+/*
+    Element styles
+*/
+
+html, body {
+    height: 100%;
+	margin: 0;
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+	justify-content: center;
+	align-items: center;
+    
+    background: #222222;
+    color: whitesmoke;
+
+    font-family: 'VCR';
+}
+
+/*
+    Class styles
+*/
+
+.control-button {
+    display: block;
+    height: 30px;
+    width: 30px;
+    margin: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: 0;
+    float: left;
+}
+
+.control-button:enabled {
+    color: whitesmoke
+}
+
+.control-button:disabled {
+    color: #222222
+}
+
+.list-song {
+    font-size: 12px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+    height: 20px;
+    color: #dddddd;
+    cursor: pointer;
+}
+
+.list-song:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/*
+    ID styles
+*/
+
 #player-container {
     display: flex;
     height: 300px;
@@ -116,6 +155,8 @@ body {
 
     box-shadow: 0 0 100px black;
 }
+
+/* Left column */
 
 #file-browser-container {
     display: flex;
@@ -165,29 +206,23 @@ body {
     overflow: hidden;
 }
 
-#list {
+#fileList {
     padding: 10px;
     height: 99%;
     overflow: scroll;
+    overflow-y: auto;
 }
 
-#list::-webkit-scrollbar {
-    display:none;
+::-webkit-scrollbar {
+    width: 10px;
 }
 
-.list-song {
-    font-size: 16px;
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow: ellipsis;
-    height: 20px;
-    color: #dddddd;
-    cursor: pointer;
+::-webkit-scrollbar-track {
+    background-color: #111111;
 }
 
-.list-song:hover {
-    color: white;
-    text-decoration: underline;
+::-webkit-scrollbar-thumb {
+    background-color: #444444;
 }
 
 #file-input-container {
@@ -224,6 +259,8 @@ body {
     cursor: pointer;
 }
 
+/* Right column */
+
 #viewport-container {
     position: relative;
     flex-grow: 1;
@@ -238,18 +275,22 @@ body {
     position: relative;
     flex-grow: 1;
     box-shadow: inset 0px 0px 0px 2px #ffffff20;
-    background: url("resources/vcr-noise.gif");
 }
 
-#backgroundAnim {
-    background: url("resources/synthwave.gif");
-    background-size: cover;
-}
-
-#backgroundAnim {
+#graphics-background {
     position: absolute;
     width: 100%;
     height: 100%;
+    background: url("resources/vcr-noise.gif");
+    background-size: cover;
+}
+
+#graphics-foreground {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url("resources/synthwave.gif");
+    background-size: cover;
 }
 
 #analyzerCanvas {
@@ -258,31 +299,33 @@ body {
     height: 45%;
 }
 
-#player-state {
+/* Viewport status labels */
+
+#viewport-state-container {
     position: absolute;
-    top: 0;
-    left: 0;
     padding: 10px 10px 10px 10px;
-    width: 280px;
+    width: calc(100% - 20px);
 }
 
-#trackTitle, #playbackPlay, #playbackPause, #playbackLoading {
-    display: block;
+#viewport-state {
+    display: flex;
+}
+
+#trackTitle {
+    flex-grow: 1;
+}
+
+#playbackState {
+    margin-top: 10px;
 }
 
 #playbackPlay, #playbackPause, #playbackLoading {
     display: none;
 }
 
-#duration {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 10px 10px 10px 10px;
-}
+/* Player controls */
 
 #viewport-controls {
-    position: relative;
     display: flex;
     width: 100%;
     height: 40px;
@@ -292,29 +335,29 @@ body {
 }
 
 #button-container {
-    display: inline-block;
     height: 90%;
     padding: 5px;
 }
 
 #progressContainer {
-    display: inline-block;
     flex-grow: 1;
     height: 30px;
     margin-top: 5px;
     margin-left: 1px;
     background-color: #111111;
     cursor: pointer;
+    border-radius: 2px;
+    overflow: hidden;
 }
 
-#progress {
+#trackProgress {
     background-color: whitesmoke;
     height: 100%;
     width: 0;
+    border-radius: 2px;
 }
 
-#timer {
-    display: inline-block;
+#trackTimer {
     height: 100%;
     text-align: center;
     vertical-align: middle;

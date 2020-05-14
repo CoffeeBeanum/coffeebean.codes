@@ -1,8 +1,12 @@
 var analyzer;
 
 // Cache references to DOM elements.
-var elms = ['playBtn', 'pauseBtn', 'prevBtn', 'nextBtn', 'progressContainer', 'progress', 'timer', 'list', 'fileInput', 'trackTitle', 'playbackState', 'playbackPlay', 'playbackPause', 'playbackLoading', 'analyzerCanvas'];
-	elms.forEach(function(elm) {
+var elms = ['fileList', 'fileInput', 
+			'trackTitle', 'playbackState', 'playbackPlay', 'playbackPause', 'playbackLoading', 'trackDuration',
+			'analyzerCanvas',
+			'playBtn', 'pauseBtn', 'prevBtn', 'nextBtn',
+			'progressContainer', 'trackProgress', 'trackTimer'];
+elms.forEach(function(elm) {
 	window[elm] = document.getElementById(elm);
 });
 
@@ -18,11 +22,11 @@ var Player = function(playlist) {
 	playlist.forEach(function(song) {
 		var div = document.createElement('div');
 		div.className = 'list-song';
-		div.innerHTML = song.title;
+		div.innerHTML = "• " + song.title;
 		div.onclick = function() {
 			player.skipTo(playlist.indexOf(song));
 		};
-		list.appendChild(div);
+		fileList.appendChild(div);
 	});
 };
 
@@ -50,7 +54,7 @@ Player.prototype = {
 				format: ['mp3', 'ogg', 'wav'],
 
 				onplay: function() {
-					duration.innerHTML = self.formatTime(Math.round(sound.duration()));
+					trackDuration.innerHTML = self.formatTime(Math.round(sound.duration()));
 
 					requestAnimationFrame(self.step.bind(self));
 
@@ -159,8 +163,8 @@ Player.prototype = {
 			self.playlist[self.index].howl.stop();
 		}
 
-		// Reset progress.
-		progress.style.width = '0%';
+		// Reset trackProgress.
+		trackProgress.style.width = '0%';
 
 		// Play the new track.
 		self.play(index);
@@ -207,8 +211,8 @@ Player.prototype = {
 
 		// Determine our current seek position.
 		var seek = sound.seek() || 0;
-		timer.innerHTML = self.formatTime(Math.round(seek));
-		progress.style.width = (((seek / sound.duration()) * 100) || 0) + '%';
+		trackTimer.innerHTML = self.formatTime(Math.round(seek));
+		trackProgress.style.width = (((seek / sound.duration()) * 100) || 0) + '%';
 
 		// If the sound is still playing, continue stepping.
 		if (sound.playing()) {
@@ -326,20 +330,20 @@ function resetStatusAnimation() {
 }
 
 function updatePlaylist() {
-	list.innerHTML = "";
+	fileList.innerHTML = "";
 
 	player.playlist.forEach(function(song) {
 		var div = document.createElement('div');
 		div.className = 'list-song';
-		div.innerHTML = song.title;
+		div.innerHTML = "• " + song.title;
 		div.onclick = function() {
 			player.skipTo(player.playlist.indexOf(song));
 		};
-		list.appendChild(div);
+		fileList.appendChild(div);
 	});
 }
 
-$("#fileInput").on('change', function() {
+fileInput.onchange = function() {
     player.playlist.push({
 		title: this.files[0].name,
 		file: URL.createObjectURL(this.files[0]),
@@ -347,4 +351,4 @@ $("#fileInput").on('change', function() {
 	})
 	updatePlaylist()
 	player.skipTo(player.playlist.length - 1);
-});
+}
