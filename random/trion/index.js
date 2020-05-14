@@ -10,6 +10,39 @@ elms.forEach(function(elm) {
 	window[elm] = document.getElementById(elm);
 });
 
+// Playback start, stop and download sound effects
+var audioStart = new Howl({
+	src: ["resources/cassetteStart.mp3"],
+	onplay: function() {
+		audioStop.stop();
+		audioDownloadStart.stop();
+	}
+})
+var audioStop = new Howl({
+	src: ["resources/cassetteStop.mp3"],
+	onplay: function() {
+		audioStart.stop();
+		audioDownloadStart.stop();
+	}
+})
+var audioDownloadStart = new Howl({
+	src: ["resources/cassetteDownloadStart.mp3"],
+	onplay: function() {
+		audioDownloadIdle.stop();
+		audioDownloadIdle.play();
+		audioDownloadIdle.fade(0, 1, 1000);
+		audioStart.stop();
+		audioStop.stop();
+	},
+	onstop: function() {
+		audioDownloadIdle.stop();
+	}
+})
+var audioDownloadIdle = new Howl({
+	src: ["resources/cassetteDownloadIdle.mp3"],
+	loop: true
+})
+
 // Player class containing the state of playlist.
 var Player = function(playlist) {
 	this.playlist = playlist;
@@ -39,6 +72,8 @@ Player.prototype = {
 		index = typeof index === 'number' ? index : self.index;
 		var data = self.playlist[index];
 
+		trackDuration.innerHTML = "";
+
 		// If we already loaded this track, use the current one.
 		// Otherwise, setup and load a new Howl.
 		if (data.howl) {
@@ -48,6 +83,8 @@ Player.prototype = {
 			playbackPause.style.display = 'none';
 			playbackLoading.style.display = 'block';
 			removeStatusAnimation();
+
+			audioDownloadStart.play();
 
 			sound = data.howl = new Howl({
 				src: [data.file],
@@ -64,6 +101,8 @@ Player.prototype = {
 					playbackPause.style.display = 'none';
 					playbackLoading.style.display = 'none';
 					resetStatusAnimation();
+
+					if (self.index == index) { audioStart.play(); }
 				},
 
 				onload: function() {
@@ -81,9 +120,8 @@ Player.prototype = {
 					playbackPause.style.display = 'block';
 					playbackLoading.style.display = 'none';
 					resetStatusAnimation();
-				},
 
-				onstop: function() {
+					audioStop.play();
 				}
 			});
 		}
@@ -161,6 +199,7 @@ Player.prototype = {
 		// Stop the current track.
 		if (self.playlist[self.index].howl) {
 			self.playlist[self.index].howl.stop();
+			//audioStop.play();
 		}
 
 		// Reset trackProgress.
@@ -233,27 +272,27 @@ Player.prototype = {
 var player = new Player([
 	{
 		title: 'Palmbomen - Stock',
-		file: 'audio/stock.mp3',
+		file: 'music/stock.mp3',
 		howl: null
 	},
 	{
 		title: 'Kavinsky - Nightcall',
-		file: 'audio/nightcall.mp3',
+		file: 'music/nightcall.mp3',
 		howl: null
 	},
 	{
 		title: 'Coconuts - Silver Lights',
-		file: 'audio/silver_lights.mp3',
+		file: 'music/silver_lights.mp3',
 		howl: null
 	},
 	{
 		title: 'El Huervo - Rust',
-		file: 'audio/rust.mp3',
+		file: 'music/rust.mp3',
 		howl: null
 	},
 	{
 		title: 'Mega Drive - NARC',
-		file: 'audio/narc.mp3',
+		file: 'music/narc.mp3',
 		howl: null
 	}
 ]);
