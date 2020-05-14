@@ -22,7 +22,6 @@ var audioStop = new Howl({
 	src: ["resources/cassetteStop.mp3"],
 	onplay: function() {
 		audioStart.stop();
-		audioDownloadStart.stop();
 	}
 })
 var audioDownloadStart = new Howl({
@@ -32,7 +31,6 @@ var audioDownloadStart = new Howl({
 		audioDownloadIdle.play();
 		audioDownloadIdle.fade(0, 1, 1000);
 		audioStart.stop();
-		audioStop.stop();
 	},
 	onstop: function() {
 		audioDownloadIdle.stop();
@@ -199,7 +197,7 @@ Player.prototype = {
 		// Stop the current track.
 		if (self.playlist[self.index].howl) {
 			self.playlist[self.index].howl.stop();
-			//audioStop.play();
+			audioStop.play();
 		}
 
 		// Reset trackProgress.
