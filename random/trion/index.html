@@ -17,7 +17,12 @@
             <span id="file-browser-subtitle">TX - 200E</span>
             <span id="file-browser-extra">Hi-Fi Stereo | Master Cassette Deck | DBX NR</span>
         </div>
-        <div id="list-container" class="scratch-effect lcd-effect text-glow">
+        <div id="file-list-container" class="scratch-effect lcd-effect text-glow">
+            <div id="fileListBackground">
+                <div id="cassettePlay" class="cassette"></div>
+                <div id="cassetteDownload" class="cassette"></div>
+                <div id="cassettePause" class="cassette"></div>
+            </div>
             <div id="fileList"></div>
         </div>
         <div id="file-input-container">
@@ -40,7 +45,7 @@
                 <div id="playback-state-container">
                     <span id="playbackPlay">PLAY <i class="fas fa-play"></i></span>
                     <span id="playbackPause">PAUSE <i class="fas fa-pause"></i></span>
-                    <span id="playbackLoading">DOWNLOADING <i class="fas fa-save"></i></span>
+                    <span id="playbackDownload">DOWNLOADING <i class="fas fa-save"></i></span>
                 </div>
                 <div id="viewport-state-extra">DBX ON</div>
             </div>
@@ -63,7 +68,7 @@
 <!-- Scripts -->
 <script src="https://kit.fontawesome.com/abbabf579a.js" crossorigin="anonymous"></script>
 
-<script src="howler.core.min.js"></script>
+<script src="howler.min.js"></script>
 
 <script src="index.js"></script>
 

@@ -1,8 +1,9 @@
 var analyzer;
 
 // Cache references to DOM elements.
-var elms = ['fileList', 'fileInput', 
-			'trackTitle', 'playbackState', 'playbackPlay', 'playbackPause', 'playbackLoading', 'trackDuration',
+var elms = ['cassettePlay', 'cassettePause', 'cassetteDownload',
+			'fileList', 'fileInput', 
+			'trackTitle', 'playbackState', 'playbackPlay', 'playbackPause', 'playbackDownload', 'trackDuration',
 			'analyzerCanvas',
 			'playBtn', 'pauseBtn', 'prevBtn', 'nextBtn',
 			'progressContainer', 'trackProgress', 'trackTimer'];
@@ -81,9 +82,7 @@ Player.prototype = {
 		if (data.howl) {
 			sound = data.howl;
 		} else {
-			playbackPlay.style.display = 'none';
-			playbackPause.style.display = 'none';
-			playbackLoading.style.display = 'block';
+			updatePlaybackVisualState(2);
 			removeStatusAnimation();
 
 			audioDownloadStart.play();
@@ -93,24 +92,26 @@ Player.prototype = {
 				format: ['mp3', 'ogg', 'wav'],
 
 				onplay: function() {
-					trackDuration.innerHTML = self.formatTime(Math.round(sound.duration()));
+					if (self.index == index) { 
+						trackDuration.innerHTML = self.formatTime(Math.round(sound.duration()));
 
-					requestAnimationFrame(self.step.bind(self));
+						requestAnimationFrame(self.step.bind(self));
 
-					pauseBtn.disabled = false;
+						pauseBtn.disabled = false;
 
-					playbackPlay.style.display = 'block';
-					playbackPause.style.display = 'none';
-					playbackLoading.style.display = 'none';
-					resetStatusAnimation();
+						updatePlaybackVisualState(0);
+						resetStatusAnimation();
 
-					if (self.index == index) { audioStart.play(); }
+						audioStart.play(); 
+					}
 				},
 
 				onload: function() {
-					pauseBtn.disabled = false;
-
-					if (self.index != index) { sound.stop(); }
+					if (self.index == index) { 
+						pauseBtn.disabled = false;
+					} else {
+						sound.stop();
+					}
 				},
 
 				onend: function() {
@@ -118,9 +119,7 @@ Player.prototype = {
 				},
 
 				onpause: function() {
-					playbackPlay.style.display = 'none';
-					playbackPause.style.display = 'block';
-					playbackLoading.style.display = 'none';
+					updatePlaybackVisualState(1);
 					resetStatusAnimation();
 
 					audioStop.play();
@@ -198,7 +197,7 @@ Player.prototype = {
 	skipTo: function(index) {
 		var self = this;
 
-		if (self.playlist[self.index].howl.playing()) {
+		if (self.playlist[self.index].howl != null && self.playlist[self.index].howl.playing()) {
 			audioStop.play();
 		}
 
@@ -328,7 +327,7 @@ function prepareFFTDisplay() {
 
 	var ctx = analyzerCanvas.getContext("2d");
 
-	analyzer.fftSize = 256;
+	analyzer.fftSize = 512;
 	var bufferLength = analyzer.frequencyBinCount;
 	var dataArray = new Uint8Array(bufferLength);
 
@@ -370,6 +369,40 @@ function resetStatusAnimation() {
 	playbackState.style.animation = "none";
 	playbackState.offsetHeight;
 	playbackState.style.animation = ""; 
+}
+
+function updatePlaybackVisualState(state) {
+	switch (state) {
+		case 0:
+			cassettePlay.style.display = 'block';
+			cassettePause.style.display = 'none';
+			cassetteDownload.style.display = 'none';
+
+			playbackPlay.style.display = 'block';
+			playbackPause.style.display = 'none';
+			playbackDownload.style.display = 'none';
+			break;
+		case 1:
+			cassettePlay.style.display = 'none';
+			cassettePause.style.display = 'block';
+			cassetteDownload.style.display = 'none';
+
+			playbackPlay.style.display = 'none';
+			playbackPause.style.display = 'block';
+			playbackDownload.style.display = 'none';
+			break;
+		case 2:
+			cassettePlay.style.display = 'none';
+			cassettePause.style.display = 'none';
+			cassetteDownload.style.display = 'block';
+
+			playbackPlay.style.display = 'none';
+			playbackPause.style.display = 'none';
+			playbackDownload.style.display = 'block';
+			break;
+		default:
+			break;
+	}
 }
 
 function updatePlaylist() {

@@ -105,6 +105,14 @@ body {
     Class styles
 */
 
+.cassette {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
 .control-button {
     display: block;
     float: left;
@@ -206,20 +214,49 @@ body {
     font-family: "Hauser";
 }
 
-#list-container {
+#file-list-container {
     position: relative;
     height: 100%;
     margin: 10px;
-    background-color: black;
-    box-shadow: inset 0px 0px 0px 2px #ffffff20;
     overflow: hidden;
 }
 
+#file-list-container::after {
+    box-shadow: inset 0px 0px 0px 2px #ffffff20;
+}
+
+#cassettePlay {
+    background: url("resources/cassettePlay.gif");
+}
+
+#cassettePause {
+    background: url("resources/cassettePause.gif");
+}
+
+#cassetteDownload {
+    background: url("resources/cassetteDownload.gif");
+}
+
+#cassettePlay,
+#cassettePause,
+#cassetteDownload {
+    background-size: 500px;
+    background-position-x: left;
+    background-position-y: center;
+}
+
 #fileList {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
     padding: 10px;
-    height: 99%;
     overflow: scroll;
     overflow-y: auto;
+    overflow-x: hidden;
+    background: #00000077;
+    box-shadow: inset 0px 0px 30px 20px black;
 }
 
 ::-webkit-scrollbar {
@@ -336,7 +373,7 @@ body {
 
 #playbackPlay,
 #playbackPause,
-#playbackLoading {
+#playbackDownload {
     display: none;
 }
 
