@@ -13,6 +13,7 @@ elms.forEach(function(elm) {
 // Playback start, stop and download sound effects
 var audioStart = new Howl({
 	src: ["resources/cassetteStart.mp3"],
+	preload: true,
 	onplay: function() {
 		audioStop.stop();
 		audioDownloadStart.stop();
@@ -20,12 +21,14 @@ var audioStart = new Howl({
 })
 var audioStop = new Howl({
 	src: ["resources/cassetteStop.mp3"],
+	preload: true,
 	onplay: function() {
 		audioStart.stop();
 	}
 })
 var audioDownloadStart = new Howl({
 	src: ["resources/cassetteDownloadStart.mp3"],
+	preload: true,
 	onplay: function() {
 		audioDownloadIdle.stop();
 		audioDownloadIdle.play();
@@ -38,6 +41,7 @@ var audioDownloadStart = new Howl({
 })
 var audioDownloadIdle = new Howl({
 	src: ["resources/cassetteDownloadIdle.mp3"],
+	preload: true,
 	loop: true
 })
 
@@ -194,10 +198,13 @@ Player.prototype = {
 	skipTo: function(index) {
 		var self = this;
 
+		if (self.playlist[self.index].howl.playing()) {
+			audioStop.play();
+		}
+
 		// Stop the current track.
 		if (self.playlist[self.index].howl) {
 			self.playlist[self.index].howl.stop();
-			audioStop.play();
 		}
 
 		// Reset trackProgress.
@@ -234,9 +241,8 @@ Player.prototype = {
 		var sound = self.playlist[self.index].howl;
 
 		// Convert the percent into a seek position.
-		if (sound.playing()) {
-			sound.seek(sound.duration() * per);
-		}
+		sound.seek(sound.duration() * per);
+		this.step();
 	},
 
 	// The step called within requestAnimationFrame to update the playback position.

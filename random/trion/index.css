@@ -108,7 +108,7 @@ body {
 .control-button {
     display: block;
     float: left;
-    height: 30px;
+    height: 40px;
     width: 30px;
     margin: 0;
     background: none;
@@ -123,6 +123,19 @@ body {
 
 .control-button:disabled {
     color: #222222
+}
+
+.control-button-3d {
+    background: url('resources/metal.jpg');
+    border-top: 4px solid #ffffff40;
+    border-left: 2px solid #ffffff40;
+    border-right: 2px solid #00000040;
+    border-bottom: 2px solid #00000040;
+}
+
+.control-button-3d:disabled,
+.control-button-3d:active {
+    border-top: 2px solid #ffffff40;
 }
 
 .list-song {
@@ -338,16 +351,11 @@ body {
     z-index: 2;
 }
 
-#button-container {
-    height: 90%;
-    padding: 5px;
-}
-
 #progressContainer {
     flex-grow: 1;
     height: 30px;
     margin-top: 5px;
-    margin-left: 1px;
+    margin-left: 5px;
     background-color: #111111;
     cursor: pointer;
     border-radius: 2px;
