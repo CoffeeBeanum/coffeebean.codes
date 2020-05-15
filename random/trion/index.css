@@ -257,10 +257,12 @@ body {
     overflow-x: hidden;
     background: #00000077;
     box-shadow: inset 0px 0px 30px 20px black;
+    scrollbar-color: #99999999 #00000033;
+    scrollbar-width: thin;
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -268,7 +270,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #444444;
+    background-color: #77777777;
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #99999999;
 }
 
 #file-input-container {

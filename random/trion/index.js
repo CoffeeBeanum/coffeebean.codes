@@ -64,6 +64,8 @@ var Player = function(playlist) {
 		};
 		fileList.appendChild(div);
 	});
+
+	prepareFFTDisplay();
 };
 
 Player.prototype = {
@@ -103,6 +105,8 @@ Player.prototype = {
 						resetStatusAnimation();
 
 						audioStart.play(); 
+					} else {
+						sound.stop();
 					}
 				},
 
@@ -129,8 +133,6 @@ Player.prototype = {
 
 		// Begin playing the sound.
 		sound.play();
-
-		prepareFFTDisplay();
 
 		// Update the track display.
 		trackTitle.innerHTML = data.title;
@@ -297,6 +299,16 @@ var player = new Player([
 		title: 'Mega Drive - NARC',
 		file: 'music/narc.mp3',
 		howl: null
+	},
+	{
+		title: 'M.O.O.N. - Dust',
+		file: 'music/dust.mp3',
+		howl: null
+	},
+	{
+		title: 'M.O.O.N. - Crystals',
+		file: 'music/crystals.mp3',
+		howl: null
 	}
 ]);
 
@@ -345,16 +357,16 @@ function prepareFFTDisplay() {
 		ctx.clearRect(0, 0, analyzerCanvas.width, analyzerCanvas.height);
 
 		for (var i = 0; i < bufferLength; i++) {
-		barHeight = dataArray[i] / 256 * analyzerCanvas.height;
-		
-		var r = barHeight + (25 * (i/bufferLength));
-		var g = 250 * (i/bufferLength);
-		var b = 150;
+			barHeight = dataArray[i] / 256 * analyzerCanvas.height;
+			
+			var r = barHeight + (25 * (i/bufferLength));
+			var g = 250 * (i/bufferLength);
+			var b = 150;
 
-		ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
-		ctx.fillRect(x, analyzerCanvas.height - barHeight, barWidth, barHeight);
+			ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+			ctx.fillRect(x, analyzerCanvas.height - barHeight, barWidth, barHeight);
 
-		x += barWidth + 1;
+			x += barWidth + 1;
 		}
 	}
 
