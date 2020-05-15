@@ -33,7 +33,7 @@ var audioDownloadStart = new Howl({
 	onplay: function() {
 		audioDownloadIdle.stop();
 		audioDownloadIdle.play();
-		audioDownloadIdle.fade(0, 1, 1000);
+		audioDownloadIdle.fade(0, 1, 500);
 		audioStart.stop();
 	},
 	onstop: function() {
