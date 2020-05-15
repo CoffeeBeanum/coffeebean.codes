@@ -296,6 +296,11 @@ var player = new Player([
 		howl: null
 	},
 	{
+		title: 'El Huervo - Daisuke',
+		file: 'music/daisuke.mp3',
+		howl: null
+	},
+	{
 		title: 'Mega Drive - NARC',
 		file: 'music/narc.mp3',
 		howl: null
