@@ -495,3 +495,4 @@ function windowResize() {
 }
 
 window.onresize = windowResize();
+window.onorientationchange = windowResize();
