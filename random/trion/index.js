@@ -1,7 +1,10 @@
 var analyzer;
 
+Howler.volume(0.4);
+
 // Cache references to DOM elements.
-var elms = ['cassettePlay', 'cassettePause', 'cassetteDownload',
+var elms = ['fileBrowserTitleContainer', 'fileBrowserTitle', 'fileBrowserSubtitle', 'fileBrowserExtra',
+			'cassettePlay', 'cassettePause', 'cassetteDownload',
 			'fileList', 'fileInput', 
 			'trackTitle', 'playbackState', 'playbackPlay', 'playbackPause', 'playbackDownload', 'trackDuration',
 			'analyzerCanvas',
@@ -314,6 +317,36 @@ var player = new Player([
 		title: 'M.O.O.N. - Crystals',
 		file: 'music/crystals.mp3',
 		howl: null
+	},
+	{
+		title: 'Carpenter Brut - Roller Mobster',
+		file: 'music/mobster.mp3',
+		howl: null
+	},
+	{
+		title: 'Benny Smiles - Hotline Theme',
+		file: 'music/hotline.mp3',
+		howl: null
+	},
+	{
+		title: 'Magic Sword - The Way Home',
+		file: 'music/home.mp3',
+		howl: null
+	},
+	{
+		title: 'El Tigr3 - She Swallowed Burning Coals',
+		file: 'music/coals.mp3',
+		howl: null
+	},
+	{
+		title: 'Jasper Byrne - Voyager',
+		file: 'music/voyager.mp3',
+		howl: null
+	},
+	{
+		title: 'iamthekidyouknowwhatimean - Run',
+		file: 'music/run.mp3',
+		howl: null
 	}
 ]);
 
@@ -338,8 +371,6 @@ function prepareFFTDisplay() {
 	if (analyzer === undefined) {
 		analyzer = Howler.ctx.createAnalyser();
 		Howler.masterGain.connect(analyzer);
-
-		Howler.volume(0.4);
 	}
 
 	var ctx = analyzerCanvas.getContext("2d");
@@ -445,3 +476,22 @@ fileInput.onchange = function() {
 	updatePlaylist()
 	player.skipTo(player.playlist.length - 1);
 }
+
+function windowResize() {
+	var containerWidth = fileBrowserTitleContainer.offsetWidth;
+
+	var titleSize = containerWidth / 240 * 25;
+	var subtitleSize = containerWidth / 240 * 20;
+	var extraSize = containerWidth / 240 * 10;
+
+	var padding = containerWidth / 240 * 10;
+
+	fileBrowserTitle.style.fontSize = titleSize + "px";
+	fileBrowserSubtitle.style.fontSize = subtitleSize + "px";
+	fileBrowserExtra.style.fontSize = extraSize + "px";
+
+	fileBrowserTitleContainer.style.paddingLeft = padding + "px";
+	fileBrowserTitleContainer.style.paddingRight = padding + "px";
+}
+
+window.onresize = windowResize();
