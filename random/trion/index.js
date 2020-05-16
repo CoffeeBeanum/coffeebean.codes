@@ -494,5 +494,7 @@ function windowResize() {
 	fileBrowserTitleContainer.style.paddingRight = padding + "px";
 }
 
-window.onresize = windowResize();
-window.onorientationchange = windowResize();
+window.onresize = function() { windowResize(); }
+window.onorientationchange = function() { windowResize(); }
+
+windowResize();
