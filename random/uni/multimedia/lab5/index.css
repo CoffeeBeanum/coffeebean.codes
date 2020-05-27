@@ -1,0 +1,39 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #222222;
+  color: whitesmoke;
+}
+
+#container {
+  width: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+#left,
+#right {
+  width: 50%;
+  float: left;
+}
+
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+
+video {
+  max-height: 300px;
+}
