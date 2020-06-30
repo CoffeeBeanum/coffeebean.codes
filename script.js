@@ -75,7 +75,7 @@ const shutdown_string = "\n\n\n\n\n\n\n\n\n\
 const restore_string = "%(600|1)%Restoring session%(100|60)%....%(100|20)%.........%(100|40)%........%(400|10)%....................."
 
 const startupAudio = new Howl({ 
-	src: ['startup.mp3'],
+	src: ['home_audio/startup.mp3'],
 	autoplay: false,
 	loop: false,
 	volume: 0.4,
@@ -85,31 +85,64 @@ const startupAudio = new Howl({
 });
 
 const shutdownAudio = new Howl({
-	src: ['shutdown.mp3'],
+	src: ['home_audio/shutdown.mp3'],
 	autoplay: false,
 	loop: false,
 	volume: 0.4
 });
 
 const idleAudio = new Howl({
-	src: ['idle_loop.mp3'],
+	src: ['home_audio/idle_loop.mp3'],
 	autoplay: false,
 	loop: true,
 	volume: 0.4
 });
 
 const beepAudio = new Howl({
-	src: ['beep.mp3'],
+	src: ['home_audio/beep.mp3'],
 	autoplay: false,
 	loop: false,
 	volume: 0.1
 });
+
+const activity1Audio = new Howl({
+	src: ['home_audio/activity/activity1.mp3'],
+	autoplay: false,
+	loop: false,
+	volume: 0.05
+});
+
+const activity2Audio = new Howl({
+	src: ['home_audio/activity/activity2.mp3'],
+	autoplay: false,
+	loop: false,
+	volume: 0.05
+});
+
+const activity3Audio = new Howl({
+	src: ['home_audio/activity/activity3.mp3'],
+	autoplay: false,
+	loop: false,
+	volume: 0.01
+});
+
+const activityAudios = [
+	activity1Audio,
+	activity2Audio,
+	activity3Audio
+];
 
 const projectLinks = [
 	"random/trion",
 	"random/vocalizer",
 	"random/connor"
 ];
+
+function playActivitySound(forced) {
+	if (forced || getRandomInt(0, 5) == 0) {
+		activityAudios[getRandomInt(0, 2)].play();
+	}
+}
 
 var on = false;
 
@@ -230,7 +263,9 @@ function presentString(callback, string, delay = 0, modifier = 1) {
  
             if ($("#screen-text").html().substr($("#screen-text").html().length - 10) === '&lt;/a&gt;') {
                 $("#screen-text").html(convertHTMLEntity($("#screen-text").html()));
-            }
+			}
+			
+			playActivitySound(false);
  
             if (callback != null && index == string.length - 1) { callback(); }
         }, index * modifier + delay);
@@ -263,6 +298,9 @@ function clearLine(numberOfLines = 1, delay = 0, callback) {
 				$("#screen-text").html($("#screen-text").html().substring(1));
 			}
 			$("#screen-text").html($("#screen-text").html().substring(1));
+
+			playActivitySound(true);
+
 			if (completion != null) { completion(); }
 		}, delay * (scheduledRemoval + 1));
 
@@ -292,3 +330,13 @@ $("body").click(function() {
 $(window).resize(function() {
 	calculateScreenSize();
 });
+
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
