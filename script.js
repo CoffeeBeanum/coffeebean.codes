@@ -232,6 +232,8 @@ function startup() {
 			canEnterBIOS = false;
 
 			if (BIOSMode) {
+				Cookies.set("fastBoot", "false", { expires: 1 });
+				
 				let date = new Date();
 
 				let timeString = new Intl.DateTimeFormat('en-US', { hour: 'numeric', hour12: false, minute: 'numeric', second: 'numeric' }).format(date)
