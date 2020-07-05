@@ -1,6 +1,27 @@
 const regexTiming = /(\d+)\|(\d+)\)\%([^\x05]*)/;
 
-const boot_string = "%(3000|1)%\
+const pre_boot_string = "%(500|1)%\
+\n\n\
+     ▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀▀▀▀▀     ▀▀▀▀▀▀▀       ▀▀▀▀▀▀▀     \n\
+     ▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀▀     ▀▀▀▀▀▀▀▀     \n\
+       ▀▀▀▀▀      ▀▀▀▀   ▀▀▀▀▀    ▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀▀      \n\
+       ▀▀▀▀▀      ▀▀▀▀▀▀▀▀▀▀▀     ▀▀▀▀▀▀▀▀▀ ▀▀▀▀▀▀▀▀▀      \n\
+       ▀▀▀▀▀      ▀▀▀▀▀▀▀▀▀▀▀     ▀▀▀▀▀ ▀▀▀▀▀▀▀ ▀▀▀▀▀      \n\
+       ▀▀▀▀▀      ▀▀▀▀   ▀▀▀▀▀    ▀▀▀▀▀  ▀▀▀▀▀  ▀▀▀▀▀      \n\
+     ▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀   ▀▀▀   ▀▀▀▀▀▀     \n\
+     ▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀▀▀▀▀     ▀▀▀▀▀▀    ▀    ▀▀▀▀▀▀     \n\
+\n\
+                     Personal Computer                     \n\
+\n\
+╔═════════════════════════════════════════════════════════╗\n\
+║        This system is for authorized users only.        ║\n\
+║   Usage of this system may be monitored and recorded.   ║\n\
+╚═════════════════════════════════════════════════════════╝\n\
+\n\n\n\
+Press ESC to enter BIOS\
+%(1800|1)% "
+
+const boot_string = "%(0|1)%\
 KIDTECH (C) 1991\n\
 BIOS Date DATE Ver: 00.00.03\n\
 CPU: Intel(R) CPU 330 @ 40 MHz\n\
@@ -17,6 +38,30 @@ Initializing USB Controllers.. %(700|1)%Done.\n\
 %(300|1)%\
 128MB OK\
 %(500|1)% ";
+
+const bios_string = "\
+┌─────────────────────────────────────────────────────────┐\n\
+│%(0|0)%<a onclick='linkBoot()' href='javascript:;'>[← Back]</a>%(0|1)%▒▒▒▒▒▒[ Generic SETUP Version 0.03]▒▒▒▒▒▒▒▒[2055]│\n\
+│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│\n\
+│▒▒▒▒▒▒▒╔═════════════════════════════════════════╗▒▒▒▒▒▒▒│\n\
+│▒▒▒▒▒▒▒║       Current SETUP Configuration       ║▒▒▒▒▒▒▒│\n\
+│▒▒▒▒▒▒▒║───────────────────────┬─────────────────║▒▒▒▒▒▒▒│\n\
+│▒▒▒▒▒▒▒║ [0] Time              │ TIME        ║▒▒▒▒▒▒▒│\n\
+│▒▒▒▒▒▒▒║ [1] Date              │ DATE      ║▒▒▒▒▒▒▒│\n\
+│▒▒▒▒▒▒▒║ [2] Floppy Disk A:    │ DS/HD 1.2m 5¼\"\" ║▒▒▒▒▒▒▒│\n\
+│▒▒▒▒▒▒▒║ [3] Floppy Disk B:    │ Not Installed   ║▒▒▒▒▒▒▒│\n\
+│▒▒▒▒▒▒▒║ [4] Hard Disk 1 (C:)  │ Type 2          ║▒▒▒▒▒▒▒│\n\
+│▒▒▒▒▒▒▒║ [5] Hard Disk 2 (D:)  │ Not Installed   ║▒▒▒▒▒▒▒│\n\
+│▒▒▒▒▒▒▒║ [6] Base Memory       │ 420k            ║▒▒▒▒▒▒▒│\n\
+│▒▒▒▒▒▒▒║ [7] Expansion Memory  │ 128000k         ║▒▒▒▒▒▒▒│\n\
+│▒▒▒▒▒▒▒║ [8] Math Coprocessor  │ Not Installed   ║▒▒▒▒▒▒▒│\n\
+│▒▒▒▒▒▒▒║ [9] Primary Display   │ Special (EGA)   ║▒▒▒▒▒▒▒│\n\
+│▒▒▒▒▒▒▒╚═════════════════════════════════════════╝▒▒▒▒▒▒▒│\n\
+│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│\n\
+│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│\n\
+│▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒│\n\
+└─────────────────────────────────────────────────────────┘\n\
+"
 
 const system_string = "\
 A:\\>dir\n\
@@ -145,6 +190,8 @@ function playActivitySound(forced) {
 }
 
 var on = false;
+var BIOSMode = false;
+var canEnterBIOS = false;
 
 var currentProjectIndex = 0;
 
@@ -171,22 +218,40 @@ function startup() {
 	
 	clearScreen();
 
-	if (fastBoot == "true") {
+	if (fastBoot == "tru") {
 		presentMessage(restore_string, function() {
 			clearLine(1, 0, function() {
 				presentMessage(library_string);
 			});
 		});
 	} else {
-		setTimeout(function() { beepAudio.play(); }, 3000);
-
-		presentMessage(processed_boot_string, function() {
+		canEnterBIOS = true;
+		presentMessage(pre_boot_string, function() {
 			clearScreen();
-			presentMessage(system_string, function() {
-				clearLine(21, 50, function() {
-					presentMessage(library_string);
+
+			canEnterBIOS = false;
+
+			if (BIOSMode) {
+				let date = new Date();
+
+				let timeString = new Intl.DateTimeFormat('en-US', { hour: 'numeric', hour12: false, minute: 'numeric', second: 'numeric' }).format(date)
+				let dateString = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(date)
+
+				let processed_bios_string = bios_string.replace("TIME", timeString).replace("DATE", dateString);
+
+				presentMessage(processed_bios_string);
+			} else {
+				beepAudio.play();
+
+				presentMessage(processed_boot_string, function() {
+					clearScreen();
+					presentMessage(system_string, function() {
+						clearLine(21, 50, function() {
+							presentMessage(library_string);
+						});
+					});
 				});
-			});
+			}
 		});
 	}
 }
@@ -214,6 +279,27 @@ function linkBack() {
 
 function linkOriginal() {
 	window.open(`${projectLinks[currentProjectIndex]}/index.html`, "_blank"); 
+}
+
+function linkBoot() {
+	let date = new Date();
+	let dateString = date.toLocaleString();    
+	let processed_boot_string = boot_string.replace("DATE", dateString);
+
+	clearLine(21, 70, function() {
+		setTimeout(function() {
+			beepAudio.play();
+
+			presentMessage(processed_boot_string, function() {
+				clearScreen();
+				presentMessage(system_string, function() {
+					clearLine(21, 50, function() {
+						presentMessage(library_string);
+					});
+				});
+			});
+		}, 1500);
+	});
 }
 
 function shutdown() {
@@ -308,6 +394,10 @@ function clearLine(numberOfLines = 1, delay = 0, callback) {
 	}
 }
 
+function handleKeyDown(event) {
+	if (event.keyCode == 27 && canEnterBIOS) { BIOSMode = true; }
+}
+
 function calculateScreenSize() {
 	if ($('#display-container').width() < 800) {
         let widthRatio = $('#display-container').width() / 800;
@@ -323,13 +413,16 @@ function calculateScreenSize() {
 	}
 }
 
-$("body").click(function() {
+document.body.addEventListener('click', function() {
 	startup();
 });
 
-$(window).resize(function() {
-	calculateScreenSize();
+window.addEventListener('keydown', function(event){
+    handleKeyDown(event);
 });
+
+window.onresize = function() { calculateScreenSize(); }
+window.onorientationchange = function() { calculateScreenSize(); }
 
 function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
