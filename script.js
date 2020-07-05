@@ -282,6 +282,8 @@ function linkOriginal() {
 }
 
 function linkBoot() {
+	BIOSMode = false;
+
 	let date = new Date();
 	let dateString = date.toLocaleString();    
 	let processed_boot_string = boot_string.replace("DATE", dateString);
