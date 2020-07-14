@@ -1,5 +1,8 @@
 const regexTiming = /(\d+)\|(\d+)\)\%([^\x05]*)/;
 
+const about_link = "https://github.com/McKiddo";
+const github_link = "https://github.com/McKiddo/mckiddo.github.io";
+
 const pre_boot_string = "%(500|1)%\
 \n\n\
      ▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀▀▀▀▀     ▀▀▀▀▀▀▀       ▀▀▀▀▀▀▀     \n\
@@ -64,33 +67,33 @@ const bios_string = "\
 "
 
 const system_string = "\
-A:\\>dir\n\
+A:\\Archive>dir\n\
  Volume in drive A has no label\n\
- Directory of A:\\\n\
 \n\
-2020-03-05  12:31 AM      2,400 beep.mp3\n\
-2019-12-10  10:32 AM    <DIR>   gmod\n\
-2020-03-04  06:02 PM      7,244 homelib.exe\n\
-2019-12-10  10:32 AM    215,526 ibm_monitor.png\n\
-2020-03-05  11:58 AM    351,675 idle_loop.mp3\n\
-2020-03-05  09:38 AM        674 index.html\n\
-2019-12-10  10:32 AM        584 led.png\n\
-2019-12-10  10:32 AM     70,956 PxPlus_IBM_VGA8.ttf\n\
-2019-12-24  09:46 AM    <DIR>   random\n\
-2020-03-05  06:05 PM      7,875 script.js\n\
-2020-03-05  12:14 PM     64,389 shutdown.mp3\n\
-2020-03-05  11:58 AM    263,316 startup.mp3\n\
-2020-03-04  05:20 PM      1,522 style.css\n\
-             10 File(s) 971,011 bytes\n\
+ Directory of A:\\Archive\n\
+\n\
+07/01/2020  01:14 AM    <DIR>          .\n\
+07/01/2020  01:14 AM    <DIR>          ..\n\
+12/08/2019  11:21 PM    <DIR>          gmod\n\
+07/01/2020  01:01 AM    <DIR>          home_audio\n\
+03/08/2020  10:23 PM           254,729 ibm_monitor.png\n\
+07/05/2020  01:47 PM               814 index.html\n\
+12/10/2019  02:32 AM               584 led.png\n\
+01/16/2016  01:00 AM            70,956 PxPlus_IBM_VGA8.ttf\n\
+07/01/2020  01:08 AM    <DIR>          random\n\
+07/14/2020  09:37 PM            17,635 script.js\n\
+07/05/2020  01:47 PM             1,796 style.css\n\
+               6 File(s)        346,514 bytes\n\
+               5 Dir(s)         278,256 bytes free\n\
 \n\
 %(300|1)%\
-A:\\>homelib\n\
+A:\\>homelib_2\n\
 %(300|1)%\
-Loading Library:%(100|50)%......%(400|500)%...%(2400|20)%..........%(200|5)%........................";
+Loading Archive:%(100|50)%......%(400|500)%...%(2400|20)%..........%(200|5)%........................";
 
 const library_string = "%(0|3)%\
-                               ╔═╗┌┬┐┬ ┬┌─┐┌─┐             \n\
-                    Welcome to ╚═╗ │ │ │├┤ ├┤              \n\
+      Welcome to...            ╔═╗┌┬┐┬ ┬┌─┐┌─┐             \n\
+                          𝓣𝓱𝓮 ╚═╗ │ │ │├┤ ├┤              \n\
      █████╗ ██████╗  ██████╗██╗╚═╝ ┴ └─┘└  └ ██╗███████╗   \n\
     ██╔══██╗██╔══██╗██╔════╝██║  ██║██║██║   ██║██╔════╝   \n\
     ███████║██████╔╝██║     ███████║██║██║   ██║█████╗     \n\
@@ -98,26 +101,39 @@ const library_string = "%(0|3)%\
     ██║  ██║██║  ██║╚██████╗██║  ██║██║ ╚████╔╝ ███████╗   \n\
     ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═══╝  ╚══════╝   \n\
 \n\
--=[ Epic pro stuff ]=32ms=-- - ·\n\
+              · - --=[ Featured stuff ]=-- - ·             \n\
 \n\
   > %(0|0)%<a onclick='linkProject(0)' href='javascript:;'>TRION TX-200E</a>%(10|3)% - Hi-Fi stereo cassette player.\n\
-\n\
--=[ Random stuff ]==273ms=-- - ·\n\
 \n\
   > %(0|0)%<a onclick='linkProject(1)' href='javascript:;'>Vocalizer</a>%(10|3)% - cutting-edge voice synthesizer.\n\
   > %(0|0)%<a onclick='linkProject(2)' href='javascript:;'>Detroit running simulator</a>%(10|3)% - it had to be done.\n\
 \n\
-██████████████████████████████████████████████▀▀▀▀▀▀▀▀▀▀▀▀█\n\
-██████████████████████████████████████████████  %(0|0)%<a onclick='shutdown()' href='javascript:;'>SHUTDOWN</a>%(10|3)%  █\n\
-██████████████████████████████████████████████▄▄▄▄▄▄▄▄▄▄▄▄█";
+                                              %(0|0)%<a onclick='linkMore()' href='javascript:;'>More Stuff ></a>%(10|3)% \n\
+\n\
+██▀▀▀▀▀▀▀▀▀██▀▀▀▀▀▀▀▀▀▀███████████████████████▀▀▀▀▀▀▀▀▀▀▀▀█\n\
+██  %(0|0)%<a onclick='linkAbout()' href='javascript:;'>About</a>%(10|3)%  ██  %(0|0)%<a onclick='linkGithub()' href='javascript:;'>GitHub</a>%(10|3)%  ███████████████████████  %(0|0)%<a onclick='shutdown()' href='javascript:;'>SHUTDOWN</a>%(10|3)%  █\n\
+██▄▄▄▄▄▄▄▄▄██▄▄▄▄▄▄▄▄▄▄███████████████████████▄▄▄▄▄▄▄▄▄▄▄▄█";
 
-const link_string = "%(0|0)%<a onclick='linkBack()' href='javascript:;'>← Back</a>                    Preview         <a onclick='linkOriginal()' href='javascript:;'>Open in new tab ↑</a>"
+const more_string = "\n\n\n\n\n\n\n\n\n\
+            · - --=[ Nothing here yet ]=-- - ·\n\
+\n\
+                        [ %(0|0)%<a onclick='linkMoreBack()' href='javascript:;'>Go Back</a>%(0|1)% ]";
+
+const link_string = "%(0|0)%<a onclick='linkProjectBack()' href='javascript:;'>← Back</a>                    Preview         <a onclick='linkOriginal()' href='javascript:;'>Open in new tab ↑</a>"
 
 const shutdown_string = "\n\n\n\n\n\n\n\n\n\
                 IT'S NOW SAFE TO TURN OFF\n\
                       YOUR COMPUTER";
 
-const restore_string = "%(600|1)%Restoring session%(100|60)%....%(100|20)%.........%(100|40)%........%(400|10)%....................."
+const restore_string = "Cache corruption detected.\n\
+System was not shutdown properly.\n\
+\n\
+Reconstructing Cache Metadata.\n\
+Please do not interrupt this process.\n\
+\n\
+%(300|1)%Active Archive session found.\n\
+\n\
+%(600|1)%Restoring session%(100|60)%....%(100|20)%.........%(100|40)%........%(400|10)%....................."
 
 const startupAudio = new Howl({ 
 	src: ['home_audio/startup.mp3'],
@@ -205,8 +221,6 @@ function startup() {
 
 	let fastBoot = Cookies.get("fastBoot");
 
-	Cookies.set("fastBoot", "true", { expires: 1 });
-
 	let date = new Date();
 	let dateString = date.toLocaleString();    
 	let processed_boot_string = boot_string.replace("DATE", dateString);
@@ -220,8 +234,8 @@ function startup() {
 
 	if (fastBoot == "true") {
 		presentMessage(restore_string, function() {
-			clearLine(1, 0, function() {
-				presentMessage(library_string);
+			clearLine(9, 50, function() {
+				presentHomepage();
 			});
 		});
 	} else {
@@ -249,7 +263,7 @@ function startup() {
 					clearScreen();
 					presentMessage(system_string, function() {
 						clearLine(21, 50, function() {
-							presentMessage(library_string);
+							presentHomepage();
 						});
 					});
 				});
@@ -258,8 +272,28 @@ function startup() {
 	}
 }
 
+function linkAbout() {
+	window.open(about_link, "_blank");
+}
+
+function linkGithub() {
+	window.open(github_link, "_blank");
+}
+
+function linkMore() {
+	clearLine(21, 50, function() {
+		presentMessage(more_string);
+	});
+}
+
+function linkMoreBack() {
+	clearLine(12, 50, function() {
+		presentHomepage();
+	});
+}
+
 function linkProject(index) {
-	clearLine(21, 70, function() {
+	clearLine(21, 50, function() {
 		$('#screen-text').css("height", "6%");
 		
 		currentProjectIndex = index;
@@ -270,7 +304,7 @@ function linkProject(index) {
 	});
 }
 
-function linkBack() {
+function linkProjectBack() {
 	$('#screen-embed').remove();
 	
 	$('#screen-text').css("height", "100%");
@@ -298,12 +332,18 @@ function linkBoot() {
 				clearScreen();
 				presentMessage(system_string, function() {
 					clearLine(21, 50, function() {
-						presentMessage(library_string);
+						presentHomepage();
 					});
 				});
 			});
 		}, 1500);
 	});
+}
+
+function presentHomepage() {
+	Cookies.set("fastBoot", "true", { expires: 1 });
+
+	presentMessage(library_string);
 }
 
 function shutdown() {
