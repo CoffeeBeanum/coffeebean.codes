@@ -38,7 +38,7 @@
 }
 
 .text-glow {
-    text-shadow: #ffffffaa 0 0 10px;
+    text-shadow: #ffffffaa 0 0 10px, #ff0000a8 1px 0px 2px, #0008ff99 -1px 0px 1px, #00ff08bd 0px 0px 2px;
 }
 
 .lcd-effect::before {
