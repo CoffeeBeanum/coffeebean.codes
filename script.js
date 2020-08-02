@@ -104,9 +104,9 @@ const library_string = "%(0|3)%\
               · - --=[ Featured stuff ]=-- - ·             \n\
 \n\
   > %(0|0)%<a onclick='linkProject(0)' href='javascript:;'>TRION TX-200E</a>%(10|3)% - Hi-Fi stereo cassette player.\n\
-\n\
-  > %(0|0)%<a onclick='linkProject(1)' href='javascript:;'>Vocalizer</a>%(10|3)% - cutting-edge voice synthesizer.\n\
-  > %(0|0)%<a onclick='linkProject(2)' href='javascript:;'>Detroit running simulator</a>%(10|3)% - it had to be done.\n\
+  > %(0|0)%<a onclick='linkProject(1)' href='javascript:;'>kidTech-Lite</a>%(10|3)% - Next-gen portable raycasting engine.\n\
+  > %(0|0)%<a onclick='linkProject(2)' href='javascript:;'>Vocalizer</a>%(10|3)% - cutting-edge voice synthesizer.\n\
+  > %(0|0)%<a onclick='linkProject(3)' href='javascript:;'>Detroit running simulator</a>%(10|3)% - it had to be done.\n\
 \n\
                                               %(0|0)%<a onclick='linkMore()' href='javascript:;'>More Stuff ></a>%(10|3)% \n\
 \n\
@@ -195,6 +195,7 @@ const activityAudios = [
 
 const projectLinks = [
 	"random/trion",
+	"random/kidtech-lite",
 	"random/vocalizer",
 	"random/connor"
 ];
