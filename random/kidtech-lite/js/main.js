@@ -102,6 +102,8 @@ canvas.height = canvas.width * screenRatio;
 
 let horizon = canvas.height / 2;
 
+let piRatio = Math.PI / 180;
+
 let excludedBlocks = [];
 
 // Drawing funcs
@@ -113,7 +115,6 @@ function drawScene() {
     updateFrame();
 
     drawFastBackground();
-    // drawBackground();
     drawFrame();
 
     finalContext.drawImage(canvas, 0, 0, finalCanvas.width, finalCanvas.height);
@@ -129,26 +130,12 @@ function drawFastBackground() {
     context.fillRect(0, horizon, canvas.width, canvas.height - horizon);
 }
 
-function drawBackground() {
-    let gradient = context.createRadialGradient(canvas.width / 2, horizon - canvas.height * 3, canvas.height * 1.5, canvas.width / 2, horizon - canvas.height * 3, canvas.height * 3);
-    gradient.addColorStop(0, '#9b9595');
-    gradient.addColorStop(1, '#696467');
-    context.fillStyle = gradient;
-    context.fillRect(0, 0, canvas.width, horizon);
-
-    gradient = context.createRadialGradient(canvas.width / 2, horizon + canvas.height * 3, canvas.height * 1.5, canvas.width / 2, horizon + canvas.height * 3, canvas.height * 3);
-    gradient.addColorStop(0, '#887c7f');
-    gradient.addColorStop(1, '#6b6061');
-    context.fillStyle = gradient;
-    context.fillRect(0, horizon, canvas.width, canvas.height - horizon);
-}
-
 function updateFrame() {
     pipeline = [];
 
     // Prepare all rays
     for (let onScreenX = 0; onScreenX < canvas.width; onScreenX++) {
-        let relativeRayAngle = Math.atan((onScreenX - canvas.width / 2) / 100) * 180 / Math.PI;
+        let relativeRayAngle = Math.atan((onScreenX - canvas.width / 2) / (canvas.width / 2.14)) * 180 / Math.PI;
 
         calculateScanLine(relativeRayAngle, onScreenX);
     }
@@ -160,8 +147,8 @@ function updateFrame() {
         if (relativeAngle <= -360) relativeAngle += 360;
         relativeAngle *= -1;
 
-        if ((relativeAngle >= 0 && relativeAngle <= 90) || (relativeAngle >= 270 && relativeAngle <= 360) ||
-            (relativeAngle <= 0 && relativeAngle >= -90) || (relativeAngle <= -270 && relativeAngle >= -360)) {
+        if ((relativeAngle >= 0 && relativeAngle <= 70) || (relativeAngle >= 290 && relativeAngle <= 360) ||
+            (relativeAngle <= 0 && relativeAngle >= -70) || (relativeAngle <= -290 && relativeAngle >= -360)) {
 
             object.relativeAngle = relativeAngle;
             object.distance = Math.abs(Math.sqrt(Math.pow(object.x - thisPlayer.x, 2) + Math.pow(object.y - thisPlayer.y, 2)));
@@ -176,8 +163,8 @@ function calculateScanLine(x, onScreenX) {
     let ray = new Ray(
         Math.floor(thisPlayer.x),
         Math.floor(thisPlayer.y),
-        Math.cos((thisPlayer.rotation + x) * (Math.PI / 180)),
-        Math.sin((thisPlayer.rotation + x) * (Math.PI / 180))
+        Math.cos((thisPlayer.rotation + x) * piRatio),
+        Math.sin((thisPlayer.rotation + x) * piRatio)
     );
 
     calculateRayDirection(ray);
@@ -261,7 +248,7 @@ function performRaycast(ray, x, onScreenX, layer) {
 }
 
 function rayHit(ray, x, onScreenX) {
-    let correction = Math.cos(x * (Math.PI / 180));
+    let correction = Math.cos(x * piRatio);
     let perpWallDist;
 
     let jumps = ray.coordJumps.length;
@@ -288,7 +275,7 @@ function rayHit(ray, x, onScreenX) {
     }
 
     // Calculate height of line to draw on screen
-    let lineHeight = canvas.height / perpWallDist / screenRatio / 6.5 / correction;
+    let lineHeight = canvas.height / perpWallDist / screenRatio / 4.5 / correction;
 
     //calculate value of wallX
     if (ray.side === 0) ray.sector = thisPlayer.y + perpWallDist * ray.dirY;
@@ -353,11 +340,11 @@ function drawObject(object) {
     let spriteX = object.x - thisPlayer.x;
     let spriteY = object.y - thisPlayer.y;
 
-    let dirX = Math.cos(thisPlayer.rotation * (Math.PI / 180));
-    let dirY = Math.sin(thisPlayer.rotation * (Math.PI / 180));
+    let dirX = Math.cos(thisPlayer.rotation * piRatio);
+    let dirY = Math.sin(thisPlayer.rotation * piRatio);
 
-    let planeX = -Math.sin(thisPlayer.rotation * (Math.PI / 180));
-    let planeY = Math.cos(thisPlayer.rotation * (Math.PI / 180));
+    let planeX = -Math.sin(thisPlayer.rotation * piRatio);
+    let planeY = Math.cos(thisPlayer.rotation * piRatio);
 
     let invDet = 1 / (planeX * dirY - dirX * planeY);
 
@@ -366,6 +353,8 @@ function drawObject(object) {
 
     let spriteScreenX = Math.floor(canvas.width / 2 * (1 + transformX / transformY));
 
+    let spriteHeight = Math.floor(canvas.height / transformY / screenRatio / 2);
+
     // Draw sprite
     if (object.type >= 0) {
         let spriteGroup = getSprite(object.type);
@@ -373,14 +362,13 @@ function drawObject(object) {
 
         if (spriteGroup.length > 1) {
             let angle = -Math.abs(thisPlayer.rotation) + Math.abs(object.rotation) + object.relativeAngle + 360 / spriteGroup.length / 2;
-            if (angle < 0) angle += 360;
             angle = angle % 360;
+            if (angle < 0) angle += 360;
             let index = Math.floor((360 - angle) / 360 * spriteGroup.length);
 
             sprite = spriteGroup[index];
         }
 
-        let spriteHeight = Math.floor(canvas.height / (transformY) / screenRatio / 3);
         let spriteWidth = sprite.width / sprite.height * spriteHeight;
 
         context.drawImage(sprite, spriteScreenX - spriteWidth / 2,
@@ -390,15 +378,11 @@ function drawObject(object) {
     }
 
     // Draw name
-    if (object.name !== '' && object.distance < 6) {
-        let alpha = 0;
-        if (object.distance < 6) alpha = (6 - object.distance) / 6;
-        context.globalAlpha = alpha;
-        context.font = `${7 / object.distance}pt Oswald`;
+    if (object.name !== '' && spriteHeight > 20) {
+        context.font = `${spriteHeight / 16}pt Oswald`;
         context.fillStyle = '#ebebeb';
         context.textAlign = 'center';
-        context.fillText(object.name, spriteScreenX, horizon - 20 / object.distance);
-        context.globalAlpha = 1;
+        context.fillText(object.name, spriteScreenX, horizon - 0.15 * spriteHeight);
     }
 }
 
@@ -455,17 +439,17 @@ function drawMiniMap() {
 
     finalContext.fillStyle = 'darkgrey';
 
-    let cos = Math.cos((thisPlayer.rotation - fov / 2) * (Math.PI / 180));
-    let sin = Math.sin((thisPlayer.rotation - fov / 2) * (Math.PI / 180));
+    let cos = Math.cos((thisPlayer.rotation - fov / 2) * piRatio);
+    let sin = Math.sin((thisPlayer.rotation - fov / 2) * piRatio);
 
     finalContext.beginPath();
     finalContext.moveTo(offset + thisPlayer.x * cellSize, offset + thisPlayer.y * cellSize);
     finalContext.lineTo(offset + (thisPlayer.x + cos) * cellSize, offset + (thisPlayer.y + sin) * cellSize);
 
-    finalContext.arc(offset + thisPlayer.x * cellSize, offset + thisPlayer.y * cellSize, playerFovSize, (thisPlayer.rotation - fov / 2) * (Math.PI / 180), (thisPlayer.rotation + fov / 2) * (Math.PI / 180), false);
+    finalContext.arc(offset + thisPlayer.x * cellSize, offset + thisPlayer.y * cellSize, playerFovSize, (thisPlayer.rotation - fov / 2) * piRatio, (thisPlayer.rotation + fov / 2) * piRatio, false);
 
-    cos = Math.cos((thisPlayer.rotation + fov / 2) * (Math.PI / 180));
-    sin = Math.sin((thisPlayer.rotation + fov / 2) * (Math.PI / 180));
+    cos = Math.cos((thisPlayer.rotation + fov / 2) * piRatio);
+    sin = Math.sin((thisPlayer.rotation + fov / 2) * piRatio);
     finalContext.moveTo(offset + thisPlayer.x * cellSize, offset + thisPlayer.y * cellSize);
     finalContext.lineTo(offset + (thisPlayer.x + cos) * cellSize, offset + (thisPlayer.y + sin) * cellSize);
     finalContext.lineTo(offset + (thisPlayer.x + cos) * cellSize, offset + (thisPlayer.y + sin) * cellSize);
@@ -514,20 +498,20 @@ let playerSize = 0.3;
 // Physics funcs
 function updatePlayerState() {
     if (currentKeyState.w) {
-        thisPlayer.speedX += acceleration * Math.cos(thisPlayer.rotation * (Math.PI / 180));
-        thisPlayer.speedY += acceleration * Math.sin(thisPlayer.rotation * (Math.PI / 180));
+        thisPlayer.speedX += acceleration * Math.cos(thisPlayer.rotation * piRatio);
+        thisPlayer.speedY += acceleration * Math.sin(thisPlayer.rotation * piRatio);
     }
     if (currentKeyState.s) {
-        thisPlayer.speedX -= acceleration * Math.cos(thisPlayer.rotation * (Math.PI / 180));
-        thisPlayer.speedY -= acceleration * Math.sin(thisPlayer.rotation * (Math.PI / 180));
+        thisPlayer.speedX -= acceleration * Math.cos(thisPlayer.rotation * piRatio);
+        thisPlayer.speedY -= acceleration * Math.sin(thisPlayer.rotation * piRatio);
     }
     if (currentKeyState.a) {
-        thisPlayer.speedX += acceleration * Math.cos((thisPlayer.rotation - 90) * (Math.PI / 180));
-        thisPlayer.speedY += acceleration * Math.sin((thisPlayer.rotation - 90) * (Math.PI / 180));
+        thisPlayer.speedX += acceleration * Math.cos((thisPlayer.rotation - 90) * piRatio);
+        thisPlayer.speedY += acceleration * Math.sin((thisPlayer.rotation - 90) * piRatio);
     }
     if (currentKeyState.d) {
-        thisPlayer.speedX += acceleration * Math.cos((thisPlayer.rotation + 90) * (Math.PI / 180));
-        thisPlayer.speedY += acceleration * Math.sin((thisPlayer.rotation + 90) * (Math.PI / 180));
+        thisPlayer.speedX += acceleration * Math.cos((thisPlayer.rotation + 90) * piRatio);
+        thisPlayer.speedY += acceleration * Math.sin((thisPlayer.rotation + 90) * piRatio);
     }
 }
 
@@ -570,6 +554,7 @@ function updatePlayerPosition(deltaTime) {
     thisPlayer.x = thisPlayer.x.toFixedNumber(3);
     thisPlayer.y = thisPlayer.y.toFixedNumber(3);
     thisPlayer.rotation = thisPlayer.rotation.toFixedNumber(1);
+    horizon = horizon.toFixedNumber(1);
 
     if (world[Math.floor(thisPlayer.y)][Math.floor(thisPlayer.x)] === 10) {
         let portal = portals.filter(function (a) {
