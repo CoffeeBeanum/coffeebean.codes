@@ -210,11 +210,22 @@ var on = false;
 var BIOSMode = false;
 var canEnterBIOS = false;
 
-var currentProjectIndex = 0;
+var currentProjectIndex = -1;
+
+var urlParams = new URLSearchParams(document.location.search.substring(1));
 
 window.addEventListener('load', function () {
 	calculateScreenSize();
 })
+
+function parseURLParameters() {
+	if (urlParams.has("project")) {
+		currentProjectIndex = urlParams.get("project");
+		Cookies.set("fastBoot", "true", { expires: 1 });
+		startup();
+	}
+}
+parseURLParameters();
 
 function startup() {
 	if (on == true) { return }
@@ -236,7 +247,9 @@ function startup() {
 	if (fastBoot == "true") {
 		presentMessage(restore_string, function() {
 			clearLine(9, 50, function() {
-				presentHomepage();
+				if (currentProjectIndex >= 0) {
+					linkProject(currentProjectIndex);
+				} else presentHomepage();
 			});
 		});
 	} else {
@@ -299,6 +312,8 @@ function linkProject(index) {
 		
 		currentProjectIndex = index;
 		
+		updateUrl();
+
 		presentMessage(link_string);
 		
 		$('#screen-container').append(`<object id='screen-embed' data='${projectLinks[index]}/index.html'>`);
@@ -309,9 +324,9 @@ function linkProjectBack() {
 	$('#screen-embed').remove();
 	
 	$('#screen-text').css("height", "100%");
-	
+
 	clearScreen();
-	presentMessage(library_string);
+	presentHomepage();
 }
 
 function linkOriginal() {
@@ -342,6 +357,9 @@ function linkBoot() {
 }
 
 function presentHomepage() {
+	currentProjectIndex = -1;
+	updateUrl();
+
 	Cookies.set("fastBoot", "true", { expires: 1 });
 
 	presentMessage(library_string);
@@ -437,6 +455,23 @@ function clearLine(numberOfLines = 1, delay = 0, callback) {
 
 		scheduledRemoval ++;
 	}
+}
+
+function updateUrl() {
+	if (currentProjectIndex >= 0) {
+		urlParams.set("project", currentProjectIndex);
+		console.log("miss");
+	} else {
+		urlParams.delete("project");
+		console.log("hit");
+	}
+
+
+	let url = location.protocol + '//' + location.host + location.pathname;
+	let params = '?' + urlParams.toString();
+	if (params == '?') params = '';
+	
+	history.pushState({}, null, url + params);
 }
 
 function handleKeyDown(event) {
