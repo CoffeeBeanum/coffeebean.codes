@@ -222,7 +222,6 @@ function parseURLParameters() {
 	if (urlParams.has("project")) {
 		currentProjectIndex = urlParams.get("project");
 		Cookies.set("fastBoot", "true", { expires: 1 });
-		startup();
 	}
 }
 parseURLParameters();
