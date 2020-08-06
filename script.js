@@ -104,9 +104,9 @@ const library_string = "%(0|3)%\
               · - --=[ Featured stuff ]=-- - ·             \n\
 \n\
   > %(0|0)%<a onclick='linkProject(0)' href='javascript:;'>TRION TX-200E</a>%(10|3)% - Hi-Fi stereo cassette player.\n\
+\n\
   > %(0|0)%<a onclick='linkProject(1)' href='javascript:;'>kidTech-Lite</a>%(10|3)% - Next-gen portable raycasting engine.\n\
   > %(0|0)%<a onclick='linkProject(2)' href='javascript:;'>Vocalizer</a>%(10|3)% - cutting-edge voice synthesizer.\n\
-  > %(0|0)%<a onclick='linkProject(3)' href='javascript:;'>Detroit running simulator</a>%(10|3)% - it had to be done.\n\
 \n\
                                               %(0|0)%<a onclick='linkMore()' href='javascript:;'>More Stuff ></a>%(10|3)% \n\
 \n\
@@ -196,9 +196,14 @@ const activityAudios = [
 const projectLinks = [
 	"random/trion",
 	"random/kidtech-lite",
-	"random/vocalizer",
-	"random/connor"
+	"random/vocalizer"
 ];
+
+const projectSoundMute = [
+	true,
+	true,
+	true
+]
 
 function playActivitySound(forced) {
 	if (forced || getRandomInt(0, 5) == 0) {
@@ -306,6 +311,8 @@ function linkMoreBack() {
 }
 
 function linkProject(index) {
+	if (projectSoundMute[index]) { muteAmbient(); }
+
 	clearLine(21, 50, function() {
 		$('#screen-text').css("height", "6%");
 		
@@ -320,6 +327,8 @@ function linkProject(index) {
 }
 
 function linkProjectBack() {
+	if (projectSoundMute[currentProjectIndex]) { unmuteAmbient(); }
+
 	$('#screen-embed').remove();
 	
 	$('#screen-text').css("height", "100%");
@@ -459,18 +468,25 @@ function clearLine(numberOfLines = 1, delay = 0, callback) {
 function updateUrl() {
 	if (currentProjectIndex >= 0) {
 		urlParams.set("project", currentProjectIndex);
-		console.log("miss");
 	} else {
 		urlParams.delete("project");
-		console.log("hit");
 	}
-
 
 	let url = location.protocol + '//' + location.host + location.pathname;
 	let params = '?' + urlParams.toString();
 	if (params == '?') params = '';
 	
 	history.pushState({}, null, url + params);
+}
+
+function muteAmbient() {
+	startupAudio.fade(idleAudio.volume(), 0, 2000);
+	idleAudio.fade(idleAudio.volume(), 0, 2000);
+}
+
+function unmuteAmbient() {
+	startupAudio.fade(startupAudio.volume(), 0.4, 1000);
+	idleAudio.fade(idleAudio.volume(), 0.4, 1000);
 }
 
 function handleKeyDown(event) {
