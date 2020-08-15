@@ -3,7 +3,8 @@ const textureNames = [
     'resources/textures/walls/error.png',
     'resources/textures/walls/brick_wall.png',
     'resources/textures/walls/metal_arch.png',
-    'resources/textures/walls/metal_window.png'
+    'resources/textures/walls/metal_window.png',
+    'resources/textures/walls/concrete.png'
 ];
 
 const decalNames = [
@@ -13,7 +14,9 @@ const decalNames = [
     'resources/textures/decals/warning.png',
     'resources/textures/decals/metal_plate.png',
     'resources/textures/decals/lag_room.png',
-    'resources/textures/decals/epic_decals.png'
+    'resources/textures/decals/epic_decals.png',
+    'resources/textures/decals/test_alpha.png',
+    'resources/textures/decals/lamp.png'
 ];
 
 const spriteNames = [
@@ -84,16 +87,39 @@ const spriteNames = [
     ]
 ];
 
+const tempCanvas = document.getElementById("tempCanvas");
+const tempContext = tempCanvas.getContext("2d", { alpha: true });
+
+let skybox = new Image();
+skybox.src = "resources/skybox_night.jpg";
+
+function Texture(data, width, height) {
+    this.data = data;
+    this.width = width;
+    this.height = height;
+}
+
 // Texture loading
 let textures = [];
 
 for (let i = 0; i < textureNames.length; i++) {
-    let temp = new Image();
-    temp.src = textureNames[i];
-    textures.push(temp);
+    let tempImage = new Image();
+    tempImage.src = textureNames[i];
+
+    tempImage.onload = function() {
+        tempCanvas.width = tempImage.width;
+        tempCanvas.height = tempImage.height;
+        tempContext.drawImage(tempImage, 0, 0);
+
+        let imageData = tempContext.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+
+        let texture = new Texture(imageData.data, imageData.width, imageData.height);
+
+        textures[i] = texture;
+    }
 }
 
-function getWallTexture(index) {
+function getTexture(index) {
     if (index > textures.length - 1) { index = 0; }
     return textures[index];
 }
@@ -102,9 +128,20 @@ function getWallTexture(index) {
 let decals = [];
 
 for (let i = 0; i < decalNames.length; i++) {
-    let temp = new Image();
-    temp.src = decalNames[i];
-    decals.push(temp);
+    let tempImage = new Image();
+    tempImage.src = decalNames[i];
+    
+    tempImage.onload = function() {
+        tempCanvas.width = tempImage.width;
+        tempCanvas.height = tempImage.height;
+        tempContext.drawImage(tempImage, 0, 0);
+
+        let imageData = tempContext.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+
+        let texture = new Texture(imageData.data, imageData.width, imageData.height);
+
+        decals[i] = texture;
+    }
 }
 
 function getDecal(index) {
@@ -116,13 +153,25 @@ function getDecal(index) {
 let sprites = [];
 
 for (let i = 0; i < spriteNames.length; i++) {
-    let tempList = [];
+
     for (let index = 0; index < spriteNames[i].length; index++) {
-        let temp = new Image();
-        temp.src = spriteNames[i][index];
-        tempList.push(temp);
+        let tempImage = new Image();
+        tempImage.src = spriteNames[i][index];
+        
+        sprites[i] = [];
+
+        tempImage.onload = function() {
+            tempCanvas.width = tempImage.width;
+            tempCanvas.height = tempImage.height;
+            tempContext.drawImage(tempImage, 0, 0);
+
+            let imageData = tempContext.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+
+            let texture = new Texture(imageData.data, imageData.width, imageData.height);
+
+            sprites[i][index] = texture;
+        }
     }
-    sprites.push(tempList);
 }
 
 function getSprite(index) {
