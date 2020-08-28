@@ -121,9 +121,11 @@ const more_string = "\n\n\n\n\n\n\n\n\n\
 
 const link_string = "%(0|0)%<a onclick='linkProjectBack()' href='javascript:;'>← Back</a>                    Preview         <a onclick='linkOriginal()' href='javascript:;'>Open in new tab ↑</a>"
 
-const shutdown_string = "\n\n\n\n\n\n\n\n\n\
-                IT'S NOW SAFE TO TURN OFF\n\
-                      YOUR COMPUTER";
+const shutdown_string = "\n\n\n\n\n\n\n\n\
+              ╔═══════════════════════════╗\n\
+              ║ IT'S NOW SAFE TO TURN OFF ║\n\
+              ║       YOUR COMPUTER       ║\n\
+              ╚═══════════════════════════╝";
 
 const restore_string = "Cache corruption detected.\n\
 System was not shutdown properly.\n\
@@ -243,6 +245,9 @@ function startup() {
 
 	shutdownAudio.stop();
 	startupAudio.play();
+
+	$("#screen-text").css("animation", "turn-on 2s linear");
+	$("#screen-text").css("animation-fill-mode", "forwards");
 	
 	$("#led-image").fadeOut(100);
 	
@@ -384,9 +389,11 @@ function shutdown() {
 		presentMessage(shutdown_string);
 
 		setTimeout(function() {
-			clearScreen();
 			on = false;
 			$("#led-image").fadeIn(100);
+
+			$("#screen-text").css("animation", "turn-off 0.55s cubic-bezier(0.23, 1, 0.32, 1)");
+			$("#screen-text").css("animation-fill-mode", "forwards");
 		}, 1500);
 	});
 }
