@@ -21,7 +21,7 @@ const pre_boot_string = "%(500|1)%\
 ║   Usage of this system may be monitored and recorded.   ║\n\
 ╚═════════════════════════════════════════════════════════╝\n\
 \n\n\n\
-Press ESC to enter BIOS\
+Press ESC to enter BIOS            Press SPACE to skip boot\
 %(1800|1)% "
 
 const boot_string = "%(0|1)%\
@@ -154,6 +154,20 @@ const shutdownAudio = new Howl({
 	volume: 0.4
 });
 
+const crtStartupAudio = new Howl({ 
+	src: ['home_audio/crt_startup.mp3'],
+	autoplay: false,
+	loop: false,
+	volume: 0.4
+});
+
+const crtShutdownAudio = new Howl({
+	src: ['home_audio/crt_shutdown.mp3'],
+	autoplay: false,
+	loop: false,
+	volume: 0.4
+});
+
 const idleAudio = new Howl({
 	src: ['home_audio/idle_loop.mp3'],
 	autoplay: false,
@@ -215,6 +229,7 @@ function playActivitySound(forced) {
 
 var on = false;
 var BIOSMode = false;
+var skipBoot = false;
 var canEnterBIOS = false;
 
 var currentProjectIndex = -1;
@@ -244,7 +259,10 @@ function startup() {
 	let processed_boot_string = boot_string.replace("DATE", dateString);
 
 	shutdownAudio.stop();
+	crtShutdownAudio.stop();
+
 	startupAudio.play();
+	crtStartupAudio.play();
 
 	$("#screen-text").css("animation", "turn-on 2s linear");
 	$("#screen-text").css("animation-fill-mode", "forwards");
@@ -279,6 +297,10 @@ function startup() {
 				let processed_bios_string = bios_string.replace("TIME", timeString).replace("DATE", dateString);
 
 				presentMessage(processed_bios_string);
+			} else if (skipBoot) {
+				if (currentProjectIndex >= 0) {
+					linkProject(currentProjectIndex);
+				} else presentHomepage();
 			} else {
 				beepAudio.play();
 
@@ -382,7 +404,9 @@ function shutdown() {
 	Cookies.set("fastBoot", "false", { expires: 1 });
 
 	startupAudio.stop();
+	crtStartupAudio.stop();
 	idleAudio.stop();
+
 	shutdownAudio.play();
 
 	clearLine(21, 70, function() {
@@ -394,6 +418,8 @@ function shutdown() {
 
 			$("#screen-text").css("animation", "turn-off 0.55s cubic-bezier(0.23, 1, 0.32, 1)");
 			$("#screen-text").css("animation-fill-mode", "forwards");
+			
+			crtShutdownAudio.play();
 		}, 1500);
 	});
 }
@@ -498,6 +524,7 @@ function unmuteAmbient() {
 
 function handleKeyDown(event) {
 	if (event.keyCode == 27 && canEnterBIOS) { BIOSMode = true; }
+	if (event.keyCode == 32 && canEnterBIOS) { skipBoot = true; }
 }
 
 function calculateScreenSize() {
