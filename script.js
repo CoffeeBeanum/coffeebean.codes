@@ -369,8 +369,6 @@ function linkOriginal() {
 }
 
 function linkBoot() {
-	BIOSMode = false;
-
 	let date = new Date();
 	let dateString = date.toLocaleString();    
 	let processed_boot_string = boot_string.replace("DATE", dateString);
@@ -392,6 +390,9 @@ function linkBoot() {
 }
 
 function presentHomepage() {
+	BIOSMode = false;
+	skipBoot = false;
+
 	currentProjectIndex = -1;
 	updateUrl();
 
