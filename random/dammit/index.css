@@ -1,12 +1,19 @@
+body, html {
+    height: 100%;
+	margin: 0;
+}
+
 body {
+    overflow: hidden;
     background: #496178;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 #dammit {
+    position: relative;
 	image-rendering: pixelated;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
     width: 20%;
 	cursor: pointer;
 }

@@ -15,9 +15,9 @@ dammit3.volume = 0.4;
 beep1.onended = function() { dammit() };
 beep2.onended = function() { dammit() };
 
-dammit1.onended = function() { dammit() };
-dammit2.onended = function() { dammit() };
-dammit3.onended = function() { dammit() };
+dammit1.onended = function() { started = false; };
+dammit2.onended = function() { started = false; };
+dammit3.onended = function() { started = false; };
 
 let started = false;
 
@@ -34,20 +34,20 @@ function dammit() {
 
     switch (rand) {
         case 0:
-			dammit1.playbackRate = Math.random() * (0.7 - 1.7) + 1.7;
+			dammit1.playbackRate = -Math.random() + 1.7;
             dammit1.play();
             break;
         case 1:
-			dammit2.playbackRate = Math.random() * (0.7 - 1.7) + 1.7;
+			dammit2.playbackRate = -Math.random() + 1.7;
             dammit2.play();
             break;
         case 2:
-			dammit3.playbackRate = Math.random() * (0.7 - 1.7) + 1.7;
+			dammit3.playbackRate = -Math.random() + 1.7;
             dammit3.play();
     }
 }
 
-function start() {
+function playMessage() {
     if (!started) {
         beep();
         started = true;

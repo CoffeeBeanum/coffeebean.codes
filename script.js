@@ -264,6 +264,8 @@ function startup() {
 	startupAudio.play();
 	crtStartupAudio.play();
 
+	$("#note-image").css("animation", "note-fly-off 1s ease-in");
+	$("#note-image").css("animation-fill-mode", "forwards");
 	$("#screen-text").css("animation", "turn-on 2s linear");
 	$("#screen-text").css("animation-fill-mode", "forwards");
 	
