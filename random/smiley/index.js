@@ -5,15 +5,37 @@ function getRandomInt(min, max) {
   }
 
 let face = document.getElementById("smiley-face");
+let body = document.getElementById("smiley-body");
 
-let amplitude = document.getElementById("amplitude");
-let frequency = document.getElementById("frequency");
+let faceTranslationAmplitude = document.getElementById("face-translation-amplitude");
+let faceRotationAmplitude = document.getElementById("face-rotation-amplitude");
+let faceFrequency = document.getElementById("face-frequency");
 
-function spaz() {
+let bodyTranslationAmplitude = document.getElementById("body-translation-amplitude");
+let bodyRotationAmplitude = document.getElementById("body-rotation-amplitude");
+let bodyFrequency = document.getElementById("body-frequency");
 
-    face.style.transform = `translate(${getRandomInt(-amplitude.value, amplitude.value)}px, ${getRandomInt(-amplitude.value, amplitude.value)}px)`;
+function faceSpaz() {
+  let xTranslation = getRandomInt(-faceTranslationAmplitude.value, faceTranslationAmplitude.value);
+  let yTranslation = getRandomInt(-faceTranslationAmplitude.value, faceTranslationAmplitude.value);
 
-    window.setTimeout(spaz, 50 - frequency.value);
+  let rotation = getRandomInt(-faceRotationAmplitude.value, faceRotationAmplitude.value);
+
+  face.style.transform = `rotate(${rotation}deg) translate(${xTranslation}px, ${yTranslation}px)`;
+
+  window.setTimeout(faceSpaz, 50 - faceFrequency.value);
 }
 
-spaz();
+function bodySpaz() {
+  let xTranslation = getRandomInt(-bodyTranslationAmplitude.value, bodyTranslationAmplitude.value);
+  let yTranslation = getRandomInt(-bodyTranslationAmplitude.value, bodyTranslationAmplitude.value);
+
+  let rotation = getRandomInt(-bodyRotationAmplitude.value, bodyRotationAmplitude.value);
+
+  body.style.transform = `rotate(${rotation}deg) translate(${xTranslation}px, ${yTranslation}px)`;
+
+  window.setTimeout(bodySpaz, 50 - bodyFrequency.value);
+}
+
+faceSpaz();
+bodySpaz();

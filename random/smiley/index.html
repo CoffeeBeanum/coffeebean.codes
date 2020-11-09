@@ -9,16 +9,46 @@
 <body>
 
 <div id="controls">
-    <div>
-        <input type="range" id="amplitude" name="amplitude"
-                min="1" max="50" value="10">
-        <label for="amplitude">Amplitude</label>
+    Face
+    <div class="controls-submenu">
+        <div>
+            <input type="range" id="face-translation-amplitude" name="face-translation-amplitude"
+                    min="1" max="50" value="10">
+            <label for="face-translation-amplitude">Translation amplitude</label>
+        </div>
+    
+        <div>
+            <input type="range" id="face-rotation-amplitude" name="face-rotation-amplitude" 
+                    min="1" max="180" value="10">
+            <label for="face-rotation-amplitude">Rotation amplitude</label>
+        </div>
+            
+        <div>
+            <input type="range" id="face-frequency" name="face-frequency" 
+                    min="0" max="50" value="50">
+            <label for="face-frequency">Spaz frequency</label>
+        </div>
     </div>
-        
-    <div>
-        <input type="range" id="frequency" name="frequency" 
-                min="0" max="50" value="50">
-        <label for="frequency">Frequency</label>
+    <br>
+    Body
+    <div class="controls-submenu">
+        <div>
+            <input type="range" id="body-translation-amplitude" name="body-translation-amplitude"
+                    min="1" max="50" value="10">
+            <label for="body-translation-amplitude">Translation amplitude</label>
+        </div>
+    
+        <div>
+            <input type="range" id="body-rotation-amplitude" name="body-rotation-amplitude" 
+                    min="1" max="180" value="10">
+            <label for="body-rotation-amplitude">Rotation amplitude</label>
+        </div>
+            
+        <div>
+            <input type="range" id="body-frequency" name="body-frequency" 
+                    min="0" max="50" value="50">
+            <label for="body-frequency">Spaz frequency</label>
+        </div>
     </div>
 </div>
 

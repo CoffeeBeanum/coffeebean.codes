@@ -22,3 +22,12 @@ body {
 	top: 10pt;
 	left: 10pt;
 }
+
+.controls-submenu {
+	position: relative;
+	padding: 4pt;
+}
+
+#smiley-face, #smiley-body {
+	transform-origin: 38%;
+}
