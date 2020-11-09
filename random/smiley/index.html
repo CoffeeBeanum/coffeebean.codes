@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="index.css" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <title>Smiley</title>
+</head>
+<body>
+
+<div id="controls">
+    <div>
+        <input type="range" id="amplitude" name="amplitude"
+                min="1" max="50" value="10">
+        <label for="amplitude">Amplitude</label>
+    </div>
+        
+    <div>
+        <input type="range" id="frequency" name="frequency" 
+                min="0" max="50" value="50">
+        <label for="frequency">Frequency</label>
+    </div>
+</div>
+
+<img id="smiley-face" class="centered" src="face.png">
+<img id="smiley-body" class="centered" src="body.png">
+
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="index.js"></script>
+
+</body>
+</html>

@@ -3,7 +3,8 @@ var analyzer;
 Howler.volume(0.4);
 
 // Cache references to DOM elements.
-var elms = ['fileBrowserTitleContainer', 'fileBrowserTitle', 'fileBrowserSubtitle', 'fileBrowserExtra',
+var elms = ['playerContainer',
+			'fileBrowserTitleContainer', 'fileBrowserTitle', 'fileBrowserSubtitle', 'fileBrowserExtra',
 			'cassettePlay', 'cassettePause', 'cassetteDownload',
 			'fileList', 'fileInput', 
 			'trackTitle', 'playbackState', 'playbackPlay', 'playbackPause', 'playbackDownload', 'trackDuration',
@@ -383,9 +384,12 @@ function prepareFFTDisplay() {
 	var barHeight;
 	var x = 0;
 
+	var meanAmplitude = 0;
+
 	function renderFrame() {
 		requestAnimationFrame(renderFrame);
 
+		meanAmplitude = 0;
 		x = 0;
 
 		analyzer.getByteFrequencyData(dataArray);
@@ -393,6 +397,7 @@ function prepareFFTDisplay() {
 		ctx.clearRect(0, 0, analyzerCanvas.width, analyzerCanvas.height);
 
 		for (var i = 0; i < bufferLength; i++) {
+			meanAmplitude += dataArray[i] / 256;
 			barHeight = dataArray[i] / 256 * analyzerCanvas.height;
 			
 			var r = barHeight + (25 * (i/bufferLength));
@@ -404,9 +409,25 @@ function prepareFFTDisplay() {
 
 			x += barWidth + 1;
 		}
+
+		meanAmplitude /= bufferLength;
+
+		glowSize = meanAmplitude * 500;
+
+		var r = barHeight + (100 * meanAmplitude);
+		var g = 250 * meanAmplitude;
+		var b = 150;
+
+		var color = "rgb(" + r + "," + g + "," + b + ")";
+
+		// updateBackgroundGlow(glowSize, color);
 	}
 
 	renderFrame();
+}
+
+function updateBackgroundGlow(size, color) {
+    playerContainer.style.boxShadow = "0 0 " + size + "px " + color;
 }
 
 function removeStatusAnimation() {
