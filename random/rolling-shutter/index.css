@@ -1,0 +1,54 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #222222;
+    color: whitesmoke;
+    font-family: 'VCR';
+}
+
+.bufferCanvas {
+    visibility: hidden;
+    position: absolute;
+    width: 640px;
+    height: 480px;
+	image-rendering: pixelated;
+}
+
+#playerContainer {
+    display: flex;
+    width: 640px;
+    height: 500px;
+}
+
+#videoContainer {
+    visibility: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+#mainCanvas {
+    position: absolute;
+    width: 640px;
+    height: 480px;
+	image-rendering: pixelated;
+    border-radius: 4px 4px 4px 4px;
+}
+
+#controls {
+    position: absolute;
+    width: 640px;
+    margin-top: 480px;
+    padding: 10px;
+}
+
+input {
+    transform: translate(0px, 3px);
+}
