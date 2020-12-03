@@ -184,10 +184,11 @@ body {
     ID styles
 */
 
-#playerContainer {
+#player-container {
     display: flex;
     height: 300px;
     width: 600px;
+    box-shadow: 0 0 100px black;
     border-radius: 4px 4px 4px 4px;
 }
 
