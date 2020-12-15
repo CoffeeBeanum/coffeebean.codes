@@ -18,7 +18,7 @@ var world = {
         [0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,2,1,1,0],
         [0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
         [0,3,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-        [0,3,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+        [0,3,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0],
         [0,3,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
         [0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
         [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
@@ -65,31 +65,28 @@ var world = {
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     ],
     'lightmap': [
-        [7,8,9,8,7,6,5,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
-        [6,7,8,7,6,5,4,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,3,3],
-        [5,6,7,6,5,4,3,3,3,3,3,3,3,3,3,3,3,3,3,4,5,3,3,3,3,3,3],
-        [4,5,6,5,4,3,3,3,3,3,3,3,3,3,3,3,3,3,4,5,6,3,3,3,3,3,3],
-        [3,4,5,4,3,3,3,3,3,3,3,3,3,3,3,3,3,4,5,6,7,3,3,3,3,3,3],
-        [3,3,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,6,7,8,3,3,3,3,3,3],
-        [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,6,7,9,3,3,3,3,3,3],
-        [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,6,7,8,3,3,3,3,3,3],
-        [3,3,3,3,3,3,3,3,4,4,4,3,3,3,3,3,3,4,5,6,7,3,3,3,3,3,3],
-        [3,3,3,3,3,3,3,4,5,5,5,4,3,3,3,3,3,3,4,5,6,3,3,3,3,3,3],
-        [3,3,3,3,3,3,4,5,6,6,6,5,4,3,3,3,3,3,3,4,5,3,3,3,3,3,3],
-        [4,4,3,3,3,4,5,6,7,7,7,6,5,4,3,3,3,3,3,3,3,3,3,3,3,3,3],
-        [5,5,4,3,4,5,6,7,8,8,8,7,6,5,4,3,3,3,3,3,3,3,3,3,3,3,3],
-        [6,6,5,4,4,5,6,7,8,9,8,7,6,5,4,3,3,3,3,3,3,3,3,3,3,3,3],
-        [7,7,7,5,4,5,6,7,8,8,8,7,6,5,4,3,3,4,5,5,5,4,3,3,3,3,3],
-        [8,8,7,6,5,4,5,6,7,7,7,6,5,4,3,3,4,5,6,6,6,5,4,3,3,3,3],
-        [9,9,8,7,5,4,4,5,6,6,6,5,4,3,3,4,5,6,7,7,7,6,5,4,3,3,3],
-        [9,9,7,6,5,4,4,4,5,5,5,4,3,3,4,5,6,7,8,9,8,7,6,5,4,3,3]
+        // [7,8,9,8,7,6,5,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
+        // [6,7,8,7,6,5,4,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,3,3,3],
+        // [5,6,7,6,5,4,3,3,3,3,3,3,3,3,3,3,3,3,3,4,5,3,3,3,3,3,3],
+        // [4,5,6,5,4,3,3,3,3,3,3,3,3,3,3,3,3,3,4,5,6,3,3,3,3,3,3],
+        // [3,4,5,4,3,3,3,3,3,3,3,3,3,3,3,3,3,4,5,6,7,3,3,3,3,3,3],
+        // [3,3,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,6,7,8,3,3,3,3,3,3],
+        // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,6,7,9,3,3,3,3,3,3],
+        // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,6,7,8,3,3,3,3,3,3],
+        // [3,3,3,3,3,3,3,3,4,4,4,3,3,3,3,3,3,4,5,6,7,3,3,3,3,3,3],
+        // [3,3,3,3,3,3,3,4,5,5,5,4,3,3,3,3,3,3,4,5,6,3,3,3,3,3,3],
+        // [3,3,3,3,3,3,4,5,6,6,6,5,4,3,3,3,3,3,3,4,5,3,3,3,3,3,3],
+        // [3,4,3,3,3,4,5,6,7,7,7,6,5,4,3,3,3,3,3,3,3,3,3,3,3,3,3],
+        // [4,5,4,3,4,5,6,7,8,8,8,7,6,5,4,3,3,3,3,3,3,3,3,3,3,3,3],
+        // [5,6,5,4,4,5,6,7,8,9,8,7,6,5,4,3,3,3,3,3,3,3,3,3,3,3,3],
+        // [6,7,6,5,4,5,6,7,8,8,8,7,6,5,4,3,3,4,5,5,5,4,3,3,3,3,3],
+        // [7,8,7,6,5,4,5,6,7,7,7,6,5,4,3,3,4,5,6,6,6,5,4,3,3,3,3],
+        // [8,9,8,7,5,4,4,5,6,6,6,5,4,3,3,4,5,6,7,7,7,6,5,4,3,3,3],
+        // [7,8,7,6,5,4,4,4,5,5,5,4,3,3,4,5,6,7,8,9,8,7,6,5,4,3,3]
     ],
     'width': 0,
     'height': 0
 }
-
-world.width = world.walls[0].length;
-world.height = world.walls.length;
 
 var decals = [
     {"type":2,"x":1,"y":1},
@@ -107,10 +104,11 @@ var decals = [
     {"type":4,"x":20,"y":10},
     {"type":5,"x":23,"y":8},
     // Lights
-    {"type":8,"x":2,"y":0},
-    {"type":8,"x":20,"y":6},
-    {"type":8,"x":19,"y":17},
-    {"type":8,"x":1,"y":16}
+    {"type":8,"x":2,"y":0,"face":3},
+    {"type":8,"x":20,"y":6,"face":0},
+    {"type":8,"x":19,"y":17,"face":1},
+    {"type":8,"x":1,"y":16,"face":2},
+    {"type":8,"x":20,"y":13,"face":0}
 ];
 
 var objects = [
@@ -134,5 +132,86 @@ var portals = [
     [{"x":10,"y":1},{"x":15,"y":1}],
     [{"x":16,"y":1},{"x":11,"y":1}]
 ];
+
+var lights = [
+    {"intensity":1,"x":2,"y":0,"face":3},
+    {"intensity":1,"x":20,"y":6,"face":0},
+    {"intensity":1,"x":19,"y":17,"face":1},
+    {"intensity":1,"x":1,"y":16,"face":2},
+    {"intensity":1,"x":20,"y":13,"face":0}
+];
+
+world.height = world.walls.length;
+world.width = world.walls[0].length;
+world.lightmap = Array.from(Array(world.height), () => new Array(world.width))
+
+const maxLightRefineIterations = 4;
+const lightDistanceFalloff = 0.7;
+const lightDiagonalFalloffFactor = 0.9;
+const ambientLightLevel = 0.2;
+
+for (var y = 0; y < world.height; y++) {
+    for (var x = 0; x < world.width; x++) {
+
+        let ligthmapCell = {
+            "face": [ambientLightLevel, ambientLightLevel, ambientLightLevel, ambientLightLevel],
+            "average": ambientLightLevel
+        };
+
+        world.lightmap[y][x] = ligthmapCell;
+    }
+}
+
+for (var i = 0; i < lights.length; i++) {
+    var light = lights[i];
+
+    world.lightmap[light.y][light.x].face[light.face] = light.intensity;
+    world.lightmap[light.y][light.x].average = light.intensity; 
+}
+
+for (var i = 0; i < maxLightRefineIterations; i++) {
+    let lightmap = { ...world.lightmap };
+
+    for (var y = 0; y < world.height; y++) {
+        for (var x = 0; x < world.width; x++) {
+            let ligthmapCell = lightmap[y][x];
+
+            for (var offY = -1; offY <= 1; offY++) {
+                for (var offX = -1; offX <= 1; offX++) {
+                    if (offX === 0 && offY === 0) continue;
+                    if (y + offY < 0 || y + offY > world.height-1) continue;
+                    if (x + offX < 0 || x + offX > world.width-1) continue;
+                    if (lightmap[y][x].average <= lightmap[y + offY][x + offX].average) continue;
+
+                    let intensity = 0;
+                    let components = 0;
+
+                    if (offY < 0) { intensity += ligthmapCell.face[1]; components++ }
+                    if (offY > 0) { intensity += ligthmapCell.face[3]; components++ }
+
+                    if (offX < 0) { intensity += ligthmapCell.face[0]; components++ }
+                    if (offX > 0) { intensity += ligthmapCell.face[2]; components++ }
+
+                    intensity /= components;
+
+                    let falloff = lightDistanceFalloff;
+                    if (Math.abs(offX) + Math.abs(offY) === 2) falloff *= lightDiagonalFalloffFactor;
+
+                    intensity *= falloff;
+
+                    if (lightmap[y + offY][x + offX].average < intensity) {
+                        lightmap[y + offY][x + offX].average = intensity;
+                        lightmap[y + offY][x + offX].face[0] = intensity;
+                        lightmap[y + offY][x + offX].face[1] = intensity;
+                        lightmap[y + offY][x + offX].face[2] = intensity;
+                        lightmap[y + offY][x + offX].face[3] = intensity;
+                    }
+                }
+            }
+        }
+    }
+
+    world.lightmap = lightmap;
+}
 
 export { world, decals, objects, portals, DEBUG_SOUND, piRatio }

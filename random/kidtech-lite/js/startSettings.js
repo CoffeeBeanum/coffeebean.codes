@@ -7,6 +7,13 @@ const context = canvas.getContext("2d", { alpha: false });
 context.lineWidth = 1;
 context.imageSmoothingEnabled = false;
 
+// UI Canvas
+const uiScaleFactor = 2;
+const uiCanvas = document.getElementById("uiCanvas");
+uiCanvas.width = canvas.width * uiScaleFactor;
+const uiContext = uiCanvas.getContext("2d");
+uiContext.lineWidth = 1;
+
 // Sound
 const debugSound = new Audio(DEBUG_SOUND);
 
@@ -34,4 +41,4 @@ const minimapObjectSize = 1.5;
 const minimapFovSize = 15;
 const minimapFloorColor = 'lightgrey';
 
-export { canvas, context, debugSound, fpsLabel, maxTransparency, drawDistance, tintStrength, fogStartDistance, maxHorizonSkew, minimapOffset, minimapCellSize, minimapObjectSize, minimapFovSize, minimapFloorColor }
+export { canvas, context, uiCanvas, uiContext, uiScaleFactor, debugSound, fpsLabel, maxTransparency, drawDistance, tintStrength, fogStartDistance, maxHorizonSkew, minimapOffset, minimapCellSize, minimapObjectSize, minimapFovSize, minimapFloorColor }

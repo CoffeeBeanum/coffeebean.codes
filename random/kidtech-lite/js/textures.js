@@ -101,12 +101,15 @@ function Texture(data, width, height) {
 
 // Texture loading
 let textures = [];
+let minimapTextures = [];
 
 for (let i = 0; i < textureNames.length; i++) {
     let tempImage = new Image();
     tempImage.src = textureNames[i];
 
-    tempImage.onload = function() {
+    tempImage.onload = function() { 
+        minimapTextures[i] = tempImage;
+
         tempCanvas.width = tempImage.width;
         tempCanvas.height = tempImage.height;
         tempContext.drawImage(tempImage, 0, 0);
@@ -122,6 +125,11 @@ for (let i = 0; i < textureNames.length; i++) {
 function getTexture(index) {
     if (index > textures.length - 1) { index = 0; }
     return textures[index];
+}
+
+function getMinimapTexture(index) {
+    if (index > minimapTextures.length - 1) { index = 0; }
+    return minimapTextures[index];
 }
 
 // Decal loading

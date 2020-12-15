@@ -1,5 +1,5 @@
 import { world, decals, objects, portals, piRatio } from './constants.js'
-import { context, canvas, debugSound, fpsLabel, maxTransparency, drawDistance, tintStrength, fogStartDistance, maxHorizonSkew, minimapOffset, minimapCellSize, minimapObjectSize, minimapFovSize, minimapFloorColor } from './startSettings.js'
+import { context, canvas, uiContext, uiCanvas, uiScaleFactor, debugSound, fpsLabel, maxTransparency, drawDistance, tintStrength, fogStartDistance, maxHorizonSkew, minimapOffset, minimapCellSize, minimapObjectSize, minimapFovSize, minimapFloorColor } from './startSettings.js'
 
 // System lets
 let frameStart;
@@ -53,9 +53,10 @@ function Ray(x, y, dirX, dirY) {
     this.sector = 0; // sector of wall ray hit
     this.coordJumps = [];
     this.lighting = 0;
+    this.face = 0;
 }
 
-function ProcessedRay(onScreenX, textureIndex, textureX, side, distance, onScreenSize, decalIndex, lighting) {
+function ProcessedRay(onScreenX, textureIndex, textureX, side, distance, onScreenSize, decalIndex, lighting, face) {
     this.onScreenX = onScreenX; // onscreen position
     this.textureIndex = textureIndex; // texture index
     this.textureX = textureX; // position on texture
@@ -64,6 +65,7 @@ function ProcessedRay(onScreenX, textureIndex, textureX, side, distance, onScree
     this.onScreenSize = onScreenSize; // ray size on screen
     this.decalIndex = decalIndex;
     this.lighting = lighting;
+    this.face = face;
 }
 
 // Key states
@@ -97,11 +99,13 @@ let frame = context.createImageData(canvas.width, canvas.height);
 
 // Drawing funcs
 function drawScene() {
+    uiContext.clearRect(0, 0, uiCanvas.width, uiCanvas.height);
+
     drawSkybox();
 
     drawFrame();
-    
-    // if (currentKeyState.m) drawMiniMap();
+
+    drawUI();
 }
 
 function drawSkybox() {
@@ -217,7 +221,7 @@ function drawFloorPixel(texture, onScreenX, onScreenY, offsetX, offsetY, lightin
     // Don't draw if resulting alpha is 0
     if (alpha > 0) {
         // Apply lighting
-        let lightingFactor = lighting / 9;
+        let lightingFactor = lighting.average;
         finalR *= lightingFactor;
         finalG *= lightingFactor;
         finalB *= lightingFactor;
@@ -387,7 +391,7 @@ function performBackwardsRaycast(refRay, x, onScreenX) {
     if (ray.x < 0 || ray.x > world.width - 1) return;
 
     // Check if ray has hit a wall
-    if (world.walls[Math.round(ray.y)][Math.round(ray.x)] == ray.hit) return;
+    if (world.walls[Math.round(ray.y)][Math.round(ray.x)] === ray.hit) return;
 
     ray = { ...refRay };
 
@@ -409,7 +413,7 @@ function performBackwardsRaycast(refRay, x, onScreenX) {
     if (ray.x < 0 || ray.x > world.width - 1) return;
 
     // Check if ray has hit a wall
-    if (world.walls[Math.round(ray.y)][Math.round(ray.x)] == ray.hit) {
+    if (world.walls[Math.round(ray.y)][Math.round(ray.x)] === ray.hit) {
         ray.backward = true;
         rayHit(ray, x, onScreenX);
     }
@@ -429,6 +433,14 @@ function rayHit(ray, x, onScreenX) {
     if (ray.backward) {
         ray.dirX *= -1;
         ray.dirY *= -1;
+    }
+
+    if (ray.side > 0) {
+        if (ray.dirY > 0) ray.face = 1;
+        else              ray.face = 3;
+    } else {
+        if (ray.dirX > 0) ray.face = 0;
+        else              ray.face = 2;
     }
 
     if (jumps === 0) {
@@ -461,15 +473,24 @@ function rayHit(ray, x, onScreenX) {
     if (ray.side === 0 && ray.dirX < 0) textureX = 1 - textureX;
     if (ray.side === 1 && ray.dirY > 0) textureX = 1 - textureX;
 
+    // Get decal on wall
     let decalTexture = -1;
     let decal = decals.filter(function (a) {
         return (a.x === Math.round(ray.x) && a.y === Math.round(ray.y));
     });
+
+    // Calculate decal direction if applicable
     if (decal.length > 0) {
-        decalTexture = decal[0].type;
+        if (decal[0].face !== undefined) {
+            if (decal[0].face === ray.face) {
+                decalTexture = decal[0].type;
+            }
+        } else {
+            decalTexture = decal[0].type;
+        }
     }
 
-    let processedRay = new ProcessedRay(onScreenX, ray.hit, textureX, ray.side, Math.abs(perpWallDist), lineHeight, decalTexture, ray.lighting);
+    let processedRay = new ProcessedRay(onScreenX, ray.hit, textureX, ray.side, Math.abs(perpWallDist), lineHeight, decalTexture, ray.lighting, ray.face);
 
     buffer.push(processedRay);
 }
@@ -536,14 +557,6 @@ function drawScanLine(ray) {
         
         // Don't draw if resulting alpha is 0
         if (alpha > 0) {
-            // // Apply side tint
-            // if (ray.side === 0) {
-            //     let tintValue = 1 - tintStrength;
-            //     finalR *= tintValue;
-            //     finalG *= tintValue;
-            //     finalB *= tintValue;
-            // }
-
             // // Apply distance fog
             // if (ray.distance > fogStartDistance) {
             //     finalR *= ray.distance / fogStartDistance;
@@ -552,7 +565,8 @@ function drawScanLine(ray) {
             // }
 
             // Apply lighting
-            let lightingFactor = ray.lighting / 9;
+            let lightingFactor = ray.lighting.face[ray.face];
+
             finalR *= lightingFactor;
             finalG *= lightingFactor;
             finalB *= lightingFactor;
@@ -646,7 +660,8 @@ function drawObject(object) {
                         //     finalB *= object.distance / fogStartDistance;
                         // }
 
-                        let lightingFactor = lighting / 9;
+                        // Apply lighting
+                        let lightingFactor = lighting.average;
                         finalR *= lightingFactor;
                         finalG *= lightingFactor;
                         finalB *= lightingFactor;
@@ -670,93 +685,90 @@ function drawObject(object) {
     }
 
     // Draw name
-    // if (object.name !== '' && spriteHeight > 20) {
-    //     context.font = `${spriteHeight / 16}pt Oswald`;
-    //     context.fillStyle = '#ebebeb';
-    //     context.textAlign = 'center';
-    //     context.shadowColor="black";
-    //     context.shadowBlur = 5;
-    //     context.fillText(object.name, spriteScreenX, horizon - 0.15 * spriteHeight);
-    //     context.shadowBlur = 0;
-    // }
+    if (object.name !== '' && onScreenHeight > 30) {
+        uiContext.font = `${onScreenHeight * uiScaleFactor / 32}pt Oswald`;
+        uiContext.fillStyle = '#ebebeb';
+        uiContext.textAlign = 'center';
+        uiContext.shadowColor="black";
+        uiContext.shadowBlur = 5;
+        uiContext.fillText(object.name, spriteScreenX * uiScaleFactor, horizon * uiScaleFactor - onScreenHeight / 4);
+        uiContext.shadowBlur = 0;
+    }
+}
+
+function drawUI() {
+    if (currentKeyState.m) drawMiniMap();
 }
 
 function drawMiniMap() {
-    context.imageSmoothingEnabled = true;
+    uiContext.imageSmoothingEnabled = true;
 
     // Draw map blocks
     drawMinimapBlocks();
 
     // Draw objects
-    context.fillStyle = '#5fa0ff';
+    uiContext.fillStyle = '#5fa0ff';
     drawMinimapObjects();
 
     // Draw player fov
-    context.fillStyle = 'darkgrey';
+    uiContext.fillStyle = 'darkgrey';
     drawMinimapObjectFov(thisPlayer);
 
     // Draw thisPlayer
-    context.fillStyle = 'grey';
+    uiContext.fillStyle = 'grey';
     drawMinimapObject(thisPlayer);
 
-    context.imageSmoothingEnabled = false;
+    uiContext.imageSmoothingEnabled = false;
 }
 
-// function drawMinimapBlocks() {
-//     for (let y = 0; y < world.length; y++) {
-//         for (let x = 0; x < world.walls[y].length; x++) {
-//             context.fillStyle = minimapFloorColor;
-//             if (world.walls[y][x] !== null) {
-//                 drawMinimapBlock(x, y);
-//             }
-//         }
-//     }
-// }
+function drawMinimapBlocks() {
+    for (let y = 0; y < world.walls.length; y++) {
+        for (let x = 0; x < world.walls[y].length; x++) {
+            drawMinimapBlock(x, y);
+        }
+    }
+}
 
-// function drawMinimapBlock(x, y) {
-//     if (world.walls[y][x] > 0) {
-//         if (transparentBlocks.includes(world.walls[y][x])) context.fillRect(minimapOffset + x * minimapCellSize, minimapOffset + y * minimapCellSize, minimapCellSize, minimapCellSize);
-//         context.drawImage(getTexture(world.walls[y][x]), minimapOffset + x * minimapCellSize, minimapOffset + y * minimapCellSize, minimapCellSize, minimapCellSize);
-//     } else if (world.walls[y][x] !== -1) {
-//         context.fillRect(minimapOffset + x * minimapCellSize, minimapOffset + y * minimapCellSize, minimapCellSize, minimapCellSize);
-//     }
-// }
+function drawMinimapBlock(x, y) {
+    if (world.floor[y][x] !== null && world.floor[y][x] !== 0) uiContext.drawImage(getMinimapTexture(world.floor[y][x]), minimapOffset + x * minimapCellSize, minimapOffset + y * minimapCellSize, minimapCellSize, minimapCellSize);
+    if (world.walls[y][x] !== null && world.walls[y][x] !== 0) uiContext.drawImage(getMinimapTexture(world.walls[y][x]), minimapOffset + x * minimapCellSize, minimapOffset + y * minimapCellSize, minimapCellSize, minimapCellSize);
+}
 
-// function drawMinimapObjects() {
-//     for (let i = 0; i < objects.length; i++) {
-//         let object = objects[i];
-//         if (object.type >= 0) {
-//             drawMinimapObject(object);
-//         }
-//     }
-// }
+function drawMinimapObjects() {
+    for (let i = 0; i < objects.length; i++) {
+        let object = objects[i];
+        if (object.type >= 0) {
+            drawMinimapObject(object);
+        }
+    }
+}
 
-// function drawMinimapObject(object) {
-//     if (minimapObjectSize > 1) {
-//         context.beginPath();
-//         context.arc(minimapOffset + Math.floor(object.x * minimapCellSize), minimapOffset + Math.floor(object.y * minimapCellSize), minimapObjectSize, 0, Math.PI * 2, true);
-//         context.fill();
-//         context.closePath();
-//     } else {
-//         context.fillRect(minimapOffset + Math.floor(object.x * minimapCellSize), minimapOffset + Math.floor(object.y * minimapCellSize), 1, 1);
-//     }
-// }
+function drawMinimapObject(object) {
+    if (minimapObjectSize > 1) {
+        uiContext.beginPath();
+        uiContext.arc(minimapOffset + Math.floor(object.x * minimapCellSize), minimapOffset + Math.floor(object.y * minimapCellSize), minimapObjectSize, 0, Math.PI * 2, true);
+        uiContext.fill();
+        uiContext.closePath();
+    } else {
+        uiContext.fillRect(minimapOffset + Math.floor(object.x * minimapCellSize), minimapOffset + Math.floor(object.y * minimapCellSize), 1, 1);
+    }
+}
 
-// function drawMinimapObjectFov(object) {
-//     context.globalAlpha = 0.5;
+function drawMinimapObjectFov(object) {
+    uiContext.globalAlpha = 0.5;
 
-//     let fov = 90;
+    let fov = 90;
 
-//     context.beginPath();
-//     context.moveTo(minimapOffset + object.x * minimapCellSize, minimapOffset + object.y * minimapCellSize);
+    uiContext.beginPath();
+    uiContext.moveTo(minimapOffset + object.x * minimapCellSize, minimapOffset + object.y * minimapCellSize);
 
-//     context.arc(minimapOffset + Math.floor(object.x * minimapCellSize), minimapOffset + Math.floor(object.y * minimapCellSize), minimapFovSize, (object.rotation - fov / 2) * piRatio, (object.rotation + fov / 2) * piRatio, false);
+    uiContext.arc(minimapOffset + Math.floor(object.x * minimapCellSize), minimapOffset + Math.floor(object.y * minimapCellSize), minimapFovSize, (object.rotation - fov / 2) * piRatio, (object.rotation + fov / 2) * piRatio, false);
 
-//     context.fill();
-//     context.closePath();
+    uiContext.fill();
+    uiContext.closePath();
 
-//     context.globalAlpha = 1;
-// }
+    uiContext.globalAlpha = 1;
+}
 
 // Physics lets
 let acceleration = 0.001;
@@ -930,6 +942,7 @@ window.onresize = function() {
     screenRatio = window.innerHeight / window.innerWidth;
 
     canvas.height = canvas.width * screenRatio;
+    uiCanvas.height = uiCanvas.width * screenRatio;
     
     context.imageSmoothingEnabled = false;
 
