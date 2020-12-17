@@ -1,5 +1,5 @@
-import { world, decals, objects, portals, piRatio } from './constants.js'
-import { context, canvas, uiContext, uiCanvas, uiScaleFactor, debugSound, fpsLabel, maxTransparency, drawDistance, tintStrength, fogStartDistance, maxHorizonSkew, minimapOffset, minimapCellSize, minimapObjectSize, minimapFovSize, minimapFloorColor } from './startSettings.js'
+import { world, faceToVertices, piRatio } from './constants.js'
+import { context, canvas, uiContext, uiCanvas, uiScaleFactor, debugSound, debugLabel, changelogLabel, drawDistance, tintStrength, fogStartDistance, maxHorizonSkew, minimapOffset, minimapCellSize, minimapObjectSize, minimapFovSize, minimapFloorColor } from './startSettings.js'
 
 // System lets
 let frameStart;
@@ -56,15 +56,14 @@ function Ray(x, y, dirX, dirY) {
     this.face = 0;
 }
 
-function ProcessedRay(onScreenX, textureIndex, textureX, side, distance, onScreenSize, decalIndex, lighting, face) {
+function ProcessedRay(onScreenX, cell, textureX, side, distance, onScreenSize, decalIndex, face) {
     this.onScreenX = onScreenX; // onscreen position
-    this.textureIndex = textureIndex; // texture index
+    this.cell = cell; // texture index
     this.textureX = textureX; // position on texture
     this.side = side; // side of the wall ray hit
     this.distance = distance; // ray length
     this.onScreenSize = onScreenSize; // ray size on screen
     this.decalIndex = decalIndex;
-    this.lighting = lighting;
     this.face = face;
 }
 
@@ -79,6 +78,8 @@ function KeyState() {
     this.rightArrow = false;
     this.upArrow = false;
     this.downArrow = false;
+    this.info = true;
+    this.perspective = false;
 }
 
 let currentKeyState = new KeyState();
@@ -182,20 +183,22 @@ function drawFloorScanLine(onScreenY) {
         let offsetY = floorY - cellY;
 
         if (cellY >= 0 && cellX >= 0 && cellY < world.height && cellX < world.width) {
-            let lighting = world.lightmap[cellY][cellX];
 
             // Draw floor
-            if (onScreenY > horizon && world.floor[cellY][cellX] > 0) {
-                let texture = getTexture(world.floor[cellY][cellX]);
+            let cell = getWorldCell(cellX, cellY);
+            let floor = cell.floor
+            if (onScreenY > horizon && floor > 0) {
+                let texture = getTexture(floor);
 
-                if (texture !== undefined && texture.width !== undefined) drawFloorPixel(texture, onScreenX, onScreenY, offsetX, offsetY, lighting);
+                if (texture !== undefined && texture.width !== undefined) drawFloorPixel(texture, onScreenX, onScreenY, offsetX, offsetY, cell);
             }
 
             // Draw ceiling
-            if (onScreenY < horizon && world.ceiling[cellY][cellX] > 0) {
-                let texture = getTexture(world.ceiling[cellY][cellX]);
+            let ceiling = cell.ceiling
+            if (onScreenY < horizon && ceiling > 0) {
+                let texture = getTexture(ceiling);
                 
-                if (texture !== undefined && texture.width !== undefined) drawFloorPixel(texture, onScreenX, onScreenY, offsetX, offsetY, lighting);
+                if (texture !== undefined && texture.width !== undefined) drawFloorPixel(texture, onScreenX, onScreenY, offsetX, offsetY, cell);
             }
         }
         
@@ -204,7 +207,7 @@ function drawFloorScanLine(onScreenY) {
     }
 }
 
-function drawFloorPixel(texture, onScreenX, onScreenY, offsetX, offsetY, lighting) {
+function drawFloorPixel(texture, onScreenX, onScreenY, offsetX, offsetY, cell) {
     let textureX = Math.floor(texture.width * offsetX) & (texture.width - 1);
     let textureY = Math.floor(texture.height * offsetY) & (texture.height - 1);
 
@@ -221,10 +224,38 @@ function drawFloorPixel(texture, onScreenX, onScreenY, offsetX, offsetY, lightin
     // Don't draw if resulting alpha is 0
     if (alpha > 0) {
         // Apply lighting
-        let lightingFactor = lighting.average;
-        finalR *= lightingFactor;
-        finalG *= lightingFactor;
-        finalB *= lightingFactor;
+
+        if (cell.lightmap.uniform) {
+            finalR *= cell.lightmap.average.r;
+            finalG *= cell.lightmap.average.g;
+            finalB *= cell.lightmap.average.b;
+        }else {
+            let inverseOffsetX = (1 - offsetX);
+            let inverseOffsetY = (1 - offsetY);
+            let offsetiXiY = inverseOffsetX * inverseOffsetY;
+            let offsetXiY = offsetX * inverseOffsetY;
+            let offsetXY = offsetX * offsetY;
+            let offsetiXY = inverseOffsetX * offsetY;
+
+            finalR *= (
+                cell.lightmap[0].r * offsetiXiY +
+                cell.lightmap[1].r * offsetXiY +
+                cell.lightmap[2].r * offsetXY +
+                cell.lightmap[3].r * offsetiXY
+            );
+            finalG *= (
+                cell.lightmap[0].g * offsetiXiY +
+                cell.lightmap[1].g * offsetXiY +
+                cell.lightmap[2].g * offsetXY +
+                cell.lightmap[3].g * offsetiXY
+            );
+            finalB *= (
+                cell.lightmap[0].b * offsetiXiY +
+                cell.lightmap[1].b * offsetXiY +
+                cell.lightmap[2].b * offsetXY +
+                cell.lightmap[3].b * offsetiXY
+            );
+        }
 
         // Don't blend if alpha is 1
         if (alpha < 1) {
@@ -252,8 +283,8 @@ function prepareWallFrame() {
 
 function prepareObjects() {
     // Prepare all objects
-    for (let i = 0; i < objects.length; i++) {
-        let object = objects[i];
+    for (let i = 0; i < world.objects.length; i++) {
+        let object = world.objects[i];
         let relativeAngle = Math.atan2(object.y - thisPlayer.y, object.x - thisPlayer.x) * 180 / Math.PI - thisPlayer.rotation;
         if (relativeAngle <= -360) relativeAngle += 360;
         relativeAngle *= -1;
@@ -310,7 +341,7 @@ function calculateRayDirection(ray) {
     }
 }
 
-function performRaycast(ray, x, onScreenX, layer) {
+function performRaycast(ray, x, onScreenX) {
     let iterations = 0;
 
     while (!ray.done && iterations < drawDistance) {
@@ -320,42 +351,31 @@ function performRaycast(ray, x, onScreenX, layer) {
         if (ray.y < 0 || ray.y > world.height - 1) break;
         if (ray.x < 0 || ray.x > world.width - 1) break;
 
-        let wall = world.walls[ray.y][ray.x];
-        let lighting = world.lightmap[ray.y][ray.x];
+        let cell = getWorldCell(ray.x, ray.y);
 
         // Check if ray has hit a wall
-        if (wall > 0) {
+        if (cell.wall > 0) {
             // Portal check
-            if (wall === 5) {
-                let portal = portals.filter(function (a) {
-                    return (a[0].x === ray.x && a[0].y === ray.y);
-                });
-                if (portal.length > 0) {
-                    portal = portal[0][1];
-                    ray.coordJumps.push(new Point(ray.x, ray.y));
-                    ray.x = portal.x;
-                    ray.y = portal.y;
-                    ray.coordJumps.push(new Point(ray.x, ray.y));
-                    continue;
-                }
+            if (cell.portal != null) {
+                ray.coordJumps.push(new Point(ray.x, ray.y));
+                ray.x += cell.portal.x;
+                ray.y += cell.portal.y;
+                ray.coordJumps.push(new Point(ray.x, ray.y));
+                continue;
             }
             
-            if (transparentBlocks.includes(wall)) {
-                if (layer <= maxTransparency) {
-                    let skipHit = mergeableBlocks.includes(ray.hit) ? wall === ray.hit : false;
-                    ray.hit = wall;
-                    ray.lighting = lighting;
-                    if (iterations > 1 && !skipHit) rayHit(ray, x, onScreenX);
-                    performBackwardsRaycast(ray, x, onScreenX);
-                }
+            if (cell.transparent) {
+                let skipHit = (ray.hit != null && ray.hit.mergeable) ? cell.wall === ray.hit.wall : false;
+                ray.hit = cell;
+                if (iterations > 1 && !skipHit) rayHit(ray, x, onScreenX);
+                performBackwardsRaycast(ray, x, onScreenX);
             } else {
-                ray.hit = wall;
-                ray.lighting = lighting;
+                ray.hit = cell;
                 rayHit(ray, x, onScreenX);
                 ray.done = true;
             }
         } else {
-            ray.hit = 0;
+            ray.hit = null;
         }
 
         // Jump to next map square in x-direction or in y-direction
@@ -391,7 +411,7 @@ function performBackwardsRaycast(refRay, x, onScreenX) {
     if (ray.x < 0 || ray.x > world.width - 1) return;
 
     // Check if ray has hit a wall
-    if (world.walls[Math.round(ray.y)][Math.round(ray.x)] === ray.hit) return;
+    if (getWorldCell(ray.x, ray.y).wall === ray.hit.wall) return;
 
     ray = { ...refRay };
 
@@ -413,7 +433,7 @@ function performBackwardsRaycast(refRay, x, onScreenX) {
     if (ray.x < 0 || ray.x > world.width - 1) return;
 
     // Check if ray has hit a wall
-    if (world.walls[Math.round(ray.y)][Math.round(ray.x)] === ray.hit) {
+    if (getWorldCell(ray.x, ray.y).wall === ray.hit.wall) {
         ray.backward = true;
         rayHit(ray, x, onScreenX);
     }
@@ -429,18 +449,18 @@ function rayHit(ray, x, onScreenX) {
     if (ray.dirX < 0) modifierX = 1;
     if (ray.dirY < 0) modifierY = 1;
 
-    // Reverse ray direction if backwards cast (fixes portal transitions)
-    if (ray.backward) {
-        ray.dirX *= -1;
-        ray.dirY *= -1;
-    }
-
     if (ray.side > 0) {
         if (ray.dirY > 0) ray.face = 1;
         else              ray.face = 3;
     } else {
         if (ray.dirX > 0) ray.face = 0;
         else              ray.face = 2;
+    }
+
+    // Reverse ray direction if backwards cast (fixes portal transitions)
+    if (ray.backward) {
+        ray.dirX *= -1;
+        ray.dirY *= -1;
     }
 
     if (jumps === 0) {
@@ -472,32 +492,30 @@ function rayHit(ray, x, onScreenX) {
     let textureX = ray.sector;
     if (ray.side === 0 && ray.dirX < 0) textureX = 1 - textureX;
     if (ray.side === 1 && ray.dirY > 0) textureX = 1 - textureX;
+    if (ray.backward) textureX = 1 - textureX;
 
     // Get decal on wall
     let decalTexture = -1;
-    let decal = decals.filter(function (a) {
-        return (a.x === Math.round(ray.x) && a.y === Math.round(ray.y));
-    });
 
     // Calculate decal direction if applicable
-    if (decal.length > 0) {
-        if (decal[0].face !== undefined) {
-            if (decal[0].face === ray.face) {
-                decalTexture = decal[0].type;
+    if (ray.hit.decals.length > 0) {
+        if (ray.hit.decals[0].face !== undefined) {
+            if (ray.hit.decals[0].face === ray.face) {
+                decalTexture = ray.hit.decals[0].type;
             }
         } else {
-            decalTexture = decal[0].type;
+            decalTexture = ray.hit.decals[0].type;
         }
     }
 
-    let processedRay = new ProcessedRay(onScreenX, ray.hit, textureX, ray.side, Math.abs(perpWallDist), lineHeight, decalTexture, ray.lighting, ray.face);
+    let processedRay = new ProcessedRay(onScreenX, ray.hit, textureX, ray.side, Math.abs(perpWallDist), lineHeight, decalTexture, ray.face);
 
     buffer.push(processedRay);
 }
 
 function drawScanLine(ray) {
 
-    let texture = getTexture(ray.textureIndex);
+    let texture = getTexture(ray.cell.wall);
 
     // Stop drawing if texture hasn't loaded yet
     if (texture === undefined || texture.width === undefined) return;
@@ -565,11 +583,19 @@ function drawScanLine(ray) {
             // }
 
             // Apply lighting
-            let lightingFactor = ray.lighting.face[ray.face];
+            let faceVertices = faceToVertices(ray.face);
 
-            finalR *= lightingFactor;
-            finalG *= lightingFactor;
-            finalB *= lightingFactor;
+            if (ray.cell.lightmap.uniform) {
+                finalR *= ray.cell.lightmap.average.r;
+                finalG *= ray.cell.lightmap.average.g;
+                finalB *= ray.cell.lightmap.average.b;
+            } else {
+                let inverseTextureX = (1 - ray.textureX);
+
+                finalR *= ray.cell.lightmap[faceVertices[0]].r * ray.textureX + ray.cell.lightmap[faceVertices[1]].r * inverseTextureX;
+                finalG *= ray.cell.lightmap[faceVertices[0]].g * ray.textureX + ray.cell.lightmap[faceVertices[1]].g * inverseTextureX;
+                finalB *= ray.cell.lightmap[faceVertices[0]].b * ray.textureX + ray.cell.lightmap[faceVertices[1]].b * inverseTextureX;
+            }
 
             // Don't blend if resulting alpha is 1
             if (alpha < 1) {
@@ -606,7 +632,7 @@ function drawObject(object) {
 
     let onScreenHeight = Math.floor(canvas.height / transformY / screenRatio / 2.1);
 
-    let lighting = world.lightmap[Math.floor(object.y)][Math.floor(object.x)];
+    let lightmap = getWorldCell(object.x, object.y).lightmap;
 
     if (object.type >= 0) {
         let spriteGroup = getSprite(object.type);
@@ -661,10 +687,9 @@ function drawObject(object) {
                         // }
 
                         // Apply lighting
-                        let lightingFactor = lighting.average;
-                        finalR *= lightingFactor;
-                        finalG *= lightingFactor;
-                        finalB *= lightingFactor;
+                        finalR *= lightmap.average.r;
+                        finalG *= lightmap.average.g;
+                        finalB *= lightmap.average.b;
 
                         // Don't blend if resulting alpha is 1
                         if (alpha < 1) {
@@ -703,8 +728,8 @@ function drawUI() {
 function drawMiniMap() {
     uiContext.imageSmoothingEnabled = true;
 
-    // Draw map blocks
-    drawMinimapBlocks();
+    // Draw map cells
+    drawMinimapCells();
 
     // Draw objects
     uiContext.fillStyle = '#5fa0ff';
@@ -721,22 +746,23 @@ function drawMiniMap() {
     uiContext.imageSmoothingEnabled = false;
 }
 
-function drawMinimapBlocks() {
-    for (let y = 0; y < world.walls.length; y++) {
-        for (let x = 0; x < world.walls[y].length; x++) {
-            drawMinimapBlock(x, y);
+function drawMinimapCells() {
+    for (let y = 0; y < world.height; y++) {
+        for (let x = 0; x < world.width; x++) {
+            drawMinimapCell(x, y);
         }
     }
 }
 
-function drawMinimapBlock(x, y) {
-    if (world.floor[y][x] !== null && world.floor[y][x] !== 0) uiContext.drawImage(getMinimapTexture(world.floor[y][x]), minimapOffset + x * minimapCellSize, minimapOffset + y * minimapCellSize, minimapCellSize, minimapCellSize);
-    if (world.walls[y][x] !== null && world.walls[y][x] !== 0) uiContext.drawImage(getMinimapTexture(world.walls[y][x]), minimapOffset + x * minimapCellSize, minimapOffset + y * minimapCellSize, minimapCellSize, minimapCellSize);
+function drawMinimapCell(x, y) {
+    let cell = getWorldCell(x, y);
+    if (cell.floor !== null && cell.floor !== 0) uiContext.drawImage(getMinimapTexture(cell.floor), minimapOffset + x * minimapCellSize, minimapOffset + y * minimapCellSize, minimapCellSize, minimapCellSize);
+    if (cell.wall !== null && cell.wall !== 0) uiContext.drawImage(getMinimapTexture(cell.wall), minimapOffset + x * minimapCellSize, minimapOffset + y * minimapCellSize, minimapCellSize, minimapCellSize);
 }
 
 function drawMinimapObjects() {
-    for (let i = 0; i < objects.length; i++) {
-        let object = objects[i];
+    for (let i = 0; i < world.objects.length; i++) {
+        let object = world.objects[i];
         if (object.type >= 0) {
             drawMinimapObject(object);
         }
@@ -800,15 +826,11 @@ function updatePlayerPosition(deltaTime) {
     thisPlayer.rotation = thisPlayer.rotation.toFixedNumber(1);
     horizon = Math.round(horizon);
 
-    if (world.walls[Math.floor(thisPlayer.y)][Math.floor(thisPlayer.x)] === 5) {
-        let portal = portals.filter(function (a) {
-            return (a[0].x === Math.floor(thisPlayer.x) && a[0].y === Math.floor(thisPlayer.y));
-        });
-        if (portal.length > 0) {
-            portal = portal[0];
-            thisPlayer.x += portal[1].x - portal[0].x;
-            thisPlayer.y += portal[1].y - portal[0].y;
-        }
+    let portal = getWorldCell(thisPlayer.x, thisPlayer.y).portal;
+
+    if (portal != null) {
+        thisPlayer.x += portal.x;
+        thisPlayer.y += portal.y;
     }
 }
 
@@ -830,16 +852,16 @@ function updateUserInput() {
         thisPlayer.speedY += acceleration * Math.sin((thisPlayer.rotation + 90) * piRatio);
     }
     if (currentKeyState.leftArrow) {
-        thisPlayer.rotation -= 2;
+        thisPlayer.rotation -= 0.15 * deltaTime;
     }
     if (currentKeyState.rightArrow) {
-        thisPlayer.rotation += 2;
+        thisPlayer.rotation += 0.15 * deltaTime;
     }
     if (currentKeyState.upArrow) {
-        horizon += 2;
+        horizon += 0.15 * deltaTime;
     }
     if (currentKeyState.downArrow) {
-        horizon -= 2;
+        horizon -= 0.15 * deltaTime;
     }
 }
 
@@ -857,28 +879,34 @@ function validatePlayerValues() {
     } else if (horizon >= canvas.height / 2 + maxHorizonSkew) {
         horizon = canvas.height / 2 + maxHorizonSkew;
     }
+
+    // Perspective distortion compensation
+    if (currentKeyState.perspective) {
+        canvas.style.transform = `perspective(1000px) rotateX(${(horizon - canvas.height / 2) / 10}deg)`;
+        // canvas.style.transform = `perspective(1000px) rotateX(${(horizon - canvas.height / 2) / 10}deg) scale(${Math.abs((canvas.height / 2) / 1000) + 1})`;
+    }
 }
 
 function performCollisionCheck() {
     // Collision on x
     let nextStep = thisPlayer.x + thisPlayer.speedX * deltaTime;
     // Negative offset
-    if (!nonSolidBlocks.includes(world.walls[Math.floor(thisPlayer.y)][Math.floor(nextStep - playerSize)])) {
+    if (getWorldCell(nextStep - playerSize, thisPlayer.y).solid) {
         thisPlayer.x += 1 - ((nextStep - playerSize) - Math.floor(nextStep - playerSize));
     }
     // Positive offset
-    if (!nonSolidBlocks.includes(world.walls[Math.floor(thisPlayer.y)][Math.floor(nextStep + playerSize)])) {
+    if (getWorldCell(nextStep + playerSize, thisPlayer.y).solid) {
         thisPlayer.x -= (nextStep + playerSize) - Math.floor(nextStep + playerSize);
     }
 
     // Collision on y
     nextStep = thisPlayer.y + thisPlayer.speedY * deltaTime;
     // Negative offset
-    if (!nonSolidBlocks.includes(world.walls[Math.floor(nextStep - playerSize)][Math.floor(thisPlayer.x)])) {
+    if (getWorldCell(thisPlayer.x, nextStep - playerSize).solid) {
         thisPlayer.y += 1 - ((nextStep - playerSize) - Math.floor(nextStep - playerSize));
     }
     // Positive offset
-    if (!nonSolidBlocks.includes(world.walls[Math.floor(nextStep + playerSize)][Math.floor(thisPlayer.x)])) {
+    if (getWorldCell(thisPlayer.x, nextStep + playerSize).solid) {
         thisPlayer.y -= (nextStep + playerSize) - Math.floor(nextStep + playerSize);
     }
 }
@@ -896,9 +924,11 @@ document.addEventListener('pointerlockchange', lockChangeAlert, false);
 function lockChangeAlert() {
     if (document.pointerLockElement === canvas && gameState === 1) {
         console.log('The pointer lock status is now locked');
+        document.body.requestFullscreen();
         document.addEventListener("mousemove", cameraMove, false);
     } else {
         console.log('The pointer lock status is now unlocked');
+        document.exitFullscreen();
         document.removeEventListener("mousemove", cameraMove, false);
     }
 }
@@ -921,6 +951,20 @@ document.addEventListener('keydown', e => {
         if (e.keyCode === 39) currentKeyState.rightArrow = true;
         if (e.keyCode === 38) currentKeyState.upArrow = true;
         if (e.keyCode === 40) currentKeyState.downArrow = true;
+        if (e.keyCode === 80) {
+            currentKeyState.perspective = !currentKeyState.perspective;
+            if (!currentKeyState.perspective) canvas.style.transform = '';
+        }
+        if (e.keyCode === 73) {
+            currentKeyState.info = !currentKeyState.info;
+            if (currentKeyState.info) {
+                changelogLabel.style.visibility = "visible";
+                debugLabel.style.visibility = "visible";
+            } else {
+                changelogLabel.style.visibility = "hidden";
+                debugLabel.style.visibility = "hidden";
+            }
+        }
     }
 });
 
@@ -951,9 +995,11 @@ window.onresize = function() {
 window.onresize();
 
 function updateFps() {
-    fpsLabel.innerHTML = `FPS: ${(1000/deltaTime).toFixed(2)}<br>
+    debugLabel.innerHTML = `FPS: ${(1000/deltaTime).toFixed(2)}<br>
     Frametime: ${(frameEnd - frameStart).toFixed(2)}ms<br>
-    Resolution: ${canvas.width}x${canvas.height}`;
+    Resolution: ${canvas.width}x${canvas.height}<br>
+    Position: ${thisPlayer.x.toFixed(1)} ${thisPlayer.y.toFixed(1)}<br>
+    ${currentKeyState.perspective ? '<br>PERSPECTIVE FIX' : ''}`;
 }
 
 function renderLoop() {
@@ -979,6 +1025,10 @@ function renderLoop() {
 requestAnimationFrame(renderLoop);
 
 Number.prototype.toFixedNumber = function(digits, base){
-    var pow = Math.pow(base||10, digits);
+    let pow = Math.pow(base||10, digits);
     return Math.round(this*pow) / pow;
+}
+
+function getWorldCell(x, y) {
+    return world.cells[Math.trunc(y) * world.width + Math.trunc(x)];
 }

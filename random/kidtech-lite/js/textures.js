@@ -4,7 +4,8 @@ const textureNames = [
     'resources/textures/walls/brick_wall.png',
     'resources/textures/walls/metal_arch.png',
     'resources/textures/walls/metal_window.png',
-    'resources/textures/walls/concrete.png'
+    'resources/textures/walls/concrete.png',
+    'resources/textures/walls/metal_window_frame.png'
 ];
 
 const decalNames = [
@@ -90,7 +91,7 @@ const spriteNames = [
 const tempCanvas = document.getElementById("tempCanvas");
 const tempContext = tempCanvas.getContext("2d", { alpha: true });
 
-var skybox = new Image();
+const skybox = new Image();
 skybox.src = "resources/skybox_night.jpg";
 
 function Texture(data, width, height) {
