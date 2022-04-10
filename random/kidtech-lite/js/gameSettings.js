@@ -20,8 +20,21 @@ uiContext.lineWidth = 1;
 uiContext.imageSmoothingEnabled = false;
 
 //Labels
-const debugLabel = document.getElementById('fps-label');
+const debugContainer = document.getElementById('debug-container');
+const debugPerformanceLabel = document.getElementById('performance-label');
+const debugStateLabel = document.getElementById('state-label');
 const secondaryInfoContainer = document.getElementById('secondary-info-container');
+
+// Debug screen
+const probe1 = document.getElementById('probe1');
+const probe2 = document.getElementById('probe2');
+const probe3 = document.getElementById('probe3');
+const probe4 = document.getElementById('probe4');
+const probe5 = document.getElementById('probe5');
+const probe6 = document.getElementById('probe6');
+const probe7 = document.getElementById('probe7');
+const probe8 = document.getElementById('probe8');
+const probe9 = document.getElementById('probe9');
 
 // Rendering settings
 const drawDistance = 100;
@@ -53,7 +66,8 @@ const fovFactor = 2.14;
 
 export { 
     canvas, context, uiCanvas, uiContext, labelCanvas, labelContext, uiScaleFactor, 
-    debugLabel, secondaryInfoContainer, 
+    debugContainer, debugPerformanceLabel, debugStateLabel, secondaryInfoContainer, 
+    probe1, probe2, probe3, probe4, probe5, probe6, probe7, probe8, probe9, 
     drawDistance, maxHorizonSkew, 
     minimapOffset, minimapCellSize, minimapObjectSize, minimapFovSize,
     playerMaxSpeed, playerAcceleration, playerFriction, playerSize, playerInteractionRange,

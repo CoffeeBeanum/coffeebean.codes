@@ -75,7 +75,7 @@ A:\\Archive>dir\n\
 07/01/2020  01:14 AM    <DIR>          .\n\
 07/01/2020  01:14 AM    <DIR>          ..\n\
 12/08/2019  11:21 PM    <DIR>          gmod\n\
-07/01/2020  01:01 AM    <DIR>          home_audio\n\
+07/01/2020  01:01 AM    <DIR>          home_resources\n\
 03/08/2020  10:23 PM           254,729 ibm_monitor.png\n\
 07/05/2020  01:47 PM               814 index.html\n\
 12/10/2019  02:32 AM               584 led.png\n\
@@ -138,7 +138,7 @@ Please do not interrupt this process.\n\
 %(600|1)%Restoring session%(100|60)%....%(100|20)%.........%(100|40)%........%(400|10)%....................."
 
 const startupAudio = new Howl({ 
-	src: ['home_audio/startup.mp3'],
+	src: ['home_resources/audio/startup.mp3'],
 	autoplay: false,
 	loop: false,
 	volume: 0.4,
@@ -148,56 +148,56 @@ const startupAudio = new Howl({
 });
 
 const shutdownAudio = new Howl({
-	src: ['home_audio/shutdown.mp3'],
+	src: ['home_resources/audio/shutdown.mp3'],
 	autoplay: false,
 	loop: false,
 	volume: 0.4
 });
 
 const crtStartupAudio = new Howl({ 
-	src: ['home_audio/crt_startup.mp3'],
+	src: ['home_resources/audio/crt_startup.mp3'],
 	autoplay: false,
 	loop: false,
 	volume: 0.4
 });
 
 const crtShutdownAudio = new Howl({
-	src: ['home_audio/crt_shutdown.mp3'],
+	src: ['home_resources/audio/crt_shutdown.mp3'],
 	autoplay: false,
 	loop: false,
 	volume: 0.4
 });
 
 const idleAudio = new Howl({
-	src: ['home_audio/idle_loop.mp3'],
+	src: ['home_resources/audio/idle_loop.mp3'],
 	autoplay: false,
 	loop: true,
 	volume: 0.4
 });
 
 const beepAudio = new Howl({
-	src: ['home_audio/beep.mp3'],
+	src: ['home_resources/audio/beep.mp3'],
 	autoplay: false,
 	loop: false,
 	volume: 0.1
 });
 
 const activity1Audio = new Howl({
-	src: ['home_audio/activity/activity1.mp3'],
+	src: ['home_resources/audio/activity/activity1.mp3'],
 	autoplay: false,
 	loop: false,
 	volume: 0.05
 });
 
 const activity2Audio = new Howl({
-	src: ['home_audio/activity/activity2.mp3'],
+	src: ['home_resources/audio/activity/activity2.mp3'],
 	autoplay: false,
 	loop: false,
 	volume: 0.05
 });
 
 const activity3Audio = new Howl({
-	src: ['home_audio/activity/activity3.mp3'],
+	src: ['home_resources/audio/activity/activity3.mp3'],
 	autoplay: false,
 	loop: false,
 	volume: 0.01
