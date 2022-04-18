@@ -1,7 +1,7 @@
 const regexTiming = /(\d+)\|(\d+)\)\%([^\x05]*)/;
 
 const about_link = "https://github.com/McKiddo";
-const github_link = "https://github.com/McKiddo/mckiddo.github.io";
+const github_link = "https://github.com/McKiddo/coffeebean.codes";
 
 const pre_boot_string = "%(500|1)%\
 \n\n\
@@ -25,7 +25,7 @@ Press ESC to enter BIOS            Press SPACE to skip boot\
 %(1800|1)% "
 
 const boot_string = "%(0|1)%\
-KIDTECH (C) 1991\n\
+KOFYTECH (C) 1991\n\
 BIOS Date DATE Ver: 00.00.03\n\
 CPU: Intel(R) CPU 330 @ 40 MHz\n\
 Speed: 40 MHz\n\
@@ -72,28 +72,28 @@ A:\\Archive>dir\n\
 \n\
  Directory of A:\\Archive\n\
 \n\
-07/01/2020  01:14 AM    <DIR>          .\n\
-07/01/2020  01:14 AM    <DIR>          ..\n\
-12/08/2019  11:21 PM    <DIR>          gmod\n\
-07/01/2020  01:01 AM    <DIR>          home_resources\n\
-03/08/2020  10:23 PM           254,729 ibm_monitor.png\n\
-07/05/2020  01:47 PM               814 index.html\n\
-12/10/2019  02:32 AM               584 led.png\n\
-01/16/2016  01:00 AM            70,956 PxPlus_IBM_VGA8.ttf\n\
-07/01/2020  01:08 AM    <DIR>          random\n\
-07/14/2020  10:03 PM            17,627 script.js\n\
-07/05/2020  01:47 PM             1,796 style.css\n\
-               6 File(s)        346,506 bytes\n\
+04/18/2022  06:04 PM    <DIR>          .\n\
+04/18/2022  06:04 PM    <DIR>          ..\n\
+04/18/2022  05:46 PM            15,086 favicon.ico\n\
+04/02/2022  11:30 PM    <DIR>          gmod\n\
+04/11/2022  01:30 AM    <DIR>          home_resources\n\
+04/18/2022  05:50 PM               925 index.html\n\
+04/11/2022  01:29 AM    <DIR>          random\n\
+04/18/2022  06:18 PM            20,140 script.js\n\
+04/11/2022  01:30 AM             3,311 style.css\n\
+               4 File(s)         39,400 bytes\n\
                5 Dir(s)         278,256 bytes free\n\
 \n\
 %(300|1)%\
-A:\\>homelib_2\n\
+A:\\>homelib_3\n\
+Coffee Bean's Archive version 1.3.0\n\
+\n\
 %(300|1)%\
-Loading Archive:%(100|50)%......%(400|500)%...%(2400|20)%..........%(200|5)%........................";
+Loading resources:%(100|50)%......%(400|500)%...%(2400|20)%..........%(200|5)%......................";
 
 const library_string = "%(0|3)%\
-      Welcome to...            ╔═╗┌┬┐┬ ┬┌─┐┌─┐             \n\
-                           The ╚═╗ │ │ │├┤ ├┤              \n\
+      Welcome to               ╔═╗┌┬┐┬ ┬┌─┐┌─┐             \n\
+              Coffee Bean's    ╚═╗ │ │ │├┤ ├┤              \n\
      █████╗ ██████╗  ██████╗██╗╚═╝ ┴ └─┘└  └ ██╗███████╗   \n\
     ██╔══██╗██╔══██╗██╔════╝██║  ██║██║██║   ██║██╔════╝   \n\
     ███████║██████╔╝██║     ███████║██║██║   ██║█████╗     \n\
@@ -103,9 +103,9 @@ const library_string = "%(0|3)%\
 \n\
               · - --=[ Featured stuff ]=-- - ·             \n\
 \n\
-  > %(0|0)%<a onclick='linkProject(0)' href='javascript:;'>TRION TX-200E</a>%(10|3)% - Hi-Fi stereo cassette player.\n\
-\n\
   > %(0|0)%<a onclick='linkProject(1)' href='javascript:;'>kidTech-Lite</a>%(10|3)% - Next-gen portable raycasting engine.\n\
+\n\
+  > %(0|0)%<a onclick='linkProject(0)' href='javascript:;'>TRION TX-200E</a>%(10|3)% - Hi-Fi stereo cassette player.\n\
   > %(0|0)%<a onclick='linkProject(2)' href='javascript:;'>Vocalizer</a>%(10|3)% - cutting-edge voice synthesizer.\n\
 \n\
                                               %(0|0)%<a onclick='linkMore()' href='javascript:;'>More Stuff ></a>%(10|3)% \n\
