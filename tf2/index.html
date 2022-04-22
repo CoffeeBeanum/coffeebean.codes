@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	
+	<title>FURRY CON 2007</title>
+	
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
+	
+	<!-- Fonts -->
+	<!-- <link href="https://fonts.googleapis.com/css?family=Odibee+Sans&display=swap" rel="stylesheet"> -->
+	
+</head>
+
+<style>
+	@font-face {
+		font-family: 'tf2build';
+		src: url('tf2build.ttf')  format('truetype')
+	}
+
+	html {
+		background-image: url(sniper.jpg);
+		background-position: center;
+		background-repeat: repeat;
+		height: 100%;
+	}
+
+	body {
+		padding: 0;
+		margin: 0;
+	}
+
+	img {
+		vertical-align: middle;
+	}
+
+	.section {
+		position: relative;
+		border-radius: 5px;
+		border-style: solid;
+		border-width: 1px;
+		border-color: #222;
+		background-color: papayawhip;
+		box-shadow: 5px 7px 5px rgba(0, 0, 0, 0.5);
+		margin: 10px;
+	}
+
+	#main-container {
+		width: 800px;
+		margin: auto;
+	}
+
+	#header {
+		height: 100px;
+		margin: 15px;
+		margin-bottom: 10px;
+		background: url(sky-hydro.jpg);
+		background-size: cover;
+	}
+
+	#header-dumbass {
+		position: absolute;
+		height: 207px;
+		-webkit-filter: drop-shadow(0px 5px 5px #222);
+  		filter: drop-shadow(0px 5px 5px #222);
+		z-index: 1;
+	}
+
+	#header-text {
+		font-family: tf2build;
+		font-size: 70px;
+		text-align: center;
+  		line-height: 100px;
+		text-shadow: 2px 4px 0px #222;
+	}
+
+	#header-furry-con {
+		margin-left: 130px;
+		color: orange;
+	}
+
+	#header-2007 {
+		color: #456292;
+	}
+	
+	#content {
+		margin: 15px;
+	}
+
+	#tip {
+		margin-left: 150px;
+		z-index: 2;
+		background-color: #222;
+		color: white;
+		overflow: hidden;
+		background: url(black-chrome.jpg);
+		background-size: cover;
+	}
+
+	#tip-engie {
+		height: 60px;
+	}
+
+	#tip-stamp {
+		position: absolute;
+		top: -10px;
+		right: 40px;
+		height: 90px;
+		opacity: 0.5;
+	}
+
+	#tip-text {
+		margin-left: 10px;
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	#tip-title {
+		font-weight: bold;
+	}
+
+	#posts {
+		background: url(badlands.png);
+		background-size: cover;
+		overflow: hidden;
+		min-height: 600px;
+		font-family: arial,helvetica,sans-serif;
+	}
+
+	.post {
+		margin: 10px;
+		padding: 15px;
+		background-color: rgba(245, 245, 220, 0.8);
+		white-space: nowrap;
+	}
+
+	.post-thumbnail {
+		width: 160px;
+		height: 120px;
+	}
+
+	.post-thumbnail-tag {
+		position: absolute;
+		height: 14px;
+		padding-left: 2px;
+		padding-right: 2px;
+		left: 20px;
+		top: 20px;
+		font-size: 12px;
+		color: white;
+		background-color: #456292;
+	}
+
+	.post-container {
+		display: inline-block;
+		height: 120px;
+		padding-left: 15px;
+		vertical-align: top;
+		width: calc(100% - 178px);
+	}
+
+	.post-title {
+		font-size: 24px;
+		font-weight: bold;
+		color: #b35215;
+		white-space: normal;
+	}
+
+	.post-body {
+		margin-top: 5px;
+		font-size: 14px;
+		color: #464646;
+		overflow: hidden;
+		white-space: normal;
+	}
+
+	#train {
+		position: absolute;
+		bottom: 0;
+		left: -1500px;
+		height: 90px;
+		animation: linear;
+		animation-name: train;
+		animation-duration: 5s;
+		animation-delay: 3s;
+	}
+	
+	@keyframes train {
+		0% {
+			left: -1500px;
+		}
+		100% {
+			left: 1000px;    
+		}
+	}
+</style>
+
+<body>
+
+	<div id='main-container'>
+
+		<div id='header' class='section'>
+			<img id='header-dumbass' src='dumbass-outline3.png'>
+			<div id='header-text'>
+				<span id="header-furry-con">FURRY CON</span>
+				<span id="header-2007">2007</span>
+			</div>
+		</div>
+
+		<div id='content'>
+			<div id='tip' class='section'>
+				<img id='tip-engie' src='engie.png'>
+				<img id='tip-stamp' src='admin-stamp.png'>
+				<div id='tip-text'>
+					<span id='tip-title'>Admin's tip of the day:</span><br>
+					<span>Cheat and you're ass is bacon.</span>
+				</div>
+			</div>
+			<div id='posts' class='section'>
+				<div class='section post'>
+					<img class='post-thumbnail' src='teafor.jpg'>
+					<div class='post-thumbnail-tag'>NEWS</div>
+					<div class='post-container'>
+						<div class='post-title'>Team Forteres 2 released!</div>
+						<div class='post-body'>Team Fortress 2 is a class-based first-person and third-person shooter game developed by Valve Corporation, and the sequel to Team Fortress Classic. There are two playable teams, RED and BLU, which you can enter and complete objectives in different game modes. You can choose nine classes which are Scout, Medic, Demoman, Soldier, Heavy, Sniper, Spy, Pyro, and Engineer.</div>
+					</div>
+				</div>
+				<img id='train' src='train-dumbass.png'>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+
+</html> 
