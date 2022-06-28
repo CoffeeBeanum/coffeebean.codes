@@ -1,0 +1,3 @@
+[submodule "random/kidtech-lite"]
+	path = random/kidtech-lite
+	url = https://github.com/McKiddo/kidTech-Lite
