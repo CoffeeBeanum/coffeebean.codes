@@ -227,14 +227,11 @@ function updateInput() {
     consoleInput.innerHTML = inputPrefix + input + (blink ? "█" : "⠀");
 }
 
-document.body.addEventListener('keypress', function (event) {
+document.body.addEventListener('keydown', function (event) {
     if (event.key.length == 1) {
         input = input + event.key;
     } else {
         switch (event.code) {
-            case "Space":
-                input = input + " ";
-                break;
             case "Backspace":
                 input = input.slice(0, -1);
                 break;
