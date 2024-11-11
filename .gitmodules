@@ -1,8 +1,8 @@
 [submodule "random/kidtech-lite"]
 	path = random/kidtech-lite
-	url = https://github.com/McKiddo/kidTech-Lite
+	url = https://github.com/CoffeeBeanum/kidTech-Lite
 	branch = master
 [submodule "random/kidtech-dev"]
 	path = random/kidtech-dev
-	url = https://github.com/McKiddo/kidTech-Lite
+	url = https://github.com/CoffeeBeanum/kidTech-Lite
 	branch = develop
