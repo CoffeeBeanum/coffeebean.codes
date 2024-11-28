@@ -39,10 +39,61 @@ body {
     top: 50%;
     /* -webkit-transform: translate(-50%, -50%) translate(3.1px, 2.6px) translateY(-280px);
     transform: translate(-50%, -50%) translate(3.1px, 2.6px) translateY(-280px); */
-    -webkit-transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translateY(-280px);
-    transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translateY(-280px);
+    /* -webkit-transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translateY(-280px);
+    transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translateY(-280px); */
 
     font: 120.25px LED, monospace;
+}
+
+@media screen and (max-height: 750px) {
+    #header {
+        -webkit-transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translate(7px, -7px) translateY(-140px);
+        transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translate(7px, -7px) translateY(-140px);
+    }
+    
+    #footer {
+        
+        -webkit-transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translate(7px, 0px) translateY(140px);
+        transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translate(7px, 0px) translateY(140px);
+    }
+}
+
+@media screen and (min-height: 750px) {
+    #header {
+        -webkit-transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translate(7px, -7px)  translateY(-280px);
+        transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translate(7px, -7px)  translateY(-280px);
+    }
+    #footer {
+        
+        -webkit-transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translate(7px, 0px) translateY(280px);
+        transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translate(7px, 0px) translateY(280px);
+    }
+}
+
+@media screen and (min-height: 900px) {
+    #header {
+        -webkit-transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translate(7px, -7px)  translateY(-322px);
+        transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translate(7px, -7px)  translateY(-322px);
+    }
+    
+    #footer {
+        
+        -webkit-transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translate(7px, 0px) translateY(322px);
+        transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translate(7px, 0px) translateY(322px);
+    }
+}
+
+@media screen and (min-height: 1100px) {
+    #header {
+        -webkit-transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translate(7px, -7px)  translateY(-378px);
+        transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translate(7px, -7px)  translateY(-378px);
+    }
+    
+    #footer {
+        
+        -webkit-transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translate(7px, 0px) translateY(378px);
+        transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translate(7px, 0px) translateY(378px);
+    }
 }
 
 #footer {
@@ -51,8 +102,8 @@ body {
     top: 50%;
     /* -webkit-transform: translate(-50%, -50%) translate(3.1px, 2.6px) translateY(280px);
     transform: translate(-50%, -50%) translate(3.1px, 2.6px) translateY(280px); */
-    -webkit-transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translateY(280px);
-    transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translateY(280px);
+    /* -webkit-transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translateY(280px);
+    transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translateY(280px); */
 
     font: 120.25px LED, monospace;
 
@@ -63,16 +114,25 @@ body {
     position: absolute;
     left: 50%;
     top: 50%;
-    -webkit-transform: translate(-50%, -50%) translate(2.0px, -2.0px);
-    transform: translate(-50%, -50%) translate(2.0px, -2.0px);
+    -webkit-transform: translate(-50%, -50%) translate(2.0px, -1.8px);
+    transform: translate(-50%, -50%) translate(2.0px, -1.8px);
+
+    /* width: 585px;
+    height: 396px; */
 
     width: 590px;
     height: 400px;
 
     background: #111;
+    /* background: #161616; */
 }
 
 #content {
+    /* margin: 2.5px;
+    padding: 17.5px;
+    border: 3px solid #fffaa3;
+    height: calc(100% - 44.5px); */
+
     padding: 20px;
 
     font: 12px Verdana, Arial, sans-serif;
@@ -92,6 +152,7 @@ body {
     right: 20px;
     bottom: 16px;
     
+    /* color: #111; */
     color: #161616;
 
     font: 36px Pixelary, monospace;
