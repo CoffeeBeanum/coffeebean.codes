@@ -9,10 +9,9 @@
 }
 
 html {
+    width: 100%;
     height: 100%;
     margin: 0;
-
-    overflow-x: hidden;
 
     background: #111;
     background-image: url('resources/bk_grid.png');
@@ -21,10 +20,15 @@ html {
 }
 
 body {
+    width: 100%;
+    height: 100%;
     margin: 0px;
     padding: 0px;
 
     overflow-x: hidden;
+
+    /* wack workaround for overflow-x being ignored on mobile */
+    touch-action: pan-y pinch-zoom;
     
     color: #fffaa3;
 }
