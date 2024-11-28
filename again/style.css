@@ -37,8 +37,8 @@ body {
     position: absolute;
     left: 50%;
     top: 50%;
-    -webkit-transform: translate(-50%, -50%) translate(-0.35px, 200.5px);
-    transform: translate(-50%, -50%) translate(-0.35px, -354.5px);
+    -webkit-transform: translate(-50%, -50%) translate(3px, -347.5px);
+    transform: translate(-50%, -50%) translate(3px, -347.5px);
 }
 
 #container {
