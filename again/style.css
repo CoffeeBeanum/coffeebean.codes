@@ -12,13 +12,12 @@ html {
     height: 100%;
     margin: 0;
 
+    overflow-x: hidden;
+
     background: #111;
     background-image: url('resources/bk_grid.png');
     background-size: 7px;
     background-position: center;
-    /* filter: saturate(5) brightness(6); */
-
-    /* image-rendering: pixelated; */
 }
 
 body {
@@ -28,9 +27,6 @@ body {
     overflow-x: hidden;
     
     color: #fffaa3;
-
-
-    /* transform: translate(-0.3px, 0px); */
 }
 
 #header {
