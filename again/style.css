@@ -16,6 +16,7 @@ html {
     background-image: url('resources/bk_grid.png');
     background-size: 7px;
     background-position: center;
+    /* filter: saturate(5) brightness(6); */
 
     /* image-rendering: pixelated; */
 }
@@ -28,7 +29,6 @@ body {
     
     color: #fffaa3;
 
-    font: 120.25px LED, monospace;
 
     /* transform: translate(-0.3px, 0px); */
 }
@@ -37,8 +37,26 @@ body {
     position: absolute;
     left: 50%;
     top: 50%;
-    -webkit-transform: translate(-50%, -50%) translate(3.1px, -354.2px);
-    transform: translate(-50%, -50%) translate(3.1px, -354.2px);
+    /* -webkit-transform: translate(-50%, -50%) translate(3.1px, 2.6px) translateY(-280px);
+    transform: translate(-50%, -50%) translate(3.1px, 2.6px) translateY(-280px); */
+    -webkit-transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translateY(-280px);
+    transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translateY(-280px);
+
+    font: 120.25px LED, monospace;
+}
+
+#footer {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    /* -webkit-transform: translate(-50%, -50%) translate(3.1px, 2.6px) translateY(280px);
+    transform: translate(-50%, -50%) translate(3.1px, 2.6px) translateY(280px); */
+    -webkit-transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translateY(280px);
+    transform: translate(-50%, -50%) translate(-0.2px, 2.6px) translateY(280px);
+
+    font: 120.25px LED, monospace;
+
+    color: #fffaa3;
 }
 
 #container {
