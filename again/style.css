@@ -36,6 +36,8 @@ body {
     display: flex;
     justify-content: center;
 
+    text-wrap: nowrap;
+
     background-image: url('resources/bk_grid.png');
     background-size: 7px;
 
