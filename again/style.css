@@ -21,8 +21,6 @@ body {
     padding: 0px;
     
     height: 100%;
-
-    overflow-x: hidden;
     
     color: #fffaa3;
 }
@@ -48,6 +46,12 @@ body {
     transform: rotate(-1deg);
 }
 
+#header-container {
+    min-height: 195px;
+
+    overflow: hidden;
+}
+
 #header {
     padding-top: 100px;
     margin-top: -100px;
@@ -58,9 +62,10 @@ body {
 #footer-container {
     min-height: 195px;
 
-    overflow: hidden;
     padding-top: 50px;
     margin-top: -50px;
+
+    overflow: hidden;
 }
 
 #footer {
@@ -117,7 +122,15 @@ body {
         width: calc(100% - 40px);
     }
 
+    #header-container {
+        min-height: 97px;
+    }
+
     #footer-container {
         min-height: 97px;
+    }
+
+    #test-image {
+        width: 150px
     }
 }
