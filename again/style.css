@@ -46,10 +46,21 @@ body {
     font: 120.25px LED, monospace;
 
     transform: rotate(-1deg);
+
+    /* text-shadow: 0 0 5px; */
+}
+
+.secondary-banner-text {
+    color: #fffaa330;
+
+    /* text-shadow: 0 0 3px; */
 }
 
 #header-container {
     min-height: 195px;
+
+    padding-bottom: 50px;
+    margin-bottom: -50px;
 
     overflow: hidden;
 }
@@ -75,17 +86,13 @@ body {
     margin-bottom: -100px;    
 }
 
-.secondary-header-text {
-    color: #fffaa330;
-}
-
 #content {
     position: relative;
     margin: auto;
     
     flex: 1 1 auto;
 
-    width: 610px;
+    width: 810px;
 
     padding: 20px;
     padding-bottom: 60px;
@@ -114,14 +121,16 @@ body {
     transform: rotate(-1deg);
 }
 
+@media screen and (max-width: 850px) {
+    #content {
+        width: calc(100% - 40px);
+    }
+}
+
 @media screen and (max-width: 650px) {
     .banner {
         font: 60.125px LED, monospace;
         background-size: 3.5px;
-    }
-
-    #content {
-        width: calc(100% - 40px);
     }
 
     #header-container {
