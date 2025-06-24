@@ -65,8 +65,7 @@ img {
 	display: inline-block;
 	vertical-align: top;
 	width: 700px;
-	margin: 0;
-	margin-right: 6px;
+	margin: 0 6px 10px 0;
 }
 
 #side-area {
@@ -188,7 +187,7 @@ img {
 	background-color: #c00f0f;
 }
 
-.gradient-background-2px::before, .gradient-background-5px::before {
+.gradient-background-2px::before, .gradient-background-5px::before, .play-button::before {
 	content: '';
 	z-index: 10;
 	width: 100%;
@@ -208,6 +207,21 @@ img {
 .gradient-background-5px::before {
 	border-radius: 5px;
 	background: linear-gradient(180deg,rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 9%, rgba(0, 0, 0, 0) 97%, rgba(0, 0, 0, 0.21) 100%);
+}
+
+.play-button::before {
+	background: url(resources/play.png);
+	background-size: 35px;
+	background-position: center;
+	background-repeat: no-repeat;
+	opacity: 0.8;
+}
+
+.image-container {
+	display: inline-block;
+	position: relative;
+	margin: 0;
+	padding: 0;
 }
 
 .section {
@@ -268,7 +282,7 @@ img {
 }
 
 #train {
-	position: relative;
+	position: fixed;
 	bottom: 0;
 	left: -1500px;
 	height: 90px;
