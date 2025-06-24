@@ -1,173 +1,201 @@
 @font-face {
-  font-family: 'IBMVGA8';
-  src: url('home_resources/fonts/PxPlus_IBM_VGA8.ttf')  format('truetype')
+    font-family: 'Pixelary';
+    src: url('resources/fonts/Pixelary.otf')  format('truetype')
 }
 
-@keyframes turn-on {
-	0% {
-		transform: scale(1, 0.8) translate(0, 0);
-		-webkit-filter: brightness(2);
-		filter: brightness(2);
-   	} 3.5% {
-		transform: scale(1, 0.8) translate(0, 100%);
-   	} 3.6% {
-		transform: scale(1, 0.8) translate(0, -100%);
-   	} 9% {
-		transform: scale(1.3, 0.6) translate(0, 100%);
-		-webkit-filter: brightness(2);
-		filter: brightness(2);
-   	} 11% {
-		transform: scale(1, 1);
-		-webkit-filter: contrast(0) brightness(0);
-		filter: contrast(0) brightness(0);
-   	} 100% {
-		transform: scale(1, 1);
-		-webkit-filter: contrast(1) brightness(1) saturate(1);
-		filter: contrast(1) brightness(1) saturate(1);
-   	}
+@font-face {
+    font-family: 'LED';
+    src: url('resources/fonts/The\ Led\ Display\ St.ttf')  format('truetype')
 }
 
-@keyframes turn-off {
-	0% {
-		transform: scale(1, 3);
-		-webkit-filter: brightness(1);
-		filter: brightness(1);
-	} 60% {
-		transform: scale(3, 0.001);
-		-webkit-filter: brightness(10);
-		filter: brightness(10);
-	} 100% {
-		animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
-		transform: scale(0, 0.0001);
-		-webkit-filter: brightness(50);
-		filter: brightness(50);
-	}
-}
+html {
+    margin: 0;
+    
+    height: 100%;
 
-@keyframes note-fly-off {
-	100% {
-		transform: translate(300px, 1000px) rotateZ(-100deg) rotateX(100deg) skew(20deg, -10deg);
-	}
-}
-
-body, html {
-	height:100%;
-	margin: 0;
-    overflow: hidden;
+    background: #111;
 }
 
 body {
-	background: black;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+    margin: 0;
+    padding: 0;
+    
+    height: 100%;
+    
+    color: #fffaa3;
 }
 
-a {
-	color: white;
+a:link, a:visited {
+    color: #fffaa3;
+    background-color: #161616;
+
+    padding: 2px 4px 2px 4px;
+    margin: -2px -4px -2px -4px;
+
+    border-radius: 5px;
+    font-weight: 600;
+
+    text-decoration: underline;
 }
 
 a:hover {
-	text-decoration: none;
-	background-color: white;
-	color: black;
+    color: #161616;
+    background-color: #fffaa3;
+
+    text-decoration: none;
 }
 
-a::selection {
-	background-color: white;
-	color: black;
-	text-shadow: none;
+#container {
+    display: flex;
+    flex-flow: column;
+    
+    height: 100%;
 }
 
-#display-container {
-	position: relative;
-	width: 800px;
-	height: 583px;
-	/* overflow: hidden; */
+.banner {
+    display: flex;
+    justify-content: center;
+
+    text-wrap: nowrap;
+
+    background-image: url('resources/bk_grid.png');
+    background-size: 7px;
+
+    background-position: center top 0px;
+
+    font: 120.25px LED, monospace;
+
+    transform: rotate(-1deg);
+
+    /* text-shadow: 0 0 5px; */
 }
 
-#led-image {
-	position: relative;
-    float: right;
-    top: 46%;
-    right: 10.6%;
-	z-index: 2;
+.secondary-banner-text {
+    color: #fffaa330;
+
+    /* text-shadow: 0 0 3px; */
 }
 
-#display-image {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	z-index: 1;
-    pointer-events: none;
-    user-select: none;
+#header-container {
+    min-height: 195px;
+
+    padding-bottom: 50px;
+    margin-bottom: -50px;
+
+    overflow: hidden;
 }
 
-#note-image {
-	position: absolute;
-	width: 20%;
-	top: 6%;
-	right: 3%;
-	z-index: 3;
-    pointer-events: none;
-    user-select: none;
+#header {
+    padding-top: 100px;
+    margin-top: -100px;
+
+    background-position: center top 1.8px;
 }
 
-#screen-container::after {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	background: 
-		repeating-linear-gradient(
-			rgba(0,0,0, 0.15),
-			rgba(0,0,0, 0.15) 1px,
-			transparent 1px,
-			transparent 2px),
-		repeating-linear-gradient(
-			90deg,
-			rgba(255, 0, 0, 0.06), 
-			rgba(0, 255, 0, 0.02) 1px,
-			rgba(0, 0, 255, 0.06) 2px,
-			rgba(255, 0, 0, 0.06) 3px);
-	pointer-events: none;
+#footer-container {
+    min-height: 195px;
+
+    padding-top: 50px;
+    margin-top: -50px;
+
+    overflow: hidden;
 }
 
-#display-container::selection, #screen-text::selection {
-	background-color: white;
-	color: black;
-	text-shadow: none;
+#footer {
+    padding-bottom: 100px;
+    margin-bottom: -100px;    
 }
 
-#screen-embed {
-	width: 100%;
-	height: 94%;
-	filter: saturate(0.7);
+#content {
+    position: relative;
+    margin: auto;
+    
+    flex: 1 1 auto;
+
+    width: 810px;
+
+    padding: 20px;
+    padding-bottom: 60px;
+
+    font: 12px Verdana, Arial, sans-serif;
+    
+    line-height: 18px;
 }
 
-#screen-text {
-	width: calc(100% - 40px);
-	height: calc(100% - 40px);
-    color: white;
-    font-family: IBMVGA8, monospace;
-    font-size: 16px;
-	white-space: pre-wrap;
-	line-height: 1;
+#test-image {
+    width: 200px;
+    float: left;
+    margin-right: 10px;
+    image-rendering: pixelated;
 }
 
-.screen-aligned {
-	position: absolute;
-	top: calc(18% - 20px);
-	left: calc(16.4% - 20px);
-	width: calc(472px + 40px);
-	height: calc(336px + 40px);
-	padding: 20px;
-	transform-origin: top left;
-	overflow: hidden;
+#watermark {
+    position: absolute;
+    right: 20px;
+    bottom: 16px;
+
+    color: #161616;
+
+    font: 36px Pixelary, monospace;
+    
+    transform: rotate(-1deg);
 }
 
-.glow {
-	text-shadow: white 0 0 10px;
+#letter-b {
+    animation: flicker 5s linear infinite;
+}
+
+#letter-r {
+    animation: flicker-inverted 5s linear infinite;
+    opacity: 0;
+    margin-left: -91px;
+}
+
+.letter:hover {
+    opacity: 0.1875;
+}
+
+@keyframes flicker {
+	0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+        opacity: 1;
+	}
+
+	20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+		opacity: 0.1875;
+	}
+}
+
+@keyframes flicker-inverted {
+	0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+        opacity: 0;
+	}
+    
+	20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+		opacity: 1;
+	}
+}
+
+@media screen and (max-width: 850px) {
+    #content {
+        width: calc(100% - 40px);
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .banner {
+        font: 60.125px LED, monospace;
+        background-size: 3.5px;
+    }
+
+    #header-container {
+        min-height: 97px;
+    }
+
+    #footer-container {
+        min-height: 97px;
+    }
+
+    #test-image {
+        width: 150px
+    }
 }

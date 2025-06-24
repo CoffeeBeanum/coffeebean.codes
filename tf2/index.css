@@ -1,4 +1,9 @@
 @font-face {
+	font-family: 'tf2';
+	src: url('resources/tf2.ttf')  format('truetype')
+}
+
+@font-face {
 	font-family: 'tf2build';
 	src: url('resources/tf2build.ttf')  format('truetype')
 }
@@ -76,7 +81,7 @@ img {
 }
 
 #search {
-	font-family: tf2build;
+	font-family: tf2;
 	margin: 0;
 	background: url(resources/wood.jpg);
 	background-size: 1000px;
