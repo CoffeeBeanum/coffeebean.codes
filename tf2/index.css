@@ -1,0 +1,277 @@
+@font-face {
+	font-family: 'tf2build';
+	src: url('resources/tf2build.ttf')  format('truetype')
+}
+
+html {
+	background-image: url(resources/sniper.jpg);
+	background-position: center;
+	background-repeat: repeat;
+	height: 100%;
+	background-attachment: fixed;
+	overflow-x: hidden;
+}
+
+body {
+	padding: 0;
+	margin: 0;
+}
+
+img {
+	vertical-align: middle;
+}
+
+#main-container {
+	width: 900px;
+	margin: auto;
+}
+
+#header {
+	/* border-radius: 25px; */
+	height: 150px;
+	background: url(resources/sky-hydro.jpg);
+	background-size: cover;
+	width: 800px;
+	margin: 10px auto;
+}
+
+#header-dumbass {
+	position: absolute;
+	height: 207px;
+	margin-top: 50px;
+	-webkit-filter: drop-shadow(0px 5px 5px #222);
+	filter: drop-shadow(0px 5px 5px #222);
+	z-index: 1;
+}
+
+#header-text {
+	font-family: tf2build;
+	font-size: 75px;
+	text-align: center;
+	line-height: 150px;
+	text-shadow: 2px 4px 0px #222;
+}
+
+#header-furry-con {
+	margin-left: 100px;
+	color: orange;
+}
+
+#header-2007 {
+	color: #456292;
+}
+
+#content {
+	display: inline-block;
+	vertical-align: top;
+	width: 700px;
+	margin: 0;
+	margin-right: 6px;
+}
+
+#side-area {
+	display: inline-block;
+	vertical-align: top;
+	margin: 0;
+	width: 190px;
+}
+
+#search {
+	font-family: tf2build;
+	margin: 0;
+	background: url(resources/wood.jpg);
+	/* height: 100px; */
+	color: rgb(255, 242, 216);
+	text-align: center;
+	font-size: 20px;
+	padding: 10px;
+}
+
+#search-title {
+	margin-bottom: 7px;
+}
+
+#search-form {
+	height: 20px;
+}
+
+#search-input {
+	width: 130px;
+	height: 15px;
+    transform: translateY(-6px);
+}
+
+#search-button {
+	width: 20px;
+	height: 20px;
+}
+
+#footer {
+	background: url(resources/wood.jpg);
+}
+
+#tip {
+	margin-left: 200px;
+	margin-bottom: 10px;
+	z-index: 2;
+	background-color: #222;
+	color: white;
+	overflow: hidden;
+	background: url(resources/black-chrome.jpg);
+	background-size: cover;
+}
+
+#tip-engie {
+	height: 60px;
+}
+
+#tip-stamp {
+	position: absolute;
+	top: -10px;
+	right: 40px;
+	height: 90px;
+	opacity: 0.5;
+}
+
+#tip-text {
+	margin-left: 10px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#tip-title {
+	font-weight: bold;
+}
+
+#tip-body {
+	margin-left: 10px;
+}
+
+#posts {
+	background: url(resources/wood.jpg);
+	background-size: cover;
+	/* background-color: transparent; */
+	/* backdrop-filter: blur(10px); */
+	overflow: hidden;
+	min-height: 200px;
+	font-family: arial,helvetica,sans-serif;
+}
+
+.blue-background {
+	color: white;
+	background-color: #456292;
+}
+
+.yellow-background {
+	color: black;
+	background-color: #ffef13;
+}
+
+.green-background {
+	color: white;
+	background-color: #478f3d;
+}
+
+.red-background {
+	color: white;
+	background-color: #c00f0f;
+}
+
+.gradient-background-2px::before, .gradient-background-5px::before {
+	content: '';
+	z-index: 10;
+	width: 100%;
+	height: 100%;
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 0;
+	pointer-events: none;
+}
+
+.gradient-background-2px::before {
+	border-radius: 2px;
+	background: linear-gradient(180deg,rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 12%, rgba(0, 0, 0, 0) 69%, rgba(0, 0, 0, 0.21) 100%);
+}
+
+.gradient-background-5px::before {
+	border-radius: 5px;
+	background: linear-gradient(180deg,rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 9%, rgba(0, 0, 0, 0) 97%, rgba(0, 0, 0, 0.21) 100%);
+}
+
+.section {
+	position: relative;
+	border-radius: 5px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #222;
+	background-color: papayawhip;
+	box-shadow: 3px 7px 5px rgba(0, 0, 0, 0.5);
+}
+
+.post {
+	margin: 10px;
+	padding: 15px;
+	background-color: rgba(245, 245, 220, 0.8);
+	white-space: nowrap;
+}
+
+.post-thumbnail {
+	width: 160px;
+	height: 120px;
+}
+
+.post-thumbnail-tag {
+	position: absolute;
+	height: 14px;
+	padding-left: 2px;
+	padding-right: 2px;
+	left: 20px;
+	top: 20px;
+	font-size: 12px;
+	border-radius: 2px;
+}
+
+.post-container {
+	display: inline-block;
+	height: 120px;
+	padding-left: 15px;
+	vertical-align: top;
+	width: calc(100% - 178px);
+}
+
+.post-title {
+	font-size: 24px;
+	font-weight: bold;
+	color: #b35215;
+	white-space: normal;
+}
+
+.post-body {
+	margin-top: 5px;
+	font-size: 14px;
+	color: #464646;
+	overflow: hidden;
+	white-space: normal;
+	text-overflow: ellipsis;
+}
+
+#train {
+	position: relative;
+	bottom: 0;
+	left: -1500px;
+	height: 90px;
+	animation: linear;
+	animation-name: train;
+	animation-duration: 5s;
+	animation-delay: 3s;
+}
+
+@keyframes train {
+	0% {
+		left: -1500px;
+	}
+	100% {
+		left: 1500px;    
+	}
+}

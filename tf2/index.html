@@ -8,203 +8,16 @@
 	<!-- Required meta tags -->
     <meta charset="utf-8">
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
-	
-	<!-- Fonts -->
-	<!-- <link href="https://fonts.googleapis.com/css?family=Odibee+Sans&display=swap" rel="stylesheet"> -->
+	<link href="index.css" rel="stylesheet">
 	
 </head>
-
-<style>
-	@font-face {
-		font-family: 'tf2build';
-		src: url('tf2build.ttf')  format('truetype')
-	}
-
-	html {
-		background-image: url(sniper.jpg);
-		background-position: center;
-		background-repeat: repeat;
-		height: 100%;
-	}
-
-	body {
-		padding: 0;
-		margin: 0;
-	}
-
-	img {
-		vertical-align: middle;
-	}
-
-	.section {
-		position: relative;
-		border-radius: 5px;
-		border-style: solid;
-		border-width: 1px;
-		border-color: #222;
-		background-color: papayawhip;
-		box-shadow: 5px 7px 5px rgba(0, 0, 0, 0.5);
-		margin: 10px;
-	}
-
-	#main-container {
-		width: 800px;
-		margin: auto;
-	}
-
-	#header {
-		/* border-radius: 25px; */
-		height: 150px;
-		background: url(sky-hydro.jpg);
-		background-size: cover;
-	}
-
-	#header-dumbass {
-		position: absolute;
-		height: 207px;
-		margin-top: 50px;
-		-webkit-filter: drop-shadow(0px 5px 5px #222);
-  		filter: drop-shadow(0px 5px 5px #222);
-		z-index: 1;
-	}
-
-	#header-text {
-		font-family: tf2build;
-		font-size: 75px;
-		text-align: center;
-  		line-height: 150px;
-		text-shadow: 2px 4px 0px #222;
-	}
-
-	#header-furry-con {
-		margin-left: 100px;
-		color: orange;
-	}
-
-	#header-2007 {
-		color: #456292;
-	}
-	
-	#content {
-		margin: 25px;
-		margin-top: 10px;
-	}
-
-	#tip {
-		margin-left: 150px;
-		z-index: 2;
-		background-color: #222;
-		color: white;
-		overflow: hidden;
-		background: url(black-chrome.jpg);
-		background-size: cover;
-	}
-
-	#tip-engie {
-		height: 60px;
-	}
-
-	#tip-stamp {
-		position: absolute;
-		top: -10px;
-		right: 40px;
-		height: 90px;
-		opacity: 0.5;
-	}
-
-	#tip-text {
-		margin-left: 10px;
-		display: inline-block;
-		vertical-align: middle;
-	}
-
-	#tip-title {
-		font-weight: bold;
-	}
-
-	#posts {
-		background: url(badlands.png);
-		background-size: cover;
-		overflow: hidden;
-		min-height: 200px;
-		font-family: arial,helvetica,sans-serif;
-	}
-
-	.post {
-		margin: 10px;
-		padding: 15px;
-		background-color: rgba(245, 245, 220, 0.8);
-		white-space: nowrap;
-	}
-
-	.post-thumbnail {
-		width: 160px;
-		height: 120px;
-	}
-
-	.post-thumbnail-tag {
-		position: absolute;
-		height: 14px;
-		padding-left: 2px;
-		padding-right: 2px;
-		left: 20px;
-		top: 20px;
-		font-size: 12px;
-		color: white;
-		background-color: #456292;
-	}
-
-	.post-container {
-		display: inline-block;
-		height: 120px;
-		padding-left: 15px;
-		vertical-align: top;
-		width: calc(100% - 178px);
-	}
-
-	.post-title {
-		font-size: 24px;
-		font-weight: bold;
-		color: #b35215;
-		white-space: normal;
-	}
-
-	.post-body {
-		margin-top: 5px;
-		font-size: 14px;
-		color: #464646;
-		overflow: hidden;
-		white-space: normal;
-  		text-overflow: ellipsis;
-	}
-
-	#train {
-		position: absolute;
-		bottom: 0;
-		left: -1500px;
-		height: 90px;
-		animation: linear;
-		animation-name: train;
-		animation-duration: 5s;
-		animation-delay: 3s;
-	}
-	
-	@keyframes train {
-		0% {
-			left: -1500px;
-		}
-		100% {
-			left: 1000px;    
-		}
-	}
-</style>
 
 <body>
 
 	<div id='main-container'>
 
 		<div id='header' class='section'>
-			<img id='header-dumbass' src='dumbass-outline3.png'>
+			<img id='header-dumbass' src='resources/dumbass-outline3.png'>
 			<div id='header-text'>
 				<span id="header-furry-con">FURRY CON</span>
 				<span id="header-2007">2007</span>
@@ -212,36 +25,73 @@
 		</div>
 
 		<div id='content'>
-			<div id='tip' class='section'>
-				<img id='tip-engie' src='engie.png'>
-				<img id='tip-stamp' src='admin-stamp.png'>
+			<div id='tip' class='section gradient-background-5px'>
+				<img id='tip-engie' src='resources/engie.png'>
+				<img id='tip-stamp' src='resources/admin-stamp.png'>
 				<div id='tip-text'>
-					<span id='tip-title'>Admin's tip of the day:</span><br>
-					<span>Cheat and you're ass is bacon.</span>
+					<span id='tip-title'>Admin Tip of the Day:</span><br>
+					<span id='tip-body'>Cheat and you're ass is bacon.</span>
 				</div>
 			</div>
 			<div id='posts' class='section'>
 				<div class='section post'>
-					<img class='post-thumbnail' src='wood.jpg'>
-					<div class='post-thumbnail-tag'>TUTORIAL</div>
+					<img class='post-thumbnail' src='resources/demoman.jpg'>
+					<div class='post-thumbnail-tag yellow-background gradient-background-2px'>TUTORIAL</div>
 					<div class='post-container'>
-						<div class='post-title'>How to use cloak correctly as Spy</div>
+						<div class='post-title'>Sticky Traps 101 (Part 2)</div>
+						<div class='post-body'></div>
+					</div>
+				</div>
+				<div class='section post'>
+					<img class='post-thumbnail' src='resources/lore.jpg'>
+					<div class='post-thumbnail-tag blue-background gradient-background-2px'>LORE</div>
+					<div class='post-container'>
+						<div class='post-title'>Red VS Blue: TF2 lore explained</div>
+						<div class='post-body'></div>
+					</div>
+				</div>
+				<div class='section post'>
+					<img class='post-thumbnail' src='resources/cloak.png'>
+					<div class='post-thumbnail-tag yellow-background gradient-background-2px'>TUTORIAL</div>
+					<div class='post-container'>
+						<div class='post-title'>How to cloak correctly as Spy</div>
 						<div class='post-body'>He is a puzzle, wrapped in an enigma, shrouded in riddles, lovingly sprinkled with intrigue, express mailed to Mystery, Alaska, and LOOK OUT BEHIND YOU! but it is too late. You're dead. For he is the Spy - globetrotting rogue, lady killer (metaphorically) and mankiller (for real).</div>
 					</div>
 				</div>
 				<div class='section post'>
-					<img class='post-thumbnail' src='teafor.jpg'>
-					<div class='post-thumbnail-tag'>NEWS</div>
+					<img class='post-thumbnail' src='resources/creature.jpg'>
+					<div class='post-thumbnail-tag green-background gradient-background-2px'>INTEL</div>
+					<div class='post-container'>
+						<div class='post-title'>Spycrab Confirmed Real?!</div>
+						<div class='post-body'>Think Spycrabs are just a myth? Then explain what we saw on Dustbowl last night...<br><br>Shoking undeniable evidence submitted by forum user "CrabTruth_Xx" from their video blog...</div>
+					</div>
+				</div>
+				<div class='section post'>
+					<img class='post-thumbnail' src='resources/teafor.jpg'>
+					<div class='post-thumbnail-tag red-background gradient-background-2px'>NEWS</div>
 					<div class='post-container'>
 						<div class='post-title'>Team Forteres 2 released!</div>
 						<div class='post-body'>Team Fortress 2 is a class-based first-person and third-person shooter game developed by Valve Corporation, and the sequel to Team Fortress Classic. There are two playable teams, RED and BLU, which you can enter and complete objectives in different game modes. You can choose nine classes which are Scout, Medic, Demoman, Soldier, Heavy, Sniper, Spy, Pyro, and...</div>
 					</div>
 				</div>
-				<img id='train' src='train-dumbass.png'>
+			</div>
+		</div>
+
+		<div id="side-area">
+			<div id="search" class="section gradient-background-5px">
+				<div id="search-title">Search</div>
+				<form id="search-form">
+					<input id="search-input" type="text">
+					<input id="search-button" type="image" src="resources/search.png">
+				</form>
+				<!-- <img id="search-button" src="resources/search.png"> -->
 			</div>
 		</div>
 
 	</div>
+	<img id='train' src='resources/train-dumbass.png'>
+
+	<script src="index.js"></script>
 
 </body>
 
