@@ -2,7 +2,7 @@ const tipTextBody = document.getElementById("tip-body");
 
 const adminTips = [
     "Cheat and you're ass is bacon.",
-    "Be nice to new other players.",
+    "Be nice to other players.",
     "Focus on having fun."
 ];
 
