@@ -67,6 +67,11 @@ a:hover {
 
     transform: rotate(-1deg);
 
+    cursor: default;
+
+    user-select: none;
+    -webkit-user-select: none;
+
     /* text-shadow: 0 0 5px; */
 }
 
