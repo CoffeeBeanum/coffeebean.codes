@@ -8,6 +8,11 @@
 	src: url('resources/tf2build.ttf')  format('truetype')
 }
 
+@font-face {
+	font-family: 'tf2secondary';
+	src: url('resources/TF2secondary.ttf')  format('truetype')
+}
+
 html {
 	background-image: url(resources/sniper.jpg);
 	background-position: center;
@@ -80,41 +85,49 @@ img {
 	width: 190px;
 }
 
-#search {
+#login {
+	height: 60px;
 	font-family: tf2;
 	margin: 0;
 	background: url(resources/wood.jpg);
 	background-size: 1000px;
     background-position: -550px 70px;
 	color: rgb(255, 242, 216);
-	padding: 10px;
 }
 
-#search-title {
-	margin-bottom: 7px;
-	font-size: 22px;
-	text-align: center;
+#login-title {
+	margin: 9px 8px 2px 8px;
+	font-size: 16px;
 }
 
-#search-form {
-	height: 20px;
+#login-name {
+	margin: 0 12px 0 12px;
+
+	font-family: tf2secondary;
+
+	font-size: 24px;
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
-#search-input {
-	width: 130px;
-	height: 15px;
-    transform: translateY(-6px);
+#login-logout {
+	position: absolute;
+	top: 11px;
+	right: 11px;
+	font-size: 12px;
+	color: #ffdb92;
 }
 
-#search-button {
-	width: 20px;
-	height: 20px;
+#login-logout:hover {
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 #latest-comments {
 	height: 400px;
 	margin-top: 10px;
-    background-color: rgba(245, 245, 220, 0.8);
+    background-color: #f5f5dccc;
 	padding: 10px;
 }
 
@@ -144,23 +157,29 @@ img {
 	font-size: 13px;
 	font-family: arial,helvetica,sans-serif;
 	font-weight: bold;
-	color: rgb(255, 219, 146);
+	color: #ffdb92;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.comments-post:hover {
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 .comments-comment {
 	/* padding-left: 10px; */
 	font-size: 11px;
 	font-weight: normal;
-	color: rgb(255, 242, 216);
+	color: #fff2d8;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 #tip {
+	height: 60px;
 	margin-left: 200px;
 	margin-bottom: 10px;
 	z-index: 2;
@@ -272,13 +291,13 @@ img {
 	border-width: 1px;
 	border-color: #222;
 	background-color: papayawhip;
-	box-shadow: 3px 7px 5px rgba(0, 0, 0, 0.5);
+	box-shadow: 3px 7px 5px #00000080;
 }
 
 .post {
 	margin: 10px;
 	padding: 15px;
-	background-color: rgba(245, 245, 220, 0.8);
+	background-color: #f5f5dccc;
 	white-space: nowrap;
 }
 
@@ -311,6 +330,11 @@ img {
 	font-weight: bold;
 	color: #b35215;
 	white-space: normal;
+}
+
+.post-title:hover {
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 .post-body {
