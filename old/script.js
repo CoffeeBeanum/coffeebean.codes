@@ -1,7 +1,7 @@
 const regexTiming = /(\d+)\|(\d+)\)\%([^\x05]*)/;
 
-const about_link = "https://github.com/McKiddo";
-const github_link = "https://github.com/McKiddo/coffeebean.codes";
+const about_link = "https://github.com/CoffeeBeanum";
+const github_link = "https://github.com/CoffeeBeanum/coffeebean.codes";
 
 const pre_boot_string = "%(500|1)%\
 \n\n\
@@ -210,9 +210,9 @@ const activityAudios = [
 ];
 
 const projectLinks = [
-	"random/trion",
-	"random/kidtech-lite",
-	"random/vocalizer"
+	"../random/trion",
+	"../random/kidtech-lite",
+	"../random/vocalizer"
 ];
 
 const projectSoundMute = [
