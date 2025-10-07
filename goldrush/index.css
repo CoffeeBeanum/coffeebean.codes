@@ -34,7 +34,7 @@ body {
 	height: 100%;
 	width: 89%;
 	
-	outline:1px #fff solid;
+	border-right: 2px #f5f5f5 solid;
 	outline-offset: -1px;
 }
 
@@ -42,7 +42,7 @@ body {
 	font-family: 'tf2';
 	font-size: 8vmax;
 
-	color: whitesmoke;
+	color: f5f5f5;
 
 	text-align: center;
 }
@@ -52,7 +52,7 @@ body {
 	top: 36px;
 	left: 36px;
 	
-	color: whitesmoke;
+	color: #f5f5f5;
 	font-family: 'tf2secondary';
 	font-size: 16px;
 }
@@ -64,8 +64,8 @@ body {
 	bottom: 0;
 	margin: 4vmax;
 	
-	outline:3px #fff solid;
-	outline-offset: 0;
+	outline:2px #f5f5f5 solid;
+	outline-offset: 5px;
 }
 
 #please-watch {
@@ -73,7 +73,7 @@ body {
 	right: 12vmax;
 	bottom: 1vmax;
 
-	color: whitesmoke;
+	color: #f5f5f5;
 
 	font-family: 'tf2secondary';
 	font-size: 1.6vmax;
