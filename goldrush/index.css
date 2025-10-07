@@ -14,6 +14,7 @@
 }
 
 html {
+	background-color: #6b6a75;
 	background-image: url(resources/blackboard.webp);
 	background-size: cover;
 	height: 100%;
