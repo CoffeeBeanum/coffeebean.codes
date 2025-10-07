@@ -18,18 +18,12 @@ html {
 	background-size: cover;
 	height: 100%;
 	overflow-x: hidden;
-	
-	outline:2px #fff solid;
-	outline-offset: -1px;
 }
 
 body {
 	padding: 0;
 	margin: 0;
 	height: 100%;
-
-	outline:2px #ffffff67 solid;
-	outline-offset: -12px;
 }
 
 #main-container {
@@ -38,9 +32,10 @@ body {
     align-items: center;
 
 	height: 100%;
-
-	outline:2px #ffffff23 solid;
-	outline-offset: -24px;
+	width: 89%;
+	
+	outline:1px #fff solid;
+	outline-offset: -1px;
 }
 
 #debug-span {
@@ -60,4 +55,26 @@ body {
 	color: whitesmoke;
 	font-family: 'tf2secondary';
 	font-size: 16px;
+}
+
+#video-engineer {
+	position: absolute;
+	width: 25vmax;
+	right: 0;
+	bottom: 0;
+	margin: 4vmax;
+	
+	outline:3px #fff solid;
+	outline-offset: 0;
+}
+
+#please-watch {
+	position: absolute;
+	right: 12vmax;
+	bottom: 1vmax;
+
+	color: whitesmoke;
+
+	font-family: 'tf2secondary';
+	font-size: 1.6vmax;
 }
